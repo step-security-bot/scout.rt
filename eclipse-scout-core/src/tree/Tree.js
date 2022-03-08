@@ -1971,10 +1971,18 @@ export default class Tree extends Widget {
     this.selectNodes([]);
   }
 
+  /**
+   * @param {TreeNode} [node] the node to be selected. If no node is provided, the selection will be removed.
+   * @param {boolean} [debounceSend]
+   */
   selectNode(node, debounceSend) {
     this.selectNodes(node, debounceSend);
   }
 
+  /**
+   * @param {TreeNode[]|TreeNode} [nodes] the nodes to be selected. If no nodes are provided, the selection will be removed.
+   * @param {boolean} [debounceSend]
+   */
   selectNodes(nodes, debounceSend) {
     nodes = arrays.ensure(nodes);
 
@@ -2303,11 +2311,16 @@ export default class Tree extends Widget {
     this.deleteAllChildNodes();
   }
 
+  /**
+   * @param {TreeNode[]|TreeNode} nodes the nodes to be deleted. If no nodes are provided, nothing will happen.
+   * @param {TreeNode} [parentNode] the parent node that contains the nodes to be deleted. This is completely optional because each node knows its parent.
+   *    If provided, an exception will occur if one of the given node has a different parent.
+   */
   deleteNodes(nodes, parentNode) {
     let deletedNodes = [];
     let parentNodesToReindex = [];
     let topLevelNodesToReindex = [];
-    nodes = arrays.ensure(nodes).slice(); // copy
+    nodes = /** @type TreeNode[]*/ arrays.ensure(nodes).slice(); // copy
     if (nodes.length === 0) {
       return;
     }
