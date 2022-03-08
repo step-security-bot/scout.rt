@@ -22,7 +22,7 @@ To learn more about Scout and how to use it, you should have a look at our [docu
 
 We welcome any kind of contributions (bug report, documentation improvement, code contribution...). Just open a GitHub issue and / or create a Pull Request.
 
-However, in order to create a valid Pull Request, you need an Eclipse account and a signed Eclipse Contributor Agreement (ECA). Please consult the [contribution guide](https://www.eclipse.org/projects/handbook/#contributing-contributors) of
+However, in order to create a valid Pull Request, you need an Eclipse account and a signed Eclipse Contributor Agreement ([ECA](https://www.eclipse.org/legal/ECA.php)). Please consult the [contribution guide](https://www.eclipse.org/projects/handbook/#contributing-contributors) of
 Eclipse for details.
 
 Many thanks to all the people who have already contributed to Scout!
