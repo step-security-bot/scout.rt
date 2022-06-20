@@ -10,18 +10,18 @@
  */
 package org.eclipse.scout.rt.platform.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
+import static org.junit.Assert.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
+import org.eclipse.scout.rt.platform.resource.BinaryResource;
 import org.junit.Test;
 
 /**
@@ -179,4 +179,21 @@ public class FileUtilityTest {
                 "someReallyLongName01234567890123456789.01234567890123456789.01234567890123456789.01234567890123456789.01234567890123456789.01234567890123456789.01234567890123456789.01234567890123456789.01234567890123456789.01234567890123456789.01234567890123456789.01234567890123.doc"));
   }
 
+  @Test
+  public void testZipAndUnzipWithZeroByteFile() {
+    List<BinaryResource> resources = new ArrayList<>();
+    resources.add(new BinaryResource("zeroByteFile", null));
+
+    BinaryResource zipFile = FileUtility.zip("testfolder.zip", resources);
+    assertNotNull("Zip file must not be null", zipFile);
+
+    // FIXME PBZ PLATFORM move unzip
+//    Collection<BinaryResource> unzipedFiles = FileUtility.unzip(zipFile, null);
+//    assertNotNull("Unziped files must not be null", unzipedFiles);
+//    assertEquals("Unziped files must contain exactly one file", 1, unzipedFiles.size());
+//    BinaryResource unzipedFile = CollectionUtility.firstElement(unzipedFiles);
+//    assertNotNull("First entry of unziped files must not be null", unzipedFile);
+//    assertNotNull("The content of the unziped file must not be null", unzipedFile.getContent());
+//    assertEquals("The content of the unziped file must have the size of 0 bytes", 0, unzipedFile.getContent().length);
+  }
 }
