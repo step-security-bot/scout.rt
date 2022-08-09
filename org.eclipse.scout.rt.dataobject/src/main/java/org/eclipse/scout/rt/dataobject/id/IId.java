@@ -24,7 +24,7 @@ import java.io.Serializable;
  * This interface implements {@link Comparable} by comparing the wrapped value, without considering the id types. Hence
  * every {@link IId} is comparable to any other {@link IId}.
  */
-public interface IId<WRAPPED_TYPE extends Comparable<WRAPPED_TYPE>> extends Comparable<IId<WRAPPED_TYPE>>, Serializable {
+public interface IId<WRAPPED_TYPE extends Comparable<WRAPPED_TYPE>> extends Comparable<IId<WRAPPED_TYPE>>, Serializable, IId2 {
 
   /**
    * @return the raw id. Use this method carefully. The value of the id should only be used by serialization and
