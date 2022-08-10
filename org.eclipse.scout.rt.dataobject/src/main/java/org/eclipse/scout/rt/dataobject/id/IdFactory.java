@@ -12,9 +12,11 @@ package org.eclipse.scout.rt.dataobject.id;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.Arrays;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.stream.Stream;
 
 import org.eclipse.scout.rt.platform.ApplicationScoped;
 import org.eclipse.scout.rt.platform.BEANS;
@@ -29,8 +31,8 @@ import org.eclipse.scout.rt.platform.util.TypeCastUtility;
 @ApplicationScoped
 public class IdFactory {
 
-  protected final ConcurrentMap<Class<? extends IId<?>>, Method> m_ofMethodsByIdType = new ConcurrentHashMap<>();
-  protected final ConcurrentMap<Class<? extends IId<?>>, Method> m_ofMethodsByString = new ConcurrentHashMap<>();
+  protected final ConcurrentMap<Class<? extends IId2>, Method> m_ofMethodsByIdType = new ConcurrentHashMap<>();
+  protected final ConcurrentMap<Class<? extends IId2>, Method> m_ofMethodsByString = new ConcurrentHashMap<>();
 
   /**
    * Creates a new wrapped {@link IId} by calling the <code>of(value)</code> method of the given id class.
@@ -74,23 +76,41 @@ public class IdFactory {
     }
   }
 
-  protected Method findOfByTypeMethod(Class<? extends IId<?>> idClass) {
+  public IId2 createFromString(Class<? extends IId2> idClass, String... components) {
+    try {
+      Method createMethod = m_ofMethodsByString.computeIfAbsent(idClass, k -> findOfByStringsMethod(k, components.length));
+      return idClass.cast(createMethod.invoke(null, components));
+    }
+    catch (Exception e) {
+      throw BEANS.get(PlatformExceptionTranslator.class).translate(e)
+          .withContextInfo("idClass", idClass.getName())
+          .withContextInfo("components", Arrays.toString(components));
+    }
+  }
+
+  protected Method findOfByStringsMethod(Class<? extends IId2> idClass, int cardinality) {
+    Class<?>[] parameterTypes = new Class[cardinality];
+    Arrays.fill(parameterTypes, String.class);
+    return findOfMethod(idClass, parameterTypes);
+  }
+
+  protected Method findOfByTypeMethod(Class<? extends IId2> idClass) {
     Class<?> parameterType = TypeCastUtility.getGenericsParameterClass(idClass, IId.class);
     return findOfMethod(idClass, parameterType);
   }
 
-  protected Method findOfByStringMethod(Class<? extends IId<?>> idClass) {
+  protected Method findOfByStringMethod(Class<? extends IId2> idClass) {
     return findOfMethod(idClass, String.class);
   }
 
-  protected Method findOfMethod(Class<? extends IId<?>> idClass, Class<?> parameterType) {
+  protected Method findOfMethod(Class<? extends IId2> idClass, Class<?>... parameterTypes) {
     try {
-      Method m = idClass.getMethod("of", parameterType);
-      Assertions.assertTrue(Modifier.isStatic(m.getModifiers()), "method 'of({})' is expected to be static [method={}]", parameterType.getName(), m);
+      Method m = idClass.getMethod("of", parameterTypes);
+      Assertions.assertTrue(Modifier.isStatic(m.getModifiers()), "method 'of({})' is expected to be static [method={}]", Arrays.toString(parameterTypes), m);
       return m;
     }
     catch (@SuppressWarnings("squid:S1166") NoSuchMethodException e) {
-      throw new PlatformException("Cannot find a static method 'of({})' on id class {}.", parameterType.getName(), idClass.getName());
+      throw new PlatformException("Cannot find a static method 'of({})' on id class {}.", Arrays.toString(parameterTypes), idClass.getName());
     }
   }
 }
