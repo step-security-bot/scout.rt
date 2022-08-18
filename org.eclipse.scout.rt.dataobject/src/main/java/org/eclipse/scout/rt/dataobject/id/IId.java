@@ -30,7 +30,9 @@ public interface IId<WRAPPED_TYPE extends Comparable<WRAPPED_TYPE>> extends Comp
    * @return the raw id. Use this method carefully. The value of the id should only be used by serialization and
    *         persistence layers.
    */
-  WRAPPED_TYPE unwrap();
+  //WRAPPED_TYPE unwrap();
+
+  Object unwrap();
 
   String unwrapAsString();
 
@@ -39,6 +41,7 @@ public interface IId<WRAPPED_TYPE extends Comparable<WRAPPED_TYPE>> extends Comp
     if (o == null) {
       return 1;
     }
-    return unwrap().compareTo(o.unwrap());
+    //return unwrap().compareTo(o.unwrap());
+    return unwrapAsString().compareTo(o.unwrapAsString());
   }
 }

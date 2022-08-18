@@ -28,4 +28,7 @@ import java.util.UUID;
  * types. Hence every {@link IUuId} is comparable to any other {@link IUuId}.
  */
 public interface IUuId extends IId<UUID> {
+
+  @Override
+  UUID unwrap();
 }

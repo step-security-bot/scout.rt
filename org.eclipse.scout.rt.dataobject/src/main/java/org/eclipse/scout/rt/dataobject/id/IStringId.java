@@ -22,4 +22,7 @@ package org.eclipse.scout.rt.dataobject.id;
  * id types. Hence every {@link IStringId} is comparable to any other {@link IStringId}.
  */
 public interface IStringId extends IId<String> {
+
+  @Override
+  String unwrap();
 }
