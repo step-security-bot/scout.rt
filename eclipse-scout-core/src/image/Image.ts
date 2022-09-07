@@ -12,6 +12,7 @@ import {Device, HtmlComponent, ImageLayout, Widget} from '../index';
 import ImageModel from './ImageModel';
 
 export default class Image extends Widget implements ImageModel {
+  declare model: ImageModel;
   autoFit: boolean;
   imageUrl: string;
   prepend: boolean;

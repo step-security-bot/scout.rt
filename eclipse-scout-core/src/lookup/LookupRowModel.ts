@@ -8,6 +8,9 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
+import {ObjectModel} from '../scout';
+import {LookupRow} from '../index';
+
 export default interface LookupRowModel<Key> {
   key: Key;
   text: string;

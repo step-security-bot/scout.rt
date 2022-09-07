@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 
-import {codes, Desktop, Device, ErrorHandler, EventEmitter, fonts, Locale, locales, logging, numbers, ObjectFactory, objects, scout, Session, texts, webstorage, Widget} from './index';
+import {AppEventMap, codes, Desktop, Device, ErrorHandler, EventEmitter, fonts, Locale, locales, logging, numbers, ObjectFactory, objects, scout, Session, texts, webstorage, Widget} from './index';
 import $ from 'jquery';
 import {FontSpec} from './util/fonts';
 
@@ -57,6 +57,8 @@ export interface AppBootstrapOptions {
 }
 
 export default class App extends EventEmitter {
+  declare eventMap: AppEventMap;
+
   static addListener(type, func) {
     let listener = {
       type: type,

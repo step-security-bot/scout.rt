@@ -1,5 +1,6 @@
 import {Session, Widget} from '../index';
 import {PartialAndRequired} from '../types';
+import {ObjectModel} from '../scout';
 
 export default interface WidgetModel {
   /**
@@ -11,7 +12,6 @@ export default interface WidgetModel {
    * If not specified, the session of the parent widget is used
    */
   session?: Session;
-  objectType?: string | { new(): Widget };
   // FIXME TS add missing properties
   [property: string]: any; // FIXME TS necessary for variable model properties, required?
 }

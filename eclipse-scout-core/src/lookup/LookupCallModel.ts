@@ -10,8 +10,9 @@
  */
 import {ObjectWithType, Session} from '../index';
 import {QueryByType} from './QueryBy';
+import {ObjectModel} from '../scout';
 
-export default interface LookupCallModel<Key> extends ObjectWithType {
+export default interface LookupCallModel<Key> {
   session: Session;
   hierarchical?: boolean;
   loadIncremental?: boolean;

@@ -13,9 +13,9 @@ import $ from 'jquery';
 import sourcemappedStacktrace from 'sourcemapped-stacktrace';
 
 export interface ErrorHandlerOptions {
-  logError: boolean;
-  displayError: boolean;
-  sendError: boolean;
+  logError?: boolean;
+  displayError?: boolean;
+  sendError?: boolean;
 }
 
 export interface ErrorInfo {
@@ -31,6 +31,7 @@ export interface ErrorInfo {
 }
 
 export default class ErrorHandler implements ErrorHandlerOptions {
+  declare model: ErrorHandlerOptions;
   logError: boolean;
   displayError: boolean;
   sendError: boolean;
