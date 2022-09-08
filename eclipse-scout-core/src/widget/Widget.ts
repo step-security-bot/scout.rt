@@ -8,10 +8,11 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {AnyWidget, arrays, DeferredGlassPaneTarget, Desktop, Device, EnumObject, EventDelegator, EventHandler, filters, focusUtils, Form, graphics, HtmlComponent, icons, inspector, KeyStroke, KeyStrokeContext, LayoutData, LoadingSupport, LogicalGrid, objects, ObjectWithType, Predicate, PropertyEventEmitter, scout, scrollbars, Session, strings, texts, TreeVisitResult, WidgetEventMap, WidgetModel} from '../index';
+import {AnyWidget, arrays, DeferredGlassPaneTarget, Desktop, Device, EnumObject, Event, EventDelegator, EventHandler, filters, focusUtils, Form, graphics, HtmlComponent, icons, inspector, KeyStroke, KeyStrokeContext, LayoutData, LoadingSupport, LogicalGrid, objects, ObjectWithType, Predicate, PropertyEventEmitter, scout, scrollbars, Session, strings, texts, TreeVisitResult, WidgetEventMap, WidgetModel} from '../index';
 import * as $ from 'jquery';
 import {RefWidgetModel} from './WidgetModel';
 import {ObjectType} from '../ObjectFactory';
+import {EventMapOf, EventModel} from '../events/EventEmitter';
 
 export type DisabledStyle = EnumObject<typeof Widget.DisabledStyle>;
 export type GlassPaneContribution = JQuery | DeferredGlassPaneTarget;
@@ -2345,6 +2346,10 @@ export default class Widget extends PropertyEventEmitter implements WidgetModel,
    */
   isAttachedAndRendered(): boolean {
     return (this.rendered || this.rendering) && this.$container.isAttached();
+  }
+
+  override trigger<K extends string & keyof EventMapOf<Widget>>(type: K, eventOrModel?: EventModel<EventMapOf<Widget>[K]>): Event<this> {
+    return super.trigger(type, eventOrModel);
   }
 
   /* --- STATIC HELPERS ------------------------------------------------------------- */

@@ -8,12 +8,12 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {PropertyChangeEvent, WidgetEventMap} from '../index';
-import {EmptyObject} from '../types';
+import {Event, PropertyChangeEvent, Widget, WidgetEventMap} from '../index';
+import Image from './Image';
 
 export default interface ImageEventMap extends WidgetEventMap {
-  'load': EmptyObject;
-  'error': EmptyObject;
+  'load': Event;
+  'error': Event;
   'propertyChange:imageUrl': PropertyChangeEvent<string>;
-  'propertyChange:autoFit': PropertyChangeEvent<string>;
+  'propertyChange:autoFit': PropertyChangeEvent<boolean>;
 }

@@ -11,19 +11,19 @@
 import {App, Desktop, Event, EventMap, Session} from './index';
 import {AppBootstrapOptions, AppOptions} from './App';
 
-export interface AppInitEvent {
+export interface AppInitEvent extends Event {
   options: AppOptions;
 }
 
-export interface AppBootstrapEvent {
+export interface AppBootstrapEvent extends Event {
   options: AppBootstrapOptions;
 }
 
-export interface AppDesktopReadyEvent {
+export interface AppDesktopReadyEvent extends Event {
   desktop: Desktop;
 }
 
-export interface AppSessionReadyEvent {
+export interface AppSessionReadyEvent extends Event {
   session: Session;
 }
 

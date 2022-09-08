@@ -8,13 +8,16 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {Event, EventMap, EventSupport, EventListener} from '../index';
+import {Event, EventListener, EventMap, EventSupport} from '../index';
 
 export interface EventHandler<K extends Event = Event> {
   (event: K): void;
 }
 
 export type EventMapOf<T> = T extends {eventMap: infer Map} ? Map : object;
+export type EventOf<T> = T extends {eventMap: infer Map} ? Map : object;
+/** Omits all properties that cannot be passed as part of the event model when the event is triggered. */
+export type EventModel<T> = Omit<T, 'source' | 'defaultPrevented' | 'type' | 'preventDefault'>;
 
 export default class EventEmitter {
   events: EventSupport;
@@ -28,7 +31,7 @@ export default class EventEmitter {
     return new EventSupport();
   }
 
-  trigger<K extends string & keyof EventMapOf<this>>(type: K, eventOrModel?: EventMapOf<this>[K]): Event<this> {
+  trigger<K extends string & keyof EventMapOf<EventEmitter>>(type: K, eventOrModel?: EventModel<EventMapOf<EventEmitter>[K]>): Event<this> {
     let event;
     if (eventOrModel instanceof Event) {
       event = eventOrModel;
@@ -69,7 +72,7 @@ export default class EventEmitter {
    * @param handler The exact same event handler that was used for registration using {@link on} or {@link one}.
    *      If no handler is specified, all handlers are de-registered for the given type.
    */
-  off<K extends string & keyof EventMapOf<this>>(type: K, handler?: EventHandler<EventMapOf<this>[K] & Event<this>>) {
+  off<K extends string & keyof EventMapOf<this>>(type: K, handler?: EventHandler<EventMapOf<this>[K]>) {
     this.events.off(type, handler);
   }
 
@@ -77,8 +80,8 @@ export default class EventEmitter {
    * Adds an event handler using {@link one} and returns a promise.
    * The promise is resolved as soon as the event is triggered.
    */
-  when<K extends string & keyof EventMap>(type: K): JQuery.Promise<EventMap[K] & Event<this>> {
-    return this.events.when(type) as JQuery.Promise<EventMap[K] & Event<this>>;
+  when<K extends string & keyof EventMap>(type: K): JQuery.Promise<EventMap[K]> {
+    return this.events.when(type) as JQuery.Promise<EventMap[K]>;
   }
 
   addListener(listener: EventListener) {

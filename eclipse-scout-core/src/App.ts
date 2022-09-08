@@ -9,9 +9,10 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 
-import {AppEventMap, codes, Desktop, Device, ErrorHandler, EventEmitter, fonts, Locale, locales, logging, numbers, ObjectFactory, objects, scout, Session, texts, webstorage, Widget} from './index';
+import {AppEventMap, codes, Desktop, Device, ErrorHandler, Event, EventEmitter, fonts, Locale, locales, logging, numbers, ObjectFactory, objects, scout, Session, texts, webstorage, Widget} from './index';
 import $ from 'jquery';
 import {FontSpec} from './util/fonts';
+import {EventMapOf, EventModel} from './events/EventEmitter';
 
 let instance = null;
 let listeners = [];
@@ -523,5 +524,9 @@ export default class App extends EventEmitter {
    */
   protected _installExtensions() {
     // NOP
+  }
+
+  override trigger<K extends string & keyof EventMapOf<App>>(type: K, eventOrModel?: EventModel<EventMapOf<App>[K]>): Event<this> {
+    return super.trigger(type, eventOrModel);
   }
 }

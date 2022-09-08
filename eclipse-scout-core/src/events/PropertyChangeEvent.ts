@@ -1,7 +1,7 @@
-import {Event, EventEmitter, PropertyEventEmitter} from '../index';
+import {Event, PropertyEventEmitter} from '../index';
 
-export default interface PropertyChangeEvent<PROP_TYPE> {
+export default interface PropertyChangeEvent<Value> extends Event<PropertyEventEmitter> {
   propertyName: string;
-  newValue: PROP_TYPE;
-  oldValue: PROP_TYPE;
+  newValue: Value;
+  oldValue: Value;
 }

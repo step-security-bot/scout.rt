@@ -1,23 +1,22 @@
-import {DisabledStyle, LogicalGrid, PropertyChangeEvent, Widget} from '../index';
+import {DisabledStyle, Event, LogicalGrid, PropertyChangeEvent, Widget} from '../index';
 import {GlassPaneContribution} from './Widget';
 import PropertyEventMap from '../events/PropertyEventMap';
-import {EmptyObject} from '../types';
 
-export interface HierarchyChangeEvent {
+export interface HierarchyChangeEvent extends Event {
   oldParent: Widget;
   parent: Widget;
 }
 
-export interface GlassPaneContributionEvent {
+export interface GlassPaneContributionEvent extends Event {
   contribution: GlassPaneContribution;
 }
 
 export default interface WidgetEventMap extends PropertyEventMap {
-  'init': EmptyObject;
-  'destroy': EmptyObject;
-  'render': EmptyObject;
-  'remove': EmptyObject;
-  'removing': EmptyObject;
+  'init': Event;
+  'destroy': Event;
+  'render': Event;
+  'remove': Event;
+  'removing': Event;
   'glassPaneContributionAdded': GlassPaneContributionEvent;
   'glassPaneContributionRemoved': GlassPaneContributionEvent;
   'hierarchyChange': HierarchyChangeEvent;

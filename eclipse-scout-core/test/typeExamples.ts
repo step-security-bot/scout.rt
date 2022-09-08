@@ -8,7 +8,9 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {Event, Image, PropertyChangeEvent, scout} from '../src';
+import {Image, PropertyChangeEvent, scout} from '../src';
+import {EventMapOf} from '../src/events/EventEmitter';
+import $ from 'jquery';
 
 function createTyped() {
   let img = scout.create(Image, {
@@ -131,4 +133,37 @@ function events() {
   $comp.trigger(jqEvent);
 }
 
+interface Event {
+  source: object;
+}
+
+interface ClickEvent extends Event {
+  data: number;
+}
+
+interface ButtonEventMap {
+  'click': ClickEvent;
+}
+
+class Button {
+  declare eventMap: ButtonEventMap;
+
+  trigger<K extends keyof EventMapOf<this>>(type: K, event: Omit<EventMapOf<this>[K], 'source'>) {
+    // ...
+  }
+
+  click() {
+    this.trigger('click', {
+      data: 1
+    });
+  }
+}
+
+class ButtonExt extends Button {
+}
+
+let button = new Button();
+button.trigger('click', {
+  data: 1
+});
 
