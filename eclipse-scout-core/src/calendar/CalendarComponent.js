@@ -296,7 +296,7 @@ export default class CalendarComponent extends Widget {
         location: {
           y: event.originalEvent.clientY
         },
-        widget: {
+        content: {
           objectType: Label,
           htmlEnabled: true,
           scrollable: true,
