@@ -51,10 +51,10 @@ export default interface TreeModel extends WidgetModel {
    * Default is true.
    */
   multiCheck?: boolean;
-
-  /** top-level nodes */
+  /**
+   * Top-level nodes
+   */
   nodes?: (TreeNode | TreeNodeData)[];
-
   /**
    * Default is 23.
    */
@@ -70,4 +70,8 @@ export default interface TreeModel extends WidgetModel {
   selectedNodes?: string[] | TreeNode[];
   filters?: FilterOrFunction<TreeNode>[];
   textFilterEnabled?: boolean;
+  /**
+   * Whether to focus the tree when the node control is clicked. Default is true.
+   */
+  requestFocusOnNodeControlMouseDown?: boolean;
 }

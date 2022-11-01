@@ -26,10 +26,7 @@ export default class Menu extends Action implements MenuModel {
   declare eventMap: MenuEventMap;
 
   childActions: Menu[];
-
-  /** null = determined by the menu bar */
   defaultMenu: boolean;
-
   excludedByFilter: boolean;
   menuTypes: string[];
   menuStyle: MenuStyle;
