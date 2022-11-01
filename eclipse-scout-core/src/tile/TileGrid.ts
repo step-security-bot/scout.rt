@@ -21,6 +21,7 @@ import TileModel from './TileModel';
 import {MenuFilter} from '../menu/Menu';
 import {ScrollToOptions} from '../scrollbar/scrollbars';
 import {FilterOrFunction} from '../widget/FilterSupport';
+import {TileGridLayoutConfigModel} from './TileGridLayoutConfig';
 
 /**
  * Only select top-level tile elements. Do not select elements with a 'tile' class deeper in the tree.
@@ -521,11 +522,11 @@ export default class TileGrid extends Widget implements TileGridModel {
   }
 
   /** @see TileGridModel.layoutConfig */
-  setLayoutConfig(layoutConfig: TileGridLayoutConfig) {
+  setLayoutConfig(layoutConfig: TileGridLayoutConfig | TileGridLayoutConfigModel) {
     this.setProperty('layoutConfig', layoutConfig);
   }
 
-  protected _setLayoutConfig(layoutConfig: TileGridLayoutConfig) {
+  protected _setLayoutConfig(layoutConfig: TileGridLayoutConfig | TileGridLayoutConfigModel) {
     if (!layoutConfig) {
       layoutConfig = new TileGridLayoutConfig();
     }
