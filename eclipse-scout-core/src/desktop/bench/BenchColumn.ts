@@ -194,8 +194,7 @@ export default class BenchColumn extends Widget implements BenchColumnModel {
             parent: this,
             $anchor: arr[arr.length - 1].$container,
             $root: this.$container,
-            splitHorizontal: false,
-            maxRatio: 1
+            splitHorizontal: false
           });
           splitter.render();
           splitter.setLayoutData(FlexboxLayoutData.fixed().withOrder(col.getLayoutData().order - 1));
@@ -223,6 +222,7 @@ export default class BenchColumn extends Widget implements BenchColumnModel {
     }
     this.components.forEach((c, i) => {
       if (c instanceof Splitter) {
+        // noinspection JSVoidFunctionReturnValueUsed
         let componentsBefore = this.components.slice(0, i).reverse() as SimpleTabBox<OutlineContent>[];
         let componentsAfter = this.components.slice(i + 1) as SimpleTabBox<OutlineContent>[];
         // shrink
