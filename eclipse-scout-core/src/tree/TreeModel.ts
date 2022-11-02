@@ -8,8 +8,7 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {Action, ActionModel, Menu, MenuModel, TreeNode, WidgetModel} from '../index';
-import {FilterOrFunction} from '../widget/FilterSupport';
+import {Action, ActionModel, FilterOrFunction, Menu, MenuModel, TreeNode, WidgetModel} from '../index';
 import {TreeCheckableStyle, TreeDisplayStyle} from './Tree';
 import {RefModel} from '../types';
 import {TreeNodeData} from './TreeNodeModel';

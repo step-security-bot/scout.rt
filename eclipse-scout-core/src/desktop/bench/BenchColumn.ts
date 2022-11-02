@@ -89,6 +89,7 @@ export default class BenchColumn extends Widget implements BenchColumnModel {
   protected _renderTabBox(tabBox: SimpleTabBox<OutlineContent>) {
     if (!tabBox.rendered) {
       tabBox.render();
+      tabBox.htmlComp.validateRoot = true;
     }
   }
 
@@ -197,7 +198,7 @@ export default class BenchColumn extends Widget implements BenchColumnModel {
             splitHorizontal: false
           });
           splitter.render();
-          splitter.setLayoutData(FlexboxLayoutData.fixed().withOrder(col.getLayoutData().order - 1));
+          splitter.setLayoutData(FlexboxLayoutData.fixed().withOrder(this._getTabBoxLayoutData(col).order - 1));
           splitter.$container.addClass('line');
           arr.push(splitter);
         }
@@ -216,6 +217,10 @@ export default class BenchColumn extends Widget implements BenchColumnModel {
     this._updateSplitterMovable();
   }
 
+  _getTabBoxLayoutData(tabBox: SimpleTabBox): FlexboxLayoutData {
+    return tabBox.getLayoutData() as FlexboxLayoutData;
+  }
+
   protected _updateSplitterMovable() {
     if (!this.components) {
       return;
@@ -226,15 +231,15 @@ export default class BenchColumn extends Widget implements BenchColumnModel {
         let componentsBefore = this.components.slice(0, i).reverse() as SimpleTabBox<OutlineContent>[];
         let componentsAfter = this.components.slice(i + 1) as SimpleTabBox<OutlineContent>[];
         // shrink
-        if (componentsBefore.filter(tab => tab.getLayoutData().shrink > 0).length > 0
-          && componentsAfter.filter(tab => tab.getLayoutData().grow > 0).length > 0) {
+        if (componentsBefore.filter(tab => this._getTabBoxLayoutData(tab).shrink > 0).length > 0
+          && componentsAfter.filter(tab => this._getTabBoxLayoutData(tab).grow > 0).length > 0) {
           c.setEnabled(true);
           c.on('move', this._onSplitterMove.bind(this));
           return;
         }
         // grow
-        if (componentsBefore.filter(c => c.getLayoutData().grow > 0).length > 0
-          && componentsAfter.filter(c => c.getLayoutData().shrink > 0).length > 0) {
+        if (componentsBefore.filter(c => this._getTabBoxLayoutData(c).grow > 0).length > 0
+          && componentsAfter.filter(c => this._getTabBoxLayoutData(c).shrink > 0).length > 0) {
           c.setEnabled(true);
           c.on('move', this._onSplitterMove.bind(this));
           return;
