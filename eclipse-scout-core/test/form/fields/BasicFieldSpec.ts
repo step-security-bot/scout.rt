@@ -8,9 +8,10 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {BasicField, BasicFieldAdapter, RemoteEvent, scout, StringField, StringFieldModel} from '../../../src/index';
+import {BasicField, BasicFieldAdapter, RemoteEvent, scout, StringField} from '../../../src/index';
 import {FormSpecHelper} from '../../../src/testing/index';
 import {triggerBlur} from '../../../src/testing/jquery-testing';
+import {ModelOf} from '../../../src/scout';
 
 describe('BasicField', () => {
   let session: SandboxSession, helper: FormSpecHelper, field: BasicField<any>;
@@ -38,7 +39,7 @@ describe('BasicField', () => {
     return field;
   }
 
-  function createModel(): StringFieldModel {
+  function createModel(): ModelOf<StringField> {
     return helper.createFieldModel();
   }
 

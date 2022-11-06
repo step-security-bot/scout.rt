@@ -11,11 +11,11 @@
 import {DisabledStyle, DisplayParent, LogicalGrid, Session, Widget} from '../index';
 import {ObjectModel} from '../scout';
 
-export default interface WidgetModel extends ObjectModel<Widget, WidgetModel> {
+export default interface WidgetModel extends ObjectModel<Widget> {
   /**
    * The parent widget.
    */
-  parent: Widget;
+  parent?: Widget;
   owner?: Widget;
   /**
    * If not specified, the session of the parent widget is used
@@ -33,6 +33,4 @@ export default interface WidgetModel extends ObjectModel<Widget, WidgetModel> {
   logicalGrid?: LogicalGrid | string;
   displayParent?: DisplayParent;
   animateRemoval?: boolean;
-
-  [property: string]: any;
 }

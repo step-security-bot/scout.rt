@@ -8,13 +8,14 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {Device, Outline, PageWithTable, scout, Table, TableModel, TableTextUserFilter} from '../../../src/index';
+import {Device, Outline, PageWithTable, scout, Table, TableTextUserFilter} from '../../../src/index';
 import {OutlineSpecHelper, TableSpecHelper} from '../../../src/testing/index';
+import {ModelOf} from '../../../src/scout';
 
 describe('OutlineMediator', () => {
 
   let session: SandboxSession;
-  let tableModel: TableModel;
+  let tableModel: ModelOf<Table>;
   let detailTable: Table;
   let page: PageWithTable;
   let firstColumn;
@@ -34,7 +35,6 @@ describe('OutlineMediator', () => {
     detailTable = tableHelper.createTable(tableModel);
     firstColumn = detailTable.columns[0];
     page = scout.create(PageWithTable, {
-      // @ts-expect-error
       childrenLoaded: true, // <-- this flag is important, otherwise this page would try to load children on doRowAction
       alwaysCreateChildPage: true,
       parent: outline,

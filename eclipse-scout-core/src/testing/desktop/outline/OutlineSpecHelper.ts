@@ -8,13 +8,10 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {Outline, OutlineAdapter, OutlineModel, PageModel, Session} from '../../../index';
+import {ModelAdapter, Outline, OutlineAdapter, Page, Session} from '../../../index';
 import {FormSpecHelper, TableSpecHelper} from '../../index';
 import $ from 'jquery';
-import {Optional, RefModel, SomeRequired} from '../../../types';
-import ModelAdapterModel from '../../../session/ModelAdapterModel';
-import {ObjectType} from '../../../ObjectFactory';
-import Widget from '../../../widget/Widget';
+import {FullModelOf, InitModelOf, ModelOf, ObjectOrModel} from '../../../scout';
 
 export default class OutlineSpecHelper {
   session: Session;
@@ -23,36 +20,35 @@ export default class OutlineSpecHelper {
     this.session = session;
   }
 
-  createModelFixture(nodeCount?: number, depth?: number, expanded?: boolean): OutlineModel & { id: string; parent: Widget; objectType: ObjectType<Outline>; session: Session } {
+  createModelFixture(nodeCount?: number, depth?: number, expanded?: boolean): FullModelOf<Outline> & { id: string; session: Session } {
     return this.createModel(this.createModelNodes(nodeCount, depth, expanded));
   }
 
-  createModel(nodes: RefModel<PageModel>[]): OutlineModel & { id: string; parent: Widget; objectType: ObjectType<Outline>; session: Session } {
-    let model = createSimpleModel('Outline', this.session) as OutlineModel & { id: string; parent: Widget; objectType: ObjectType<Outline>; session: Session };
+  createModel(nodes: ObjectOrModel<Page>[]): FullModelOf<Outline> & { id: string; session: Session } {
+    let model = createSimpleModel('Outline', this.session) as FullModelOf<Outline> & { id: string; session: Session };
     if (nodes) {
       model.nodes = nodes;
     }
     return model;
   }
 
-  createModelNode(id: string, text: string): Optional<PageModel, 'parent'> {
+  createModelNode(id: string, text: string): ModelOf<Page> {
     return {
       id: id,
       text: text
     };
   }
 
-  createModelNodes(nodeCount: number, depth?: number, expanded?: boolean): RefModel<PageModel>[] {
+  createModelNodes(nodeCount: number, depth?: number, expanded?: boolean): ModelOf<Page>[] {
     return this.createModelNodesInternal(nodeCount, depth, expanded);
   }
 
-  createModelNodesInternal(nodeCount: number, depth?: number, expanded?: boolean, parentNode?: PageModel): RefModel<PageModel>[] {
+  createModelNodesInternal(nodeCount: number, depth?: number, expanded?: boolean, parentNode?: ModelOf<Page>): ModelOf<Page>[] {
     if (!nodeCount) {
       return;
     }
 
-    let nodes = [],
-      nodeId;
+    let nodes: ModelOf<Page>[] = [], nodeId;
     if (!depth) {
       depth = 0;
     }
@@ -70,19 +66,19 @@ export default class OutlineSpecHelper {
     return nodes;
   }
 
-  createOutline(model?: OutlineModel): Outline {
+  createOutline(model?: ModelOf<Outline>): Outline {
     let defaults = {
       parent: this.session.desktop
     };
-    model = $.extend({}, defaults, model);
-    let tree = new Outline();
-    tree.init(model);
-    return tree;
+    let m = $.extend({}, defaults, model) as InitModelOf<Outline>;
+    let outline = new Outline();
+    outline.init(m);
+    return outline;
   }
 
-  createOutlineAdapter(model: ModelAdapterModel | SomeRequired<OutlineModel, 'session' | 'id'>): OutlineAdapter {
+  createOutlineAdapter(model: InitModelOf<ModelAdapter> | ModelOf<Outline> & { id: string; session: Session }): OutlineAdapter {
     let outlineAdapter = new OutlineAdapter();
-    outlineAdapter.init(model);
+    outlineAdapter.init(model as InitModelOf<OutlineAdapter>);
     return outlineAdapter;
   }
 

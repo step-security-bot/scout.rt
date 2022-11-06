@@ -11,6 +11,7 @@
 import {DateRange, dates, ObjectFactory, Planner, PlannerModel, Widget} from '../../src/index';
 import {ObjectType} from '../../src/ObjectFactory';
 import {PlannerResource} from '../../src/planner/Planner';
+import {InitModelOf, ModelOf} from '../../src/scout';
 
 describe('Planner', () => {
   let session: SandboxSession;
@@ -38,7 +39,7 @@ describe('Planner', () => {
     }
   }
 
-  function createPlannerModel(numResources): PlannerModel & { id: string; objectType: ObjectType<Planner>; parent: Widget; session: SandboxSession } {
+  function createPlannerModel(numResources): ModelOf<Planner> & { id: string; objectType: ObjectType<Planner>; parent: Widget; session: SandboxSession } {
     let model = createSimpleModel('Planner', session) as PlannerModel & { id: string; objectType: ObjectType<Planner>; parent: Widget; session: SandboxSession };
     model.resources = [];
     for (let i = 0; i < numResources; i++) {
@@ -65,7 +66,7 @@ describe('Planner', () => {
     };
   }
 
-  function createPlanner(model: PlannerModel): SpecPlanner {
+  function createPlanner(model: InitModelOf<Planner>): SpecPlanner {
     let planner = new SpecPlanner();
     planner.init(model);
     return planner;
@@ -80,7 +81,7 @@ describe('Planner', () => {
   }
 
   describe('deleteResources', () => {
-    let model: PlannerModel & { id: string; objectType: ObjectType<Planner>; parent: Widget; session: SandboxSession };
+    let model: ModelOf<Planner> & { id: string; objectType: ObjectType<Planner>; parent: Widget; session: SandboxSession };
     let planner: SpecPlanner;
     let resource0: PlannerResource;
     let resource1: PlannerResource;
@@ -139,7 +140,7 @@ describe('Planner', () => {
   });
 
   describe('updateResources', () => {
-    let model: PlannerModel & { id: string; objectType: ObjectType<Planner>; parent: Widget; session: SandboxSession };
+    let model: ModelOf<Planner> & { id: string; objectType: ObjectType<Planner>; parent: Widget; session: SandboxSession };
     let planner: SpecPlanner;
     let resource0: PlannerResource;
     let resource1: PlannerResource;
@@ -204,7 +205,7 @@ describe('Planner', () => {
   });
 
   describe('renderScale', () => {
-    let model: PlannerModel & { id: string; objectType: ObjectType<Planner>; parent: Widget; session: SandboxSession };
+    let model: ModelOf<Planner> & { id: string; objectType: ObjectType<Planner>; parent: Widget; session: SandboxSession };
     let planner: SpecPlanner;
 
     beforeEach(() => {

@@ -8,8 +8,8 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {TableAdapter} from '../../index';
-import {TableRowData} from '../../table/TableRowModel';
+import {TableAdapter, TableRow} from '../../index';
+import {ModelOf} from '../../scout';
 
 export default class SpecTableAdapter extends TableAdapter {
   override _onRowsDeleted(rowIds: string[]) {
@@ -20,11 +20,11 @@ export default class SpecTableAdapter extends TableAdapter {
     super._onRowsSelected(rowIds);
   }
 
-  override _onRowsChecked(rows: TableRowData[]) {
+  override _onRowsChecked(rows: ModelOf<TableRow>[]) {
     super._onRowsChecked(rows);
   }
 
-  override _onRowsExpanded(rows: TableRowData[]) {
+  override _onRowsExpanded(rows: ModelOf<TableRow>[]) {
     super._onRowsExpanded(rows);
   }
 

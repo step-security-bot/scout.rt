@@ -8,12 +8,14 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {arrays, CancelMenu, Form, FormModel, GroupBox, ListBox, Menu, OkMenu, scout, Status, UnsavedFormChangesFormModel, UnsavedFormsLookupCall} from '../../index';
-import {RefModel} from '../../types';
+import {arrays, CancelMenu, Event, Form, GroupBox, ListBox, Menu, OkMenu, scout, Status, UnsavedFormChangesFormModel, UnsavedFormsLookupCall} from '../../index';
 import {TableRowsInsertedEvent} from '../../table/TableEventMap';
+import {ChildModelOf, InitModelOf, ModelOf} from '../../scout';
+import {SomeRequired} from '../../types';
 
 export default class UnsavedFormChangesForm extends Form implements UnsavedFormChangesFormModel {
   declare model: UnsavedFormChangesFormModel;
+  declare initModel: SomeRequired<ModelOf<this>, 'parent' | 'unsavedForms'>;
 
   unsavedForms: Form[];
   openFormsField: ListBox<Form>;
@@ -23,7 +25,7 @@ export default class UnsavedFormChangesForm extends Form implements UnsavedFormC
     this.unsavedForms = [];
   }
 
-  protected override _jsonModel(): RefModel<FormModel> {
+  protected override _jsonModel(): ChildModelOf<Form> {
     return {
       id: 'scout.UnsavedFormChangesForm',
       objectType: Form,
@@ -58,7 +60,7 @@ export default class UnsavedFormChangesForm extends Form implements UnsavedFormC
     };
   }
 
-  protected override _init(model: UnsavedFormChangesFormModel) {
+  protected override _init(model: InitModelOf<this>) {
     super._init(model);
 
     this.openFormsField = this.widget('OpenFormsField', ListBox<Form>);
@@ -91,7 +93,7 @@ export default class UnsavedFormChangesForm extends Form implements UnsavedFormC
 
     this.openFormsField.table.setMenus([checkAllMenu, uncheckAllMenu]);
 
-    this.on('postLoad', event => this.touch());
+    this.on('postLoad', (event: Event<Form>) => this.touch());
   }
 
   /** @internal */

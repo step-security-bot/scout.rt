@@ -11,13 +11,16 @@
 import {Desktop, Device, OpenUriHandlerModel, PopupBlockerHandler, scout, Session} from '../index';
 import $ from 'jquery';
 import {DesktopUriAction} from './Desktop';
+import {SomeRequired} from '../types';
+import {InitModelOf, ModelOf} from '../scout';
 
 export default class OpenUriHandler implements OpenUriHandlerModel {
   declare model: OpenUriHandlerModel;
+  declare initModel: SomeRequired<ModelOf<this>, 'session'>;
 
   session: Session;
 
-  init(model: OpenUriHandlerModel) {
+  init(model: InitModelOf<this>) {
     this.session = model.session;
   }
 

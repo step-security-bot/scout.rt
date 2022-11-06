@@ -8,7 +8,8 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {Status, StatusModel} from '../index';
+import {Status} from '../index';
+import {InitModelOf, ModelOf} from '../scout';
 
 /**
  * The DefaultStatus class is used add programmatic Status triggered by business logic
@@ -16,28 +17,28 @@ import {Status, StatusModel} from '../index';
  */
 export default class DefaultStatus extends Status {
 
-  constructor(model?: StatusModel) {
+  constructor(model?: InitModelOf<DefaultStatus>) {
     super(model);
   }
 
   /**
    * @returns a {@link DefaultStatus} object with severity ERROR.
    */
-  static override error(model: StatusModel | string): DefaultStatus {
+  static override error(model: ModelOf<Status> | string): DefaultStatus {
     return new DefaultStatus(Status.ensureModel(model, Status.Severity.ERROR));
   }
 
   /**
    * @returns a {@link DefaultStatus} object with severity WARNING.
    */
-  static override warning(model: StatusModel | string): DefaultStatus {
+  static override warning(model: ModelOf<Status> | string): DefaultStatus {
     return new DefaultStatus(Status.ensureModel(model, Status.Severity.WARNING));
   }
 
   /**
    * @returns a {@link DefaultStatus} object with severity INFO.
    */
-  static override info(model: StatusModel | string): DefaultStatus {
+  static override info(model: ModelOf<Status> | string): DefaultStatus {
     return new DefaultStatus(Status.ensureModel(model, Status.Severity.INFO));
   }
 }

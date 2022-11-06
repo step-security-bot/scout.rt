@@ -8,15 +8,15 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {Dimension, TreeNode} from '../../src/index';
+import {Dimension, TreeNode, TreeNodeModel} from '../../src/index';
 import {TreeSpecHelper} from '../../src/testing/index';
 import SpecTree from '../../src/testing/tree/SpecTree';
-import {TreeNodeData} from '../../src/tree/TreeNodeModel';
+import {ModelOf} from '../../src/scout';
 
 describe('TreeNodePosition', () => {
 
   let helper: TreeSpecHelper;
-  let session: SandboxSession, tree: SpecTree, node0: TreeNodeData, node1: TreeNodeData, node2: TreeNodeData, rootNode: TreeNode;
+  let session: SandboxSession, tree: SpecTree, node0: TreeNodeModel, node1: TreeNodeModel, node2: TreeNodeModel, rootNode: TreeNode;
 
   beforeEach(() => {
     setFixtures(sandbox());
@@ -169,7 +169,7 @@ describe('TreeNodePosition', () => {
       // This tree does not use a root node
       tree = helper.createTree(helper.createModel([]));
 
-      function createNode(id: string, text: string, expanded: boolean, childNodeIndex?: number): TreeNodeData {
+      function createNode(id: string, text: string, expanded: boolean, childNodeIndex?: number): ModelOf<TreeNode> {
         let node = helper.createModelNode(id, text, childNodeIndex);
         node.expanded = expanded;
         return node;
@@ -297,7 +297,7 @@ describe('TreeNodePosition', () => {
       // This tree does not use a root node
       tree = helper.createTree(helper.createModel([]));
 
-      function createNode(id: string, text: string, expanded: boolean, childNodeIndex?: number): TreeNodeData {
+      function createNode(id: string, text: string, expanded: boolean, childNodeIndex?: number): ModelOf<TreeNode> {
         let node = helper.createModelNode(id, text, childNodeIndex);
         node.expanded = expanded;
         return node;
