@@ -15,10 +15,6 @@ import {ModelOf} from '../../../scout';
 export default class StringFieldAdapter extends BasicFieldAdapter {
   declare widget: StringField;
 
-  constructor() {
-    super();
-  }
-
   protected override _initProperties(model: ModelOf<StringField> & { insertText?: boolean }) {
     if (model.insertText !== undefined) {
       // ignore pseudo property initially (to prevent the function StringField#insertText() to be replaced)

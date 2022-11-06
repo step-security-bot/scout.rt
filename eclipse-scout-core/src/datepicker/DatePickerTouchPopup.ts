@@ -18,10 +18,6 @@ export default class DatePickerTouchPopup extends TouchPopup {
   declare _field: DateField;
   declare _touchField: DateField;
 
-  constructor() {
-    super();
-  }
-
   protected override _init(options: InitModelOf<this>) {
     super._init(options);
     this._field.on('acceptInput', this._onFieldAcceptInput.bind(this));

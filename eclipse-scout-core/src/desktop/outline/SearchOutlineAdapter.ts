@@ -15,10 +15,6 @@ import {ModelOf} from '../../scout';
 export default class SearchOutlineAdapter extends OutlineAdapter {
   declare widget: SearchOutline;
 
-  constructor() {
-    super();
-  }
-
   protected override _initProperties(model: ModelOf<SearchOutline> & { requestFocusQueryField?: boolean }) {
     if (model.requestFocusQueryField !== undefined) {
       // ignore pseudo property initially (to prevent the function SearchOutlineAdapter#requestFocusQueryField() to be replaced)

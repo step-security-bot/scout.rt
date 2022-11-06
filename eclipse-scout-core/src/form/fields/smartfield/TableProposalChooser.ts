@@ -15,10 +15,6 @@ import {ModelOf} from '../../../scout';
 
 export default class TableProposalChooser<TValue> extends ProposalChooser<TValue, Table, TableRow> {
 
-  constructor() {
-    super();
-  }
-
   protected override _createContent(): Table {
     let headerVisible = false,
       columns = [],

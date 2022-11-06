@@ -20,10 +20,6 @@ export default class TimePickerTouchPopup extends TouchPopup implements TimePick
   declare _widget: TimePicker;
   declare _field: DateField;
 
-  constructor() {
-    super();
-  }
-
   protected override _init(options: InitModelOf<this>) {
     super._init(options);
     this._field.on('acceptInput', this._onFieldAcceptInput.bind(this));

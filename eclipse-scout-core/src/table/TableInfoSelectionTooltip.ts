@@ -18,10 +18,6 @@ export default class TableInfoSelectionTooltip extends Tooltip implements TableI
 
   tableFooter: TableFooter;
 
-  constructor() {
-    super();
-  }
-
   protected override _init(options: InitModelOf<this>) {
     super._init(options);
     this.tableFooter = options.tableFooter;

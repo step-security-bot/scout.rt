@@ -17,10 +17,6 @@ export default class LogoutApp extends App {
 
   declare model: LogoutAppModel;
 
-  constructor() {
-    super();
-  }
-
   protected override _prepareEssentials(options: LogoutAppModel) {
     ObjectFactory.get().init();
   }

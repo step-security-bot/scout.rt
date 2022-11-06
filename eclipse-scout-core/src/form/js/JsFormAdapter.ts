@@ -13,10 +13,6 @@ import {ChildModelOf, FullModelOf} from '../../scout';
 
 export default class JsFormAdapter extends FormAdapter {
 
-  constructor() {
-    super();
-  }
-
   protected override _initModel(m: ChildModelOf<Widget>, parent: Widget): FullModelOf<Widget> {
     let model = super._initModel(m, parent) as JsFormModel;
 

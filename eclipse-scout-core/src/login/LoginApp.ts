@@ -17,10 +17,6 @@ export default class LoginApp extends App {
 
   declare model: LoginAppModel;
 
-  constructor() {
-    super();
-  }
-
   override init(options?: InitModelOf<this>): JQuery.Promise<any> {
     return super.init(options);
   }
