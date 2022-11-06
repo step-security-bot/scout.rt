@@ -26,10 +26,6 @@ export default class YearPanel extends Widget implements YearPanelModel {
   yearRendered: boolean;
   viewRange: DateRange;
 
-  constructor() {
-    super();
-  }
-
   protected override _init(model: InitModelOf<this>) {
     super._init(model);
 

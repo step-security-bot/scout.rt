@@ -29,10 +29,6 @@ export default class SmartFieldTouchPopup<TValue> extends TouchPopup implements 
   lookupResult: SmartFieldLookupResult<TValue>;
   smartField: SmartField<TValue>;
 
-  constructor() {
-    super();
-  }
-
   protected override _init(options: InitModelOf<this>) {
     options.withFocusContext = false;
     options.smartField = options.parent as SmartField<TValue>; // alias for parent (required by proposal chooser)

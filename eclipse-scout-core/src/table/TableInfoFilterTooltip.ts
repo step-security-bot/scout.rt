@@ -18,10 +18,6 @@ export default class TableInfoFilterTooltip extends Tooltip implements TableInfo
 
   tableFooter: TableFooter;
 
-  constructor() {
-    super();
-  }
-
   protected override _init(options: InitModelOf<this>) {
     super._init(options);
     this.tableFooter = options.tableFooter;

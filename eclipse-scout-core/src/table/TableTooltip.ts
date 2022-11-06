@@ -22,10 +22,6 @@ export default class TableTooltip extends Tooltip implements TableTooltipModel {
 
   protected _rowOrderChangedFunc: EventHandler<TableRowOrderChangedEvent>;
 
-  constructor() {
-    super();
-  }
-
   protected override _init(options: InitModelOf<this>) {
     super._init(options);
 
