@@ -8,8 +8,8 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {Event, Form, FormField, FormModel, ModelAdapter, Widget} from '../index';
-import {RefModel, SomeRequired} from '../types';
+import {Event, Form, FormField, ModelAdapter, Widget} from '../index';
+import {ChildModelOf, FullModelOf} from '../scout';
 
 export default class FormAdapter extends ModelAdapter {
   declare widget: Form;
@@ -18,7 +18,7 @@ export default class FormAdapter extends ModelAdapter {
     super();
   }
 
-  protected override _initModel(m: RefModel<FormModel>, parent: Widget): SomeRequired<FormModel, 'objectType'> {
+  protected override _initModel(m: ChildModelOf<Widget>, parent: Widget): FullModelOf<Widget> {
     let model = super._initModel(m, parent);
     // Set logical grid to null -> Calculation happens on server side
     model.logicalGrid = null;

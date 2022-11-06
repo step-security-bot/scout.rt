@@ -9,23 +9,23 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {
-  Action, AggregateTableControl, AppLinkKeyStroke, arrays, BooleanColumn, Cell, CellEditorPopup, clipboard, Column, ColumnModel, CompactColumn, ContextMenuKeyStroke, ContextMenuPopup, Desktop, Device, DoubleClickSupport, dragAndDrop,
-  DragAndDropHandler, EnumObject, EventHandler, Filter, FilterOrFunction, FilterResult, FilterSupport, graphics, HtmlComponent, IconColumn, Insets, KeyStrokeContext, LoadingSupport, Menu, MenuBar, MenuDestinations, MenuItemsOrder,
-  MenuModel, menus, NumberColumn, objects, Predicate, PropertyChangeEvent, Range, scout, scrollbars, Status, strings, styles, TableCompactHandler, TableControl, TableControlModel, TableCopyKeyStroke, TableEventMap, TableFooter, TableHeader,
-  TableLayout, TableModel, TableNavigationCollapseKeyStroke, TableNavigationDownKeyStroke, TableNavigationEndKeyStroke, TableNavigationExpandKeyStroke, TableNavigationHomeKeyStroke, TableNavigationPageDownKeyStroke,
-  TableNavigationPageUpKeyStroke, TableNavigationUpKeyStroke, TableRefreshKeyStroke, TableRow, TableRowModel, TableSelectAllKeyStroke, TableSelectionHandler, TableStartCellEditKeyStroke, TableTextUserFilter, TableTileGridMediator,
-  TableToggleRowKeyStroke, TableTooltip, TableUpdateBuffer, TableUserFilter, TableUserFilterModel, Tile, TileTableHeaderBox, tooltips, UpdateFilteredElementsOptions, ValueField, Widget
+  Action, AggregateTableControl, AppLinkKeyStroke, arrays, BooleanColumn, Cell, CellEditorPopup, clipboard, Column, CompactColumn, ContextMenuKeyStroke, ContextMenuPopup, Desktop, Device, DoubleClickSupport, dragAndDrop, DragAndDropHandler,
+  EnumObject, EventHandler, Filter, FilterOrFunction, FilterResult, FilterSupport, graphics, HtmlComponent, IconColumn, Insets, KeyStrokeContext, LoadingSupport, Menu, MenuBar, MenuDestinations, MenuItemsOrder, menus, NumberColumn, objects,
+  Predicate, PropertyChangeEvent, Range, scout, scrollbars, Status, strings, styles, TableCompactHandler, TableControl, TableCopyKeyStroke, TableEventMap, TableFooter, TableHeader, TableLayout, TableModel, TableNavigationCollapseKeyStroke,
+  TableNavigationDownKeyStroke, TableNavigationEndKeyStroke, TableNavigationExpandKeyStroke, TableNavigationHomeKeyStroke, TableNavigationPageDownKeyStroke, TableNavigationPageUpKeyStroke, TableNavigationUpKeyStroke, TableRefreshKeyStroke,
+  TableRow, TableRowModel, TableSelectAllKeyStroke, TableSelectionHandler, TableStartCellEditKeyStroke, TableTextUserFilter, TableTileGridMediator, TableToggleRowKeyStroke, TableTooltip, TableUpdateBuffer, TableUserFilter, Tile,
+  TileTableHeaderBox, tooltips, UpdateFilteredElementsOptions, ValueField, Widget
 } from '../index';
 import $ from 'jquery';
 import {ScrollToOptions} from '../scrollbar/scrollbars';
 import {NumberColumnAggregationFunction, NumberColumnBackgroundEffect} from './columns/NumberColumn';
-import {TableRowData} from './TableRowModel';
-import {Comparator, RefModel} from '../types';
+import {Comparator} from '../types';
 import {StatusOrModel} from '../status/Status';
 import {Alignment} from '../cell/Cell';
 import {DropType} from '../util/dragAndDrop';
 import {DisplayViewId} from '../tabbox/SimpleTab';
 import {DesktopPopupOpenEvent} from '../desktop/DesktopEventMap';
+import {FullModelOf, InitModelOf, ModelOf, ObjectOrChildModel, ObjectOrModel} from '../scout';
 
 export default class Table extends Widget implements TableModel {
   declare model: TableModel;
@@ -318,7 +318,7 @@ export default class Table extends Widget implements TableModel {
 
   static SELECTION_CLASSES = 'select-middle select-top select-bottom select-single selected';
 
-  protected override _init(model: TableModel) {
+  protected override _init(model: InitModelOf<this>) {
     super._init(model);
     this.resolveConsts([{
       property: 'hierarchicalStyle',
@@ -355,7 +355,7 @@ export default class Table extends Widget implements TableModel {
     this._setTileTableHeader(this.tileTableHeader);
   }
 
-  protected _initRow(row: TableRowData | TableRow): TableRow {
+  protected _initRow(row: ObjectOrModel<TableRow>): TableRow {
     let tableRow: TableRow;
     if (row instanceof TableRow) {
       tableRow = row;
@@ -369,18 +369,18 @@ export default class Table extends Widget implements TableModel {
     return tableRow;
   }
 
-  protected _createRow(rowModel: TableRowData): TableRow {
-    let model = (rowModel || {}) as TableRowModel;
+  protected _createRow(rowModel: TableRowModel): TableRow {
+    let model = (rowModel || {}) as FullModelOf<TableRow>;
     model.objectType = scout.nvl(model.objectType, TableRow);
     model.parent = this;
-    return scout.create(model as TableRowModel & RefModel<TableRowModel>);
+    return scout.create(model);
   }
 
   protected _initColumns() {
-    let cols = this.columns as (Column<any> | RefModel<ColumnModel<any>>)[];
+    let cols = this.columns as ObjectOrChildModel<Column<any>>[];
     this.columns = cols.map((colModel, index) => {
       let column: Column<any>;
-      let columnOrModel = colModel;
+      let columnOrModel = colModel as FullModelOf<Column<any>>;
       columnOrModel.session = this.session;
       if (columnOrModel instanceof Column) {
         column = columnOrModel;
@@ -397,7 +397,7 @@ export default class Table extends Widget implements TableModel {
         // set checkable column if this column is the checkable one
         this.checkableColumn = column as BooleanColumn;
       }
-      return column as Column<any>;
+      return column;
     });
 
     // Add gui only checkbox column at the beginning
@@ -642,7 +642,7 @@ export default class Table extends Widget implements TableModel {
     this._rerenderViewport();
   }
 
-  setTableControls(controls: (TableControl | RefModel<TableControlModel>)[]) {
+  setTableControls(controls: ObjectOrChildModel<TableControl>[]) {
     this.setProperty('tableControls', controls);
   }
 
@@ -2134,7 +2134,7 @@ export default class Table extends Widget implements TableModel {
     return this._filterMenus(this.menus, MenuDestinations.CONTEXT_MENU, true, false, ['Header']);
   }
 
-  setStaticMenus(staticMenus: (Menu | RefModel<MenuModel>)[]) {
+  setStaticMenus(staticMenus: ObjectOrChildModel<Menu>[]) {
     this.setProperty('staticMenus', staticMenus);
     this._updateMenuBar();
   }
@@ -2775,11 +2775,11 @@ export default class Table extends Widget implements TableModel {
     this._triggerRowAction(row, column);
   }
 
-  insertRow(row: TableRow | TableRowData) {
+  insertRow(row: ObjectOrModel<TableRow>) {
     this.insertRows([row]);
   }
 
-  insertRows(rows: TableRow | TableRowData | (TableRow | TableRowData)[]) {
+  insertRows(rows: ObjectOrModel<TableRow> | ObjectOrModel<TableRow>[]) {
     let rowsArr = arrays.ensure(rows);
     if (rowsArr.length === 0) {
       return;
@@ -2954,11 +2954,11 @@ export default class Table extends Widget implements TableModel {
     }
   }
 
-  updateRow(row: TableRow | TableRowData) {
+  updateRow(row: ObjectOrModel<TableRow>) {
     this.updateRows([row]);
   }
 
-  updateRows(rows: TableRow | TableRowData | (TableRow | TableRowData)[]) {
+  updateRows(rows: ObjectOrModel<TableRow> | ObjectOrModel<TableRow>[]) {
     rows = arrays.ensure(rows);
     if (rows.length === 0) {
       return;
@@ -3870,12 +3870,12 @@ export default class Table extends Widget implements TableModel {
    * @param filter The new filters.
    * @param applyFilter Whether to apply the filters after modifying the filter list or not. Default is true.
    */
-  setFilters(filters: (FilterOrFunction<TableRow> | TableUserFilterModel)[], applyFilter = true) {
+  setFilters(filters: (FilterOrFunction<TableRow> | ObjectOrModel<TableUserFilter>)[], applyFilter = true) {
     this.resetUserFilter(false);
     let tableFilters = filters.map(filter => this._ensureFilter(filter));
     let result = this.filterSupport.setFilters(tableFilters, applyFilter);
-    let filtersAdded = result.filtersAdded as Filter<TableRow>[];
-    let filtersRemoved = result.filtersRemoved as Filter<TableRow>[];
+    let filtersAdded = result.filtersAdded;
+    let filtersRemoved = result.filtersRemoved;
     filtersAdded.forEach(filter => this.trigger('filterAdded', {
       filter: filter
     }));
@@ -3884,12 +3884,12 @@ export default class Table extends Widget implements TableModel {
     }));
   }
 
-  protected _ensureFilter<T extends Filter<TableRow>>(filter: TableUserFilterModel | FilterOrFunction<TableRow>): Filter<TableRow> {
+  protected _ensureFilter<T extends Filter<TableRow>>(filter: ModelOf<TableUserFilter> | FilterOrFunction<TableRow>): Filter<TableRow> {
     if (filter instanceof TableUserFilter || !filter['objectType']) {
       return filter as Filter<TableRow>;
     }
 
-    let filterModel = filter as RefModel<TableUserFilterModel>;
+    let filterModel = filter as FullModelOf<TableUserFilter>;
     if (filterModel.column) {
       filterModel.column = this.columnById(filterModel.column as string);
     }
@@ -4517,7 +4517,7 @@ export default class Table extends Widget implements TableModel {
     this._setProperty('selectedRows', selectedRows);
   }
 
-  setMenus(menus: (Menu | RefModel<MenuModel>)[]) {
+  setMenus(menus: ObjectOrChildModel<Menu>[]) {
     this.setProperty('menus', menus);
   }
 
@@ -5329,7 +5329,7 @@ export default class Table extends Widget implements TableModel {
    * @param columns array of columns which were updated.
    */
   updateColumnHeaders(columns: Column[]) {
-    let oldColumnState: ColumnModel;
+    let oldColumnState: ModelOf<Column>;
 
     // Update model columns
     for (let i = 0; i < columns.length; i++) {

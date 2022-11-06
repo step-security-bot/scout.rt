@@ -11,8 +11,11 @@
 import {Action, EnumObject, HAlign, Key, keys, KeyStrokeModel, scout, ScoutKeyboardEvent, Widget} from '../index';
 import $ from 'jquery';
 import {KeyStrokeFirePolicy} from '../action/Action';
+import {ModelOf} from '../scout';
 
 export default class KeyStroke implements KeyStrokeModel {
+  declare model: KeyStrokeModel;
+
   field?: Widget;
 
   /** keys which this keystroke is bound to. Typically, this is a single key, but may be multiple keys if handling the same action (e.g. ENTER and SPACE on a button). */
@@ -27,7 +30,7 @@ export default class KeyStroke implements KeyStrokeModel {
   stopImmediatePropagation: boolean;
   keyStrokeMode: KeyStrokeMode;
 
-  /** whether or not the handle method is called multiple times while a key is pressed */
+  /** whether the handle method is called multiple times while a key is pressed */
   repeatable: boolean;
 
   keyStrokeFirePolicy: KeyStrokeFirePolicy;
@@ -42,12 +45,12 @@ export default class KeyStroke implements KeyStrokeModel {
   invokeAcceptInputOnActiveValueField: boolean;
 
   /**
-   * Indicates whether to prevent the invoke of 'acceptInput' on a currently focused value field prior handling the keystroke,
+   * Indicates whether to prevent to invoke 'acceptInput' on a currently focused value field prior handling the keystroke,
    * either triggered by previous property or by KeyStrokeContext
    */
   preventInvokeAcceptInputOnActiveValueField: boolean;
 
-  /** internal flag to remember whether or not the handle method has been executed (reset on keyup) */
+  /** internal flag to remember whether the handle method has been executed (reset on keyup) */
   protected _handleExecuted: boolean;
 
   constructor() {
@@ -122,14 +125,14 @@ export default class KeyStroke implements KeyStrokeModel {
   }
 
   invokeHandle(event: JQuery.KeyboardEventBase) {
-    // if key stroke is repeatable, handle is called each time the key event occurs
+    // if keystroke is repeatable, handle is called each time the key event occurs
     // which means it is executed multiple times while a key is pressed.
     if (this.repeatable) {
       this.handle(event);
       return;
     }
 
-    // if key stroke is not repeatable it should only call execute once until
+    // if keystroke is not repeatable it should only call execute once until
     // we receive a key up event for that key
     if (!this._handleExecuted) {
       this.handle(event);
@@ -296,12 +299,12 @@ export default class KeyStroke implements KeyStrokeModel {
    *
    * @see "org.eclipse.scout.rt.client.ui.action.keystroke.KeyStrokeNormalizer"
    */
-  static parseKeyStroke(keyStrokeName: string): KeyStrokeModel {
+  static parseKeyStroke(keyStrokeName: string): ModelOf<KeyStroke> {
     if (!keyStrokeName) {
       return null;
     }
 
-    let keyStrokeObj: KeyStrokeModel = {
+    let keyStrokeObj: ModelOf<KeyStroke> = {
       alt: false,
       ctrl: false,
       shift: false,

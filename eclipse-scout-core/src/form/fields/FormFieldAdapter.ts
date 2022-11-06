@@ -8,8 +8,9 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {App, arrays, Event, FormField, FormFieldModel, ModelAdapter, objects} from '../../index';
+import {App, arrays, Event, FormField, ModelAdapter, objects} from '../../index';
 import {FileDropEvent} from '../../util/dragAndDrop';
+import {ModelOf} from '../../scout';
 
 export default class FormFieldAdapter extends ModelAdapter {
   declare widget: FormField;
@@ -27,7 +28,7 @@ export default class FormFieldAdapter extends ModelAdapter {
     this._currentMenuTypes = [];
   }
 
-  protected override _initProperties(model: FormFieldModel & {currentMenuTypes: string[]}) {
+  protected override _initProperties(model: ModelOf<FormField> & { currentMenuTypes: string[] }) {
     super._initProperties(model);
     this._currentMenuTypes = arrays.ensure(model.currentMenuTypes);
     delete model.currentMenuTypes;

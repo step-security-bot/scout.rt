@@ -12,7 +12,8 @@ import {Cell, LookupRow, Table, TableRow} from '../index';
 import {Primitive} from '../types';
 import {ObjectModel} from '../scout';
 
-export default interface TableRowModel extends ObjectModel<TableRow, TableRowModel> {
+export default interface TableRowModel extends ObjectModel<TableRow> {
+  parent?: Table;
   /**
    * Cell instances or cell values.
    */
@@ -21,11 +22,8 @@ export default interface TableRowModel extends ObjectModel<TableRow, TableRowMod
   enabled?: boolean;
   iconId?: string;
   cssClass?: string;
-  parentRow?: string | TableRow | TableRowData;
-  parent: Table;
+  parentRow?: string | TableRow;
   expanded?: boolean;
   dataMap?: Record<PropertyKey, any>;
   lookupRow?: LookupRow<any>;
 }
-
-export type TableRowData = Omit<TableRowModel, 'parent'>;

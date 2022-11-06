@@ -10,8 +10,8 @@
  */
 import {
   AjaxCall, App, arrays, BackgroundJobPollingStatus, BackgroundJobPollingSupport, BusyIndicator, Desktop, Device, Event, EventEmitter, FileInput, files as fileUtil, FocusManager, fonts, icons, KeyStrokeManager, LayoutValidator, Locale,
-  LocaleModel, LogLevel, MessageBox, ModelAdapter, ModelAdapterModel, NullWidget, ObjectFactory, objects, ObjectWithType, Reconnector, RemoteEvent, ResponseQueue, scout, SessionEventMap, SessionModel, Status, strings, TextMap, texts,
-  TypeDescriptor, URL, UserAgent, webstorage, Widget
+  LogLevel, MessageBox, ModelAdapter, NullWidget, ObjectFactory, objects, ObjectWithType, Reconnector, RemoteEvent, ResponseQueue, scout, SessionEventMap, SessionModel, Status, strings, TextMap, texts, TypeDescriptor, URL, UserAgent,
+  webstorage, Widget
 } from '../index';
 import $ from 'jquery';
 import {AjaxCallModel} from '../ajax/AjaxCall';
@@ -19,12 +19,16 @@ import {ObjectFactoryOptions} from '../ObjectFactory';
 import {JsonErrorResponse} from '../App';
 import {ModelAdapterLike} from './ModelAdapter';
 import {StatusSeverity} from '../status/Status';
+import {InitModelOf, ModelOf} from '../scout';
+import {SomeRequired} from '../types';
 import ErrorTextStatus = JQuery.Ajax.ErrorTextStatus;
 
-export default class Session extends EventEmitter implements ModelAdapterLike {
+export default class Session extends EventEmitter implements SessionModel, ModelAdapterLike {
   declare model: SessionModel;
+  declare initModel: SomeRequired<ModelOf<this>, '$entryPoint'>;
   declare eventMap: SessionEventMap;
   declare self: Session;
+
   partId: string;
   url: URL;
   userAgent: UserAgent;
@@ -70,7 +74,7 @@ export default class Session extends EventEmitter implements ModelAdapterLike {
   /** This property is enabled by URL parameter &adapterExportEnabled=1. Default is false */
   adapterExportEnabled: boolean;
   requestSequenceNo: number;
-  ajaxCallOptions: AjaxCallModel;
+  ajaxCallOptions: ModelOf<AjaxCall>;
   rootAdapter: ModelAdapter;
   root: Widget;
   widget: Widget; // same as root
@@ -173,8 +177,8 @@ export default class Session extends EventEmitter implements ModelAdapterLike {
   static EMPTY_UPLOAD_FILENAME = '*empty*';
 
 
-  init(model: SessionModel) {
-    let options = model || {} as SessionModel;
+  init(model: InitModelOf<this>) {
+    let options = model || {} as InitModelOf<this>;
 
     if (!options.$entryPoint) {
       throw new Error('$entryPoint is not defined');
@@ -291,7 +295,7 @@ export default class Session extends EventEmitter implements ModelAdapterLike {
     }
 
     // TODO [7.0] bsh, cgu: Add classId/modelClass? Think about if IDs should be different for widgets (maybe prefix with 'w')
-    let adapterModel: ModelAdapterModel = {
+    let adapterModel: ModelOf<ModelAdapter> = {
       id: adapterData.id,
       session: this
     };
@@ -1485,7 +1489,7 @@ export default class Session extends EventEmitter implements ModelAdapterLike {
     return adapterData;
   }
 
-  protected _onLocaleChanged(event: RemoteEvent & { locale?: LocaleModel; textMap?: Record<string, string> }) {
+  protected _onLocaleChanged(event: RemoteEvent & { locale?: ModelOf<Locale>; textMap?: Record<string, string> }) {
     let locale = new Locale(event.locale);
     let textMap = new TextMap(event.textMap);
     this.switchLocale(locale, textMap);
@@ -1685,7 +1689,7 @@ export interface SessionStartupResponse extends RemoteResponse {
     persistent?: boolean;
     inDevelopmentMode?: boolean;
     inspector?: boolean;
-    locale?: LocaleModel;
+    locale?: ModelOf<Locale>;
     textMap?: TextMap;
   };
 }

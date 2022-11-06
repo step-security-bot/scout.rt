@@ -9,12 +9,10 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {LookupCall, QueryBy, Session} from '../index';
-import {ObjectType} from '../ObjectFactory';
+import {ObjectModel} from '../scout';
 
-export default interface LookupCallModel<TKey> {
-  session: Session;
-  id?: string;
-  objectType?: ObjectType<LookupCall<TKey>>;
+export default interface LookupCallModel<TKey> extends ObjectModel<LookupCall<TKey>> {
+  session?: Session;
   hierarchical?: boolean;
   loadIncremental?: boolean;
 
@@ -43,6 +41,4 @@ export default interface LookupCallModel<TKey> {
    * Default value is 100.
    */
   maxRowCount?: number;
-
-  [property: string]: any; // allow custom properties
 }

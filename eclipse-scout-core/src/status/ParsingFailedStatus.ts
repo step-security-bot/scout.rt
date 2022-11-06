@@ -8,18 +8,19 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {Status, StatusModel} from '../index';
+import {Status} from '../index';
+import {InitModelOf, ModelOf} from '../scout';
 
 export default class ParsingFailedStatus extends Status {
 
-  constructor(model?: StatusModel) {
+  constructor(model?: InitModelOf<ParsingFailedStatus>) {
     super(model);
   }
 
   /**
    * @returns a {@link ParsingFailedStatus} object with severity ERROR.
    */
-  static override error(model: StatusModel | string): ParsingFailedStatus {
+  static override error(model: ModelOf<Status> | string): ParsingFailedStatus {
     return new ParsingFailedStatus(Status.ensureModel(model, Status.Severity.ERROR));
   }
 }

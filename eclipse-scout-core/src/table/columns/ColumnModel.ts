@@ -13,7 +13,7 @@ import {Alignment} from '../../cell/Cell';
 import {ColumnComparator} from './comparators';
 import {ObjectModel} from '../../scout';
 
-export default interface ColumnModel<TValue = string> extends ObjectModel<Column<TValue>, ColumnModel<TValue>> {
+export default interface ColumnModel<TValue = string> extends ObjectModel<Column<TValue>> {
   session?: Session;
   /**
    * Configures whether the column width is auto optimized.

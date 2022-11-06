@@ -10,9 +10,12 @@
  */
 import {EventHandler, Table, TableRow, TableTooltipModel, Tooltip} from '../index';
 import {TableRowOrderChangedEvent} from './TableEventMap';
+import {InitModelOf, ModelOf} from '../scout';
+import {SomeRequired} from '../types';
 
 export default class TableTooltip extends Tooltip implements TableTooltipModel {
   declare model: TableTooltipModel;
+  declare initModel: SomeRequired<ModelOf<this>, 'parent' | 'table'>;
 
   table: Table;
   row: TableRow;
@@ -23,7 +26,7 @@ export default class TableTooltip extends Tooltip implements TableTooltipModel {
     super();
   }
 
-  protected override _init(options: TableTooltipModel) {
+  protected override _init(options: InitModelOf<this>) {
     super._init(options);
 
     this.table = options.table;

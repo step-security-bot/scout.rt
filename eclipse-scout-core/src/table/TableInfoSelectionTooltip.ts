@@ -9,9 +9,12 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {Menu, scout, TableFooter, TableInfoSelectionTooltipModel, Tooltip} from '../index';
+import {InitModelOf, ModelOf} from '../scout';
+import {SomeRequired} from '../types';
 
 export default class TableInfoSelectionTooltip extends Tooltip implements TableInfoSelectionTooltipModel {
   declare model: TableInfoSelectionTooltipModel;
+  declare initModel: SomeRequired<ModelOf<this>, 'parent' | 'tableFooter'>;
 
   tableFooter: TableFooter;
 
@@ -19,7 +22,7 @@ export default class TableInfoSelectionTooltip extends Tooltip implements TableI
     super();
   }
 
-  protected override _init(options: TableInfoSelectionTooltipModel) {
+  protected override _init(options: InitModelOf<this>) {
     super._init(options);
     this.tableFooter = options.tableFooter;
     let selectNoneMenu = scout.create(Menu, {

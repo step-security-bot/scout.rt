@@ -8,15 +8,14 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {Locale, UserAgent} from '../index';
-import {AjaxCallModel} from '../ajax/AjaxCall';
-import LocaleModel from './LocaleModel';
+import {AjaxCall, Locale, Session, UserAgent} from '../index';
+import {ModelOf, ObjectModel, ObjectOrModel} from '../scout';
 
-export default interface SessionModel {
+export default interface SessionModel extends ObjectModel<Session> {
   /**
    * The HTML element that is used by the {@link Desktop} to render its content.
    */
-  $entryPoint: JQuery;
+  $entryPoint?: JQuery;
 
   /**
    * Necessary when multiple UI sessions are managed by the same window (portlet support).
@@ -43,7 +42,7 @@ export default interface SessionModel {
   /**
    * If not specified, {@link Locale.DEFAULT} is used.
    */
-  locale?: Locale | LocaleModel;
+  locale?: ObjectOrModel<Locale>;
 
   /**
    * Unless websockets is used, this property turns on (default) or off background polling using an async ajax call together with setTimeout()
@@ -70,5 +69,5 @@ export default interface SessionModel {
   /**
    * Properties of this object are copied to all instances of {@link AjaxCall}.
    */
-  ajaxCallOptions?: AjaxCallModel;
+  ajaxCallOptions?: ModelOf<AjaxCall>;
 }

@@ -10,7 +10,7 @@
  */
 import {arrays, Locale, objects, scout, texts} from '../index';
 import $ from 'jquery';
-import LocaleModel from '../session/LocaleModel';
+import {ModelOf} from '../scout';
 
 let localesMap = {};
 
@@ -30,7 +30,7 @@ export function _preInit(url: string, data: any) {
   init(data);
 }
 
-export function init(data: LocaleModel[]) {
+export function init(data: ModelOf<Locale>[]) {
   data.forEach(locale => {
     localesMap[locale.languageTag] = new Locale(locale);
   }, this);

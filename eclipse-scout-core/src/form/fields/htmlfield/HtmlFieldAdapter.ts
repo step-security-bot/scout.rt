@@ -8,12 +8,13 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {Event, HtmlField, HtmlFieldModel, ValueFieldAdapter} from '../../../index';
+import {Event, HtmlField, ValueFieldAdapter} from '../../../index';
 import {HtmlFieldAppLinkActionEvent} from './HtmlFieldEventMap';
+import {ModelOf} from '../../../scout';
 
 export default class HtmlFieldAdapter extends ValueFieldAdapter {
 
-  protected override _initProperties(model: HtmlFieldModel & {scrollToEnd?: boolean}) {
+  protected override _initProperties(model: ModelOf<HtmlField> & { scrollToEnd?: boolean }) {
     if (model.scrollToEnd !== undefined) {
       // ignore pseudo property initially (to prevent the function StringField#scrollToEnd() to be replaced)
       delete model.scrollToEnd;

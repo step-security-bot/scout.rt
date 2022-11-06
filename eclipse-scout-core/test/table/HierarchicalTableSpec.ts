@@ -10,8 +10,8 @@
  */
 import {arrays, Column, ColumnUserFilter, Table, TableRow} from '../../src/index';
 import {TableSpecHelper} from '../../src/testing/index';
-import {TableRowData} from '../../src/table/TableRowModel';
 import SpecTable from '../../src/testing/table/SpecTable';
+import {ModelOf} from '../../src/scout';
 
 describe('HierarchicalTableSpec', () => {
   let session: SandboxSession;
@@ -71,7 +71,7 @@ describe('HierarchicalTableSpec', () => {
   }
 
   describe('add', () => {
-    let table: SpecTable, rowIds: string[], rows: TableRowData[];
+    let table: SpecTable, rowIds: string[], rows: ModelOf<TableRow>[];
 
     /**
      * initial table
@@ -134,7 +134,7 @@ describe('HierarchicalTableSpec', () => {
 
     it('a child row to a row which is already a parent row (by pseudo row)', () => {
       let newRow = helper.createModelRow('33', ['newRow']),
-        pseudoParentRow = {
+        pseudoParentRow: any = {
           id: '0'
         };
       newRow.parentRow = pseudoParentRow;
@@ -178,8 +178,9 @@ describe('HierarchicalTableSpec', () => {
     });
 
     it('a child row to a model row that was inserted before', () => {
-      let parentRow = {cells: ['newRow'], expanded: true} as TableRowData;
-      let childRow = {cells: ['childRow'], parentRow: parentRow} as TableRowData;
+      let parentRow: ModelOf<TableRow> = {cells: ['newRow'], expanded: true};
+      // @ts-expect-error
+      let childRow: ModelOf<TableRow> = {cells: ['childRow'], parentRow: parentRow};
 
       table.deleteAllRows();
       table.insertRows([parentRow, childRow]);
