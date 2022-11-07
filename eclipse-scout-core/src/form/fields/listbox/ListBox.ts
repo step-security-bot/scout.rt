@@ -8,9 +8,9 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {arrays, Cell, Column, ListBoxLayout, ListBoxModel, LookupBox, LookupResult, LookupRow, scout, Table, TableRow, Widget} from '../../../index';
+import {arrays, Cell, Column, ListBoxLayout, ListBoxModel, LookupBox, LookupResult, LookupRow, scout, Table, TableRowModel, Widget} from '../../../index';
 import {TableRowsCheckedEvent} from '../../../table/TableEventMap';
-import {InitModelOf, ModelOf} from '../../../scout';
+import {InitModelOf} from '../../../scout';
 
 export default class ListBox<TValue> extends LookupBox<TValue> implements ListBoxModel<TValue> {
   declare model: ListBoxModel<TValue>;
@@ -155,13 +155,13 @@ export default class ListBox<TValue> extends LookupBox<TValue> implements ListBo
       .map(row => row.lookupRow);
   }
 
-  protected _createTableRow(lookupRow: LookupRow<TValue>): ModelOf<TableRow> {
+  protected _createTableRow(lookupRow: LookupRow<TValue>): TableRowModel {
     let
       cell = scout.create(Cell, {
         text: lookupRow.text
       }),
       cells = [cell],
-      row: ModelOf<TableRow> = {
+      row: TableRowModel = {
         cells: cells,
         lookupRow: lookupRow
       };

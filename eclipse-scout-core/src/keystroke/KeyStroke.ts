@@ -11,7 +11,6 @@
 import {Action, EnumObject, HAlign, Key, keys, KeyStrokeModel, scout, ScoutKeyboardEvent, Widget} from '../index';
 import $ from 'jquery';
 import {KeyStrokeFirePolicy} from '../action/Action';
-import {ModelOf} from '../scout';
 
 export default class KeyStroke implements KeyStrokeModel {
   declare model: KeyStrokeModel;
@@ -299,12 +298,12 @@ export default class KeyStroke implements KeyStrokeModel {
    *
    * @see "org.eclipse.scout.rt.client.ui.action.keystroke.KeyStrokeNormalizer"
    */
-  static parseKeyStroke(keyStrokeName: string): ModelOf<KeyStroke> {
+  static parseKeyStroke(keyStrokeName: string): KeyStrokeModel {
     if (!keyStrokeName) {
       return null;
     }
 
-    let keyStrokeObj: ModelOf<KeyStroke> = {
+    let keyStrokeObj: KeyStrokeModel = {
       alt: false,
       ctrl: false,
       shift: false,

@@ -10,12 +10,12 @@
  */
 import {ColumnLayout, FormField, FormFieldMenuEventMap, FormFieldMenuModel, GridData, HtmlComponent, LogicalGridData, Menu} from '../../../index';
 import {CloneOptions} from '../../../widget/Widget';
-import {ModelOf, ObjectOrChildModel} from '../../../scout';
+import {ObjectOrChildModel} from '../../../scout';
 import {SomeRequired} from '../../../types';
 
 export default class FormFieldMenu extends Menu implements FormFieldMenuModel {
   declare model: FormFieldMenuModel;
-  declare initModel: SomeRequired<ModelOf<this>, 'parent' | 'field'>;
+  declare initModel: SomeRequired<this['model'], 'parent' | 'field'>;
   declare eventMap: FormFieldMenuEventMap;
   declare self: FormFieldMenu;
 

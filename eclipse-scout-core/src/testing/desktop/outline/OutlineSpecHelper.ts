@@ -8,10 +8,10 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {ModelAdapter, Outline, OutlineAdapter, Page, Session} from '../../../index';
+import {ModelAdapter, Outline, OutlineAdapter, OutlineModel, Page, PageModel, Session} from '../../../index';
 import {FormSpecHelper, TableSpecHelper} from '../../index';
 import $ from 'jquery';
-import {FullModelOf, InitModelOf, ModelOf, ObjectOrModel} from '../../../scout';
+import {FullModelOf, InitModelOf, ObjectOrModel} from '../../../scout';
 
 export default class OutlineSpecHelper {
   session: Session;
@@ -32,23 +32,23 @@ export default class OutlineSpecHelper {
     return model;
   }
 
-  createModelNode(id: string, text: string): ModelOf<Page> {
+  createModelNode(id: string, text: string): PageModel {
     return {
       id: id,
       text: text
     };
   }
 
-  createModelNodes(nodeCount: number, depth?: number, expanded?: boolean): ModelOf<Page>[] {
+  createModelNodes(nodeCount: number, depth?: number, expanded?: boolean): PageModel[] {
     return this.createModelNodesInternal(nodeCount, depth, expanded);
   }
 
-  createModelNodesInternal(nodeCount: number, depth?: number, expanded?: boolean, parentNode?: ModelOf<Page>): ModelOf<Page>[] {
+  createModelNodesInternal(nodeCount: number, depth?: number, expanded?: boolean, parentNode?: PageModel): PageModel[] {
     if (!nodeCount) {
       return;
     }
 
-    let nodes: ModelOf<Page>[] = [], nodeId;
+    let nodes: PageModel[] = [], nodeId;
     if (!depth) {
       depth = 0;
     }
@@ -66,7 +66,7 @@ export default class OutlineSpecHelper {
     return nodes;
   }
 
-  createOutline(model?: ModelOf<Outline>): Outline {
+  createOutline(model?: OutlineModel): Outline {
     let defaults = {
       parent: this.session.desktop
     };
@@ -76,7 +76,7 @@ export default class OutlineSpecHelper {
     return outline;
   }
 
-  createOutlineAdapter(model: InitModelOf<ModelAdapter> | ModelOf<Outline> & { id: string; session: Session }): OutlineAdapter {
+  createOutlineAdapter(model: InitModelOf<ModelAdapter> | OutlineModel & { id: string; session: Session }): OutlineAdapter {
     let outlineAdapter = new OutlineAdapter();
     outlineAdapter.init(model as InitModelOf<OutlineAdapter>);
     return outlineAdapter;

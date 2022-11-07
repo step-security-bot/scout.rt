@@ -10,13 +10,13 @@
  */
 import {ColumnUserFilter, FilterFieldsGroupBoxModel, GroupBox, scout, ValueField} from '../index';
 import {ObjectType} from '../ObjectFactory';
-import {InitModelOf, ModelOf} from '../scout';
+import {InitModelOf} from '../scout';
 import {SomeRequired} from '../types';
 
 
 export default class FilterFieldsGroupBox extends GroupBox implements FilterFieldsGroupBoxModel {
   declare model: FilterFieldsGroupBoxModel;
-  declare initModel: SomeRequired<ModelOf<this>, 'parent' | 'filter'>;
+  declare initModel: SomeRequired<this['model'], 'parent' | 'filter'>;
 
   filter: ColumnUserFilter;
 

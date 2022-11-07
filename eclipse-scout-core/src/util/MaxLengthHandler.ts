@@ -10,13 +10,13 @@
  */
 import {arrays, DesktopNotification, MaxLengthHandlerModel, objects, scout, Status} from '../index';
 import $ from 'jquery';
-import {assertValue, InitModelOf, ModelOf} from '../scout';
+import {assertValue, InitModelOf} from '../scout';
 import {MaxLengthHandlerTarget} from './MaxLengthHandlerModel';
 import {SomeRequired} from '../types';
 
 export default class MaxLengthHandler implements MaxLengthHandlerModel {
   declare model: MaxLengthHandlerModel;
-  declare initModel: SomeRequired<ModelOf<this>, 'target'>;
+  declare initModel: SomeRequired<this['model'], 'target'>;
 
   onInputFieldPaste: (event: JQuery.TriggeredEvent<HTMLInputElement, undefined, HTMLInputElement, HTMLInputElement>) => void;
   target: MaxLengthHandlerTarget;

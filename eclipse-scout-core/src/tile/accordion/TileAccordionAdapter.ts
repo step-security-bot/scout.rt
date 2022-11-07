@@ -8,11 +8,10 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {AccordionAdapter, TileAccordion} from '../../index';
-import {ModelOf} from '../../scout';
+import {AccordionAdapter, TileAccordionModel} from '../../index';
 
 export default class TileAccordionAdapter extends AccordionAdapter {
-  protected override _initProperties(model: ModelOf<TileAccordion> & { takeTileFiltersFromGroup: boolean }) {
+  protected override _initProperties(model: TileAccordionModel & { takeTileFiltersFromGroup: boolean }) {
     super._initProperties(model);
     // TileGridAdapter creates a RemoteTileFilter for each grid.
     // Such filters must not be added to the tile accordion, otherwise no tiles would be visible at all.

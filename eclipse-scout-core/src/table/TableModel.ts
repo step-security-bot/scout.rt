@@ -8,11 +8,11 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {Action, Column, FilterOrFunction, Menu, TableCompactHandler, TableControl, TableRow, TableSelectionHandler, TableTileGridMediator, TableUserFilter, Tile, TileTableHeaderBox, WidgetModel} from '../index';
+import {Action, Column, FilterOrFunction, Menu, TableCompactHandler, TableControl, TableRow, TableSelectionHandler, TableTileGridMediator, TableUserFilterModel, Tile, TileTableHeaderBox, WidgetModel} from '../index';
 import {TableCheckableStyle, TableGroupingStyle, TableHierarchicalStyle} from './Table';
 import {DropType} from '../util/dragAndDrop';
 import {StatusOrModel} from '../status/Status';
-import {ModelOf, ObjectOrChildModel, ObjectOrModel} from '../scout';
+import {ObjectOrChildModel, ObjectOrModel} from '../scout';
 
 export default interface TableModel extends WidgetModel {
   /**
@@ -113,7 +113,7 @@ export default interface TableModel extends WidgetModel {
    * Specifies if the table footer is visible. Default is false.
    */
   footerVisible?: boolean;
-  filters?: (FilterOrFunction<TableRow> | ModelOf<TableUserFilter>)[];
+  filters?: (FilterOrFunction<TableRow> | TableUserFilterModel)[];
   rows?: ObjectOrModel<TableRow>[];
   maxRowCount?: number;
   /**

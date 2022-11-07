@@ -10,12 +10,12 @@
  */
 import {EventEmitter, Filter, objects, Session, Table, TableRow, TableUserFilterModel} from '../../index';
 import $ from 'jquery';
-import {InitModelOf, ModelOf} from '../../scout';
+import {InitModelOf} from '../../scout';
 import {SomeRequired} from '../../types';
 
 export default abstract class TableUserFilter extends EventEmitter implements Filter<TableRow>, TableUserFilterModel {
   declare model: TableUserFilterModel;
-  declare initModel: SomeRequired<ModelOf<this>, 'session' | 'table'>;
+  declare initModel: SomeRequired<this['model'], 'session' | 'table'>;
 
   session: Session;
   table: Table;

@@ -8,14 +8,14 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {arrays, CancelMenu, Event, Form, GroupBox, ListBox, Menu, OkMenu, scout, Status, UnsavedFormChangesFormModel, UnsavedFormsLookupCall} from '../../index';
+import {arrays, CancelMenu, Event, Form, FormModel, GroupBox, ListBox, Menu, OkMenu, scout, Status, UnsavedFormChangesFormModel, UnsavedFormsLookupCall} from '../../index';
 import {TableRowsInsertedEvent} from '../../table/TableEventMap';
-import {ChildModelOf, InitModelOf, ModelOf} from '../../scout';
+import {InitModelOf} from '../../scout';
 import {SomeRequired} from '../../types';
 
 export default class UnsavedFormChangesForm extends Form implements UnsavedFormChangesFormModel {
   declare model: UnsavedFormChangesFormModel;
-  declare initModel: SomeRequired<ModelOf<this>, 'parent' | 'unsavedForms'>;
+  declare initModel: SomeRequired<this['model'], 'parent' | 'unsavedForms'>;
 
   unsavedForms: Form[];
   openFormsField: ListBox<Form>;
@@ -25,10 +25,9 @@ export default class UnsavedFormChangesForm extends Form implements UnsavedFormC
     this.unsavedForms = [];
   }
 
-  protected override _jsonModel(): ChildModelOf<Form> {
+  protected override _jsonModel(): FormModel {
     return {
       id: 'scout.UnsavedFormChangesForm',
-      objectType: Form,
       type: 'model',
       title: '${textKey:SaveChangesOfSelectedItems}',
       askIfNeedSave: false,

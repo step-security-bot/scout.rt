@@ -240,8 +240,7 @@ export default abstract class ProposalChooser<TValue, TContent extends ProposalC
 
   setVirtual(virtual: boolean) {
     if (this.content instanceof Table) {
-      let table = this.content as unknown as Table; // FIXME TS: why is this necessary??
-      table.setVirtual(virtual);
+      this.content.setVirtual(virtual);
     }
   }
 

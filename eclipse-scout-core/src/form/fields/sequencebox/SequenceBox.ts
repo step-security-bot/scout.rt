@@ -259,7 +259,7 @@ export default class SequenceBox extends CompositeField implements SequenceBoxMo
 
   override setMenus(menusOrModels: ObjectOrChildModel<Menu>[]) {
     // ensure menus are real and not just model objects
-    let menus = this._createChildren(menusOrModels) as unknown as Menu[];
+    let menus = this._createChildren(menusOrModels);
 
     if (this._isOverwritingStatusFromField && !this._isMenusOverwritten) {
       // was not overwritten, will be overwritten now -> backup old value

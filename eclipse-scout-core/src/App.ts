@@ -24,7 +24,7 @@ export interface AppModel {
   /**
    * Object to configure the session, see {@link Session.init} for the available options.
    */
-  session?: ModelOf<Session>;
+  session?: SessionModel;
 
   bootstrap?: AppBootstrapOptions;
 

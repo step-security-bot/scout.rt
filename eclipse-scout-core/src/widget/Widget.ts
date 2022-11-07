@@ -15,37 +15,11 @@ import {
 import * as $ from 'jquery';
 import {ScrollbarInstallOptions, ScrollOptions, ScrollToOptions} from '../scrollbar/scrollbars';
 import {SomeRequired} from '../types';
-import {FullModelOf, InitModelOf, ModelOf, ObjectOrChildModel} from '../scout';
-
-export type DisabledStyle = EnumObject<typeof Widget.DisabledStyle>;
-export type GlassPaneTarget = JQuery | HTMLElement | DeferredGlassPaneTarget;
-export type GlassPaneContribution = (widget: Widget) => GlassPaneTarget | GlassPaneTarget[];
-export type TreeVisitor<T> = (element: T) => boolean | TreeVisitResult | void;
-
-export interface CloneOptions {
-  /** An array of all properties to be delegated from the original to the clone when changed on the original widget. Default is []. */
-  delegatePropertiesToClone?: string[];
-  /** An array of all properties to be delegated from the clone to the original when changed on the clone widget. Default is []. */
-  delegatePropertiesToOriginal?: string[];
-  /** An array of all properties to be excluded from delegating from the clone to the original in any cases. Default is []. */
-  excludePropertiesToOriginal?: string[];
-  /** An array of all events to be delegated from the clone to the original when fired on the clone widget. Default is []. */
-  delegateEventsToOriginal?: string[];
-  /** True to delegate all property changes from the original to the clone. Default is false. */
-  delegateAllPropertiesToClone?: boolean;
-  /** True to delegate all property changes from the clone to the original. Default is false. */
-  delegateAllPropertiesToOriginal?: boolean;
-}
-
-interface EventDelegatorForCloning {
-  clone: Widget;
-  originalToClone: EventDelegator;
-  cloneToOriginal: EventDelegator;
-}
+import {FullModelOf, InitModelOf, ObjectOrChildModel} from '../scout';
 
 export default class Widget extends PropertyEventEmitter implements WidgetModel, ObjectWithType {
   declare model: WidgetModel;
-  declare initModel: SomeRequired<ModelOf<this>, 'parent'>;
+  declare initModel: SomeRequired<this['model'], 'parent'>;
   declare eventMap: WidgetEventMap;
   declare self: Widget;
   declare widgetMap: WidgetMap;
@@ -2366,6 +2340,33 @@ export default class Widget extends PropertyEventEmitter implements WidgetModel,
     }
     return cssClasses;
   }
+}
+
+
+export type DisabledStyle = EnumObject<typeof Widget.DisabledStyle>;
+export type GlassPaneTarget = JQuery | HTMLElement | DeferredGlassPaneTarget;
+export type GlassPaneContribution = (widget: Widget) => GlassPaneTarget | GlassPaneTarget[];
+export type TreeVisitor<T> = (element: T) => boolean | TreeVisitResult | void;
+
+export interface CloneOptions {
+  /** An array of all properties to be delegated from the original to the clone when changed on the original widget. Default is []. */
+  delegatePropertiesToClone?: string[];
+  /** An array of all properties to be delegated from the clone to the original when changed on the clone widget. Default is []. */
+  delegatePropertiesToOriginal?: string[];
+  /** An array of all properties to be excluded from delegating from the clone to the original in any cases. Default is []. */
+  excludePropertiesToOriginal?: string[];
+  /** An array of all events to be delegated from the clone to the original when fired on the clone widget. Default is []. */
+  delegateEventsToOriginal?: string[];
+  /** True to delegate all property changes from the original to the clone. Default is false. */
+  delegateAllPropertiesToClone?: boolean;
+  /** True to delegate all property changes from the clone to the original. Default is false. */
+  delegateAllPropertiesToOriginal?: boolean;
+}
+
+interface EventDelegatorForCloning {
+  clone: Widget;
+  originalToClone: EventDelegator;
+  cloneToOriginal: EventDelegator;
 }
 
 type WidgetMap = {

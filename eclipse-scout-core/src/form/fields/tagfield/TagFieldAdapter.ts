@@ -8,14 +8,13 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {FormField, LookupFieldAdapter, RemoteLookupCall, scout, TagField} from '../../../index';
+import {FormFieldModel, LookupFieldAdapter, RemoteLookupCall, scout, TagField} from '../../../index';
 import {TagFieldAcceptInputEvent} from './TagFieldEventMap';
-import {ModelOf} from '../../../scout';
 
 export default class TagFieldAdapter extends LookupFieldAdapter {
   declare widget: TagField;
 
-  protected override _initProperties(model: ModelOf<FormField> & { insertText?: boolean }) {
+  protected override _initProperties(model: FormFieldModel & { insertText?: boolean }) {
     if (model.insertText !== undefined) {
       // ignore pseudo property initially (to prevent the function StringField#insertText() to be replaced)
       delete model.insertText;

@@ -8,9 +8,8 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {arrays, Locale, objects, scout, texts} from '../index';
+import {arrays, Locale, LocaleModel, objects, scout, texts} from '../index';
 import $ from 'jquery';
-import {ModelOf} from '../scout';
 
 let localesMap = {};
 
@@ -30,7 +29,7 @@ export function _preInit(url: string, data: any) {
   init(data);
 }
 
-export function init(data: ModelOf<Locale>[]) {
+export function init(data: LocaleModel[]) {
   data.forEach(locale => {
     localesMap[locale.languageTag] = new Locale(locale);
   }, this);

@@ -9,12 +9,12 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {AutoLeafPageWithNodesModel, Page, scout, TableRow} from '../../../index';
-import {InitModelOf, ModelOf} from '../../../scout';
+import {InitModelOf} from '../../../scout';
 import {SomeRequired} from '../../../types';
 
 export default class AutoLeafPageWithNodes extends Page implements AutoLeafPageWithNodesModel {
   declare model: AutoLeafPageWithNodesModel;
-  declare initModel: SomeRequired<ModelOf<this>, 'parent' | 'row'>;
+  declare initModel: SomeRequired<this['model'], 'parent' | 'row'>;
 
   constructor() {
     super();

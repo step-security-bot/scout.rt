@@ -8,8 +8,8 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {Status} from '../index';
-import {InitModelOf, ModelOf} from '../scout';
+import {Status, StatusModel} from '../index';
+import {InitModelOf} from '../scout';
 
 export default class ParsingFailedStatus extends Status {
 
@@ -20,7 +20,7 @@ export default class ParsingFailedStatus extends Status {
   /**
    * @returns a {@link ParsingFailedStatus} object with severity ERROR.
    */
-  static override error(model: ModelOf<Status> | string): ParsingFailedStatus {
+  static override error(model: StatusModel | string): ParsingFailedStatus {
     return new ParsingFailedStatus(Status.ensureModel(model, Status.Severity.ERROR));
   }
 }

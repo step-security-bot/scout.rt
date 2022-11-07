@@ -11,7 +11,7 @@
 import {
   Action, arrays, ContextMenuPopup, Device, DoubleClickSupport, dragAndDrop, DragAndDropHandler, EnumObject, EventHandler, Filter, FilterOrFunction, FilterResult, FilterSupport, graphics, HtmlComponent, KeyStrokeContext, keyStrokeModifier,
   LazyNodeFilter, Menu, MenuBar, MenuDestinations, MenuItemsOrder, menus as menuUtil, objects, Range, scout, scrollbars, tooltips, TreeBreadcrumbFilter, TreeCollapseAllKeyStroke, TreeCollapseOrDrillUpKeyStroke,
-  TreeExpandOrDrillDownKeyStroke, TreeLayout, TreeModel, TreeNavigationDownKeyStroke, TreeNavigationEndKeyStroke, TreeNavigationUpKeyStroke, TreeNode, TreeSpaceKeyStroke, UpdateFilteredElementsOptions, Widget
+  TreeExpandOrDrillDownKeyStroke, TreeLayout, TreeModel, TreeNavigationDownKeyStroke, TreeNavigationEndKeyStroke, TreeNavigationUpKeyStroke, TreeNode, TreeNodeModel, TreeSpaceKeyStroke, UpdateFilteredElementsOptions, Widget
 } from '../index';
 import $ from 'jquery';
 import {MenuFilter} from '../menu/Menu';
@@ -19,7 +19,7 @@ import {ScrollDirection, ScrollToOptions} from '../scrollbar/scrollbars';
 import TreeEventMap from './TreeEventMap';
 import {DesktopPopupOpenEvent} from '../desktop/DesktopEventMap';
 import {DropType} from '../util/dragAndDrop';
-import {FullModelOf, InitModelOf, ModelOf, ObjectOrModel} from '../scout';
+import {FullModelOf, InitModelOf, ObjectOrModel} from '../scout';
 
 export default class Tree extends Widget implements TreeModel {
   declare model: TreeModel;
@@ -258,7 +258,7 @@ export default class Tree extends Widget implements TreeModel {
     }
   }
 
-  protected _createTreeNode(nodeModel?: ModelOf<TreeNode>): TreeNode {
+  protected _createTreeNode(nodeModel?: TreeNodeModel): TreeNode {
     nodeModel = nodeModel || {};
     nodeModel.objectType = scout.nvl(nodeModel.objectType, TreeNode);
     nodeModel.parent = this;

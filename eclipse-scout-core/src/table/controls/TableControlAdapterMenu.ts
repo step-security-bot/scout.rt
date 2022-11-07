@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {Event, EventHandler, FormMenu, PropertyChangeEvent, TableControl, TableControlAdapterMenuModel, TableControlModel} from '../../index';
-import {InitModelOf, ModelOf} from '../../scout';
+import {InitModelOf} from '../../scout';
 
 export default class TableControlAdapterMenu extends FormMenu implements TableControlAdapterMenuModel {
   declare model: TableControlAdapterMenuModel;
@@ -59,7 +59,7 @@ export default class TableControlAdapterMenu extends FormMenu implements TableCo
 
   protected _onTableControlPropertyChange(event: PropertyChangeEvent<any, TableControl>) {
     // Whenever a tableControl property changes, apply the changes to the menu
-    let changedProperties: ModelOf<TableControl> = {};
+    let changedProperties: TableControlModel = {};
     changedProperties[event.propertyName] = event.newValue;
     changedProperties = TableControlAdapterMenu.adaptTableControlProperties(changedProperties);
     for (let prop in changedProperties) {

@@ -8,20 +8,20 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {Action, arrays, EventEmitter, filters, Key, keys, KeyStroke, KeyStrokeContext, KeyStrokeManagerEventMap, Session, ValueField, VirtualKeyStrokeEvent} from '../index';
+import {Action, arrays, EventEmitter, filters, Key, keys, KeyStroke, KeyStrokeContext, KeyStrokeManagerEventMap, KeyStrokeModel, Session, ValueField, VirtualKeyStrokeEvent} from '../index';
 import $ from 'jquery';
-import {InitModelOf, ModelOf, ObjectModel} from '../scout';
+import {InitModelOf, ObjectModel} from '../scout';
 import {SomeRequired} from '../types';
 import KeyboardEventBase = JQuery.KeyboardEventBase;
 
 export default class KeyStrokeManager extends EventEmitter implements KeyStrokeManagerModel {
   declare model: KeyStrokeManagerModel;
-  declare initModel: SomeRequired<ModelOf<this>, 'session'>;
+  declare initModel: SomeRequired<this['model'], 'session'>;
   declare eventMap: KeyStrokeManagerEventMap;
   declare self: KeyStrokeManager;
 
   session: Session;
-  helpKeyStroke: ModelOf<KeyStroke>;
+  helpKeyStroke: KeyStrokeModel;
   swallowF1: boolean;
   filters: ({ filter(keyStroke: KeyStroke): boolean })[];
   protected _helpRendered: boolean;

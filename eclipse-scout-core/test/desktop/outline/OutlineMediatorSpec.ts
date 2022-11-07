@@ -8,14 +8,13 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {Device, Outline, PageWithTable, scout, Table, TableTextUserFilter} from '../../../src/index';
+import {Device, Outline, PageWithTable, scout, Table, TableModel, TableTextUserFilter} from '../../../src/index';
 import {OutlineSpecHelper, TableSpecHelper} from '../../../src/testing/index';
-import {ModelOf} from '../../../src/scout';
 
 describe('OutlineMediator', () => {
 
   let session: SandboxSession;
-  let tableModel: ModelOf<Table>;
+  let tableModel: TableModel;
   let detailTable: Table;
   let page: PageWithTable;
   let firstColumn;

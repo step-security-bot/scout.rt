@@ -10,12 +10,12 @@
  */
 import {Device, Event, EventHandler, FieldStatus, FormField, HtmlComponent, HtmlEnvironment, PropertyChangeEvent, scout, Status, strings, TabItem, TabModel, tooltips, Widget} from '../../../index';
 import TabEventMap from './TabEventMap';
-import {InitModelOf, ModelOf} from '../../../scout';
+import {InitModelOf} from '../../../scout';
 import {SomeRequired} from '../../../types';
 
 export default class Tab extends Widget implements TabModel {
   declare model: TabModel;
-  declare initModel: SomeRequired<ModelOf<this>, 'parent' | 'tabItem'>;
+  declare initModel: SomeRequired<this['model'], 'parent' | 'tabItem'>;
   declare eventMap: TabEventMap;
   declare self: Tab;
 

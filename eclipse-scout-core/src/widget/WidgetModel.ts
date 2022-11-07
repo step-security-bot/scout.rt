@@ -33,4 +33,6 @@ export default interface WidgetModel extends ObjectModel<Widget> {
   logicalGrid?: LogicalGrid | string;
   displayParent?: DisplayParent;
   animateRemoval?: boolean;
+
+  [property: string]: any; // allow custom properties
 }

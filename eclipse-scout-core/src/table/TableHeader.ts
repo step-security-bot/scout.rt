@@ -14,12 +14,12 @@ import {
 } from '../index';
 import $ from 'jquery';
 import {TableColumnMovedEvent, TableColumnResizedEvent, TableFilterAddedEvent, TableFilterRemovedEvent} from './TableEventMap';
-import {InitModelOf, ModelOf} from '../scout';
+import {InitModelOf} from '../scout';
 import {SomeRequired} from '../types';
 
 export default class TableHeader extends Widget implements TableHeaderModel {
   declare model: TableHeaderModel;
-  declare initModel: SomeRequired<ModelOf<this>, 'parent' | 'table'>;
+  declare initModel: SomeRequired<this['model'], 'parent' | 'table'>;
   declare eventMap: TableHeaderEventMap;
   declare self: TableHeader;
 

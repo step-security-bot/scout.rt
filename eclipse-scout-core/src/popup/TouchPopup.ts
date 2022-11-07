@@ -13,12 +13,12 @@ import {
 } from '../index';
 import RowLayout from '../layout/RowLayout';
 import {PopupAlignment} from './Popup';
-import {InitModelOf, ModelOf} from '../scout';
+import {InitModelOf} from '../scout';
 import {SomeRequired} from '../types';
 
 export default class TouchPopup extends Popup {
   declare model: TouchPopupModel;
-  declare initModel: SomeRequired<ModelOf<this>, 'parent' | 'field'>;
+  declare initModel: SomeRequired<this['model'], 'parent' | 'field'>;
 
   doneAction: Action;
   htmlBody: HtmlComponent;

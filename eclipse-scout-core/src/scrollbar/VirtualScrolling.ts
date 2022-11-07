@@ -10,12 +10,12 @@
  */
 import {numbers, Range, scout, VirtualScrollingModel, Widget} from '../index';
 import $ from 'jquery';
-import {InitModelOf, ModelOf} from '../scout';
+import {InitModelOf} from '../scout';
 import {SomeRequired} from '../types';
 
 export default class VirtualScrolling implements VirtualScrollingModel {
   declare model: VirtualScrollingModel;
-  declare initModel: SomeRequired<ModelOf<this>, 'rowHeight' | 'rowCount' | '_renderViewRange'>;
+  declare initModel: SomeRequired<this['model'], 'rowHeight' | 'rowCount' | '_renderViewRange'>;
 
   enabled: boolean;
   minRowHeight: number;

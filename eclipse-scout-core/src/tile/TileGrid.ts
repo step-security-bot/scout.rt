@@ -285,7 +285,7 @@ export default class TileGrid extends Widget implements TileGridModel {
     }
 
     // Ensure given tiles are real tiles (of type Tile)
-    let tiles = this._createChildren(tilesOrModelsArr) as unknown as Tile[];
+    let tiles = this._createChildren(tilesOrModelsArr);
 
     if (this.withPlaceholders && scout.nvl(appendPlaceholders, true)) {
       // Remove placeholders from new tiles, they will be added later

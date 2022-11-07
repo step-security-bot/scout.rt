@@ -19,11 +19,11 @@ import {AggregateTableRow} from '../Table';
 import {ObjectType} from '../../ObjectFactory';
 import {TableColumnMovedEvent} from '../TableEventMap';
 import {SomeRequired} from '../../types';
-import {InitModelOf, ModelOf} from '../../scout';
+import {InitModelOf} from '../../scout';
 
 export default class Column<TValue = string> extends PropertyEventEmitter implements ColumnModel<TValue> {
   declare model: ColumnModel<TValue>;
-  declare initModel: SomeRequired<ModelOf<this>, 'session'>;
+  declare initModel: SomeRequired<this['model'], 'session'>;
   declare eventMap: ColumnEventMap;
   declare self: Column<any>;
 

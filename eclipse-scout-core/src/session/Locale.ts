@@ -10,7 +10,7 @@
  */
 import {DateFormat, DecimalFormat, locales, scout} from '../index';
 import LocaleModel, {DateFormatSymbols, DecimalFormatSymbols} from './LocaleModel';
-import {InitModelOf, ModelOf} from '../scout';
+import {InitModelOf} from '../scout';
 
 export default class Locale implements LocaleModel {
   declare model: LocaleModel;
@@ -64,7 +64,7 @@ export default class Locale implements LocaleModel {
     return new Locale(locale);
   }
 
-  static DEFAULT: ModelOf<Locale> = {
+  static DEFAULT: LocaleModel = {
     languageTag: 'en-US',
     decimalFormatPatternDefault: '#,##0.###',
     dateFormatPatternDefault: 'MM/dd/yyyy',

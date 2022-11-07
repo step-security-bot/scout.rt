@@ -8,14 +8,13 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {DesktopTabArea, Form, SimpleTabArea, WidgetModel} from '../../index';
+import {DesktopTabArea, Form, SimpleTabAreaModel, WidgetModel} from '../../index';
 import {OutlineContent} from '../bench/DesktopBench';
-import {ModelOf} from '../../scout';
 
 export default interface DesktopHeaderModel extends WidgetModel {
   toolBoxVisible?: boolean;
   viewButtonBoxVisible?: boolean;
   logoUrl?: string;
-  tabArea?: DesktopTabArea | ModelOf<SimpleTabArea<Form>>;
+  tabArea?: DesktopTabArea | SimpleTabAreaModel<Form>;
   outlineContent?: OutlineContent;
 }

@@ -8,10 +8,10 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {Group, Range, scout, Tile, TileAccordion, TileGrid} from '../../src/index';
+import {Group, Range, scout, Tile, TileAccordion, TileGrid, TileGridModel} from '../../src/index';
 import {triggerMouseDown} from '../../src/testing/jquery-testing';
 import TileModel from '../../src/tile/TileModel';
-import {InitModelOf, ModelOf} from '../../src/scout';
+import {InitModelOf} from '../../src/scout';
 
 describe('VirtualTileGrid', () => {
   let session: SandboxSession;
@@ -27,7 +27,7 @@ describe('VirtualTileGrid', () => {
     }
   }
 
-  function createTileGrid(numTiles: number, model?: ModelOf<TileGrid>): SpecTileGrid {
+  function createTileGrid(numTiles: number, model?: TileGridModel): SpecTileGrid {
     let tiles = [];
     for (let i = 0; i < numTiles; i++) {
       tiles.push({

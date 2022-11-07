@@ -8,8 +8,9 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {AjaxCall, Locale, Session, UserAgent} from '../index';
-import {ModelOf, ObjectModel, ObjectOrModel} from '../scout';
+import {Locale, Session, UserAgent} from '../index';
+import {ObjectModel, ObjectOrModel} from '../scout';
+import {AjaxCallModel} from '../ajax/AjaxCall';
 
 export default interface SessionModel extends ObjectModel<Session> {
   /**
@@ -69,5 +70,5 @@ export default interface SessionModel extends ObjectModel<Session> {
   /**
    * Properties of this object are copied to all instances of {@link AjaxCall}.
    */
-  ajaxCallOptions?: ModelOf<AjaxCall>;
+  ajaxCallOptions?: AjaxCallModel;
 }

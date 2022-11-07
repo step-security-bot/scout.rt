@@ -10,11 +10,10 @@
  */
 import {EventHandler, Mode, ModeSelector, ModeSelectorFieldModel, PropertyChangeEvent, ValueField} from '../../../index';
 import {SomeRequired} from '../../../types';
-import {ModelOf} from '../../../scout';
 
 export default class ModeSelectorField<TValue> extends ValueField<TValue> implements ModeSelectorFieldModel<TValue> {
   declare model: ModeSelectorFieldModel<TValue>;
-  declare initModel: SomeRequired<ModelOf<this>, 'parent' | 'modeSelector'>;
+  declare initModel: SomeRequired<this['model'], 'parent' | 'modeSelector'>;
 
   modeSelector: ModeSelector<TValue>;
   modes: Mode<TValue>[];

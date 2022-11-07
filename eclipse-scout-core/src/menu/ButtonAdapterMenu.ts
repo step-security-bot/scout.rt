@@ -17,7 +17,7 @@ import {SomeRequired} from '../types';
 
 export default class ButtonAdapterMenu extends Menu implements ButtonAdapterMenuModel {
   declare model: ButtonAdapterMenuModel;
-  declare initModel: SomeRequired<ModelOf<this>, 'button' | 'parent'>;
+  declare initModel: SomeRequired<this['model'], 'button' | 'parent'>;
 
   button: Button;
   menubar: MenuBar;
@@ -109,7 +109,7 @@ export default class ButtonAdapterMenu extends Menu implements ButtonAdapterMenu
     return this.session.focusManager.requestFocus(this.getFocusableElement());
   }
 
-  static adaptButtonProperties(buttonProperties: ModelOf<Button> & { gridData?: GridData }, menuProperties?: InitModelOf<ButtonAdapterMenu>): InitModelOf<ButtonAdapterMenu> {
+  static adaptButtonProperties(buttonProperties: ButtonModel & { gridData?: GridData }, menuProperties?: InitModelOf<ButtonAdapterMenu>): InitModelOf<ButtonAdapterMenu> {
     // @ts-expect-error
     menuProperties = menuProperties || {};
 

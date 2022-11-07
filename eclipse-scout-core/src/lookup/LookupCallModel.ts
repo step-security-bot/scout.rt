@@ -41,4 +41,6 @@ export default interface LookupCallModel<TKey> extends ObjectModel<LookupCall<TK
    * Default value is 100.
    */
   maxRowCount?: number;
+
+  [property: string]: any; // allow custom properties
 }

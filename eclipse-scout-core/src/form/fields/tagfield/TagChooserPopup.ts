@@ -10,12 +10,12 @@
  */
 import {AbstractLayout, Column, lookupField, LookupResult, Popup, scout, ScoutKeyboardEvent, Table, TableRow, TagChooserPopupEventMap, TagChooserPopupLayout, TagChooserPopupModel, TagField} from '../../../index';
 import {TableRowClickEvent} from '../../../table/TableEventMap';
-import {InitModelOf, ModelOf} from '../../../scout';
+import {InitModelOf} from '../../../scout';
 import {SomeRequired} from '../../../types';
 
 export default class TagChooserPopup extends Popup implements TagChooserPopupModel {
   declare model: TagChooserPopupModel;
-  declare initModel: SomeRequired<ModelOf<this>, 'parent' | 'field'>;
+  declare initModel: SomeRequired<this['model'], 'parent' | 'field'>;
   declare eventMap: TagChooserPopupEventMap;
   declare self: TagChooserPopup;
 

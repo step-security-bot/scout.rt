@@ -9,8 +9,8 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {
-  arrays, Cell, CellModel, Column, ColumnModel, comparators, DecimalFormat, Filter, Menu, ModelAdapter, NumberColumnModel, ObjectFactory, objects, RemoteEvent, scout, Session, Table, TableModel, TableRow, TableRowModel, TableTextUserFilter,
-  TextColumnUserFilter, Widget
+  arrays, Cell, CellModel, Column, ColumnModel, comparators, DecimalFormat, Filter, MenuModel, ModelAdapter, NumberColumnModel, ObjectFactory, objects, RemoteEvent, scout, Session, Table, TableModel, TableRow, TableRowModel,
+  TableTextUserFilter, TextColumnUserFilter, Widget
 } from '../../index';
 import {MenuSpecHelper} from '../index';
 import $ from 'jquery';
@@ -43,7 +43,7 @@ export default class TableSpecHelper {
     return model;
   }
 
-  createModelRow(id?: string, cells?: (Primitive | object | Cell)[], parentRow?: TableRow | string): ModelOf<TableRow> {
+  createModelRow(id?: string, cells?: (Primitive | object | Cell)[], parentRow?: TableRow | string): TableRowModel {
     return {
       id: scout.nvl(id, ObjectFactory.get().createUniqueId()),
       cells: cells,
@@ -56,7 +56,7 @@ export default class TableSpecHelper {
    * @param texts array of texts for the cells in the new row or a string if only one cell should be created.
    * @param withoutCells true if only text instead of cells should be created (server only sends text without a cell object if no other properties are set)
    */
-  createModelRowByTexts(id: string, texts: string[] | string, withoutCells?: boolean): ModelOf<TableRow> {
+  createModelRowByTexts(id: string, texts: string[] | string, withoutCells?: boolean): TableRowModel {
     texts = arrays.ensure(texts);
 
     let cells = [];
@@ -74,7 +74,7 @@ export default class TableSpecHelper {
    *
    * @param values array of values for the cells in the new row or a number if only one cell should be created.
    */
-  createModelRowByValues(id: string, values: any | any[]): ModelOf<TableRow> {
+  createModelRowByValues(id: string, values: any | any[]): TableRowModel {
     values = arrays.ensure(values);
     let cells: Cell[] = [];
     for (let i = 0; i < values.length; i++) {
@@ -107,11 +107,11 @@ export default class TableSpecHelper {
     return scout.create(Cell, cell);
   }
 
-  createMenuModel(text?: string, icon?: string): ModelOf<Menu> {
+  createMenuModel(text?: string, icon?: string): MenuModel {
     return this.menuHelper.createModel(text, icon, ['Table.SingleSelection']);
   }
 
-  createMenuModelWithSingleAndHeader(text: string, icon?: string): ModelOf<Menu> {
+  createMenuModelWithSingleAndHeader(text: string, icon?: string): MenuModel {
     return this.menuHelper.createModel(text, icon, ['Table.SingleSelection', 'Table.Header']);
   }
 
@@ -148,7 +148,7 @@ export default class TableSpecHelper {
    * If the column is of type NumberColumn a numeric value is set.
    * Otherwise, the value is similar to 'cell0_0' if rowId is given, or 'cell0' if no rowId is given.
    */
-  createModelCells(columns: ModelOf<Column>[] | number, rowId?: string): Cell[] {
+  createModelCells(columns: ColumnModel[] | number, rowId?: string): Cell[] {
     let cells: Cell[] = [];
     if (rowId === undefined) {
       rowId = '';
@@ -260,7 +260,7 @@ export default class TableSpecHelper {
     });
   }
 
-  createColumnStructureChangedEvent(model: { id: string }, columns: ModelOf<Column>[]): RemoteEvent {
+  createColumnStructureChangedEvent(model: { id: string }, columns: ColumnModel[]): RemoteEvent {
     return {
       target: model.id,
       columns: columns,
@@ -268,7 +268,7 @@ export default class TableSpecHelper {
     };
   }
 
-  createRowsInsertedEvent(model: { id: string }, rows: ModelOf<TableRow>[]): RemoteEvent {
+  createRowsInsertedEvent(model: { id: string }, rows: TableRowModel[]): RemoteEvent {
     return {
       target: model.id,
       rows: rows,

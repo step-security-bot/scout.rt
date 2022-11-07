@@ -8,14 +8,13 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {Event, OutlineAdapter, SearchOutline} from '../../index';
+import {Event, OutlineAdapter, SearchOutline, SearchOutlineModel} from '../../index';
 import {SearchOutlineSearchEvent} from './SearchOutlineEventMap';
-import {ModelOf} from '../../scout';
 
 export default class SearchOutlineAdapter extends OutlineAdapter {
   declare widget: SearchOutline;
 
-  protected override _initProperties(model: ModelOf<SearchOutline> & { requestFocusQueryField?: boolean }) {
+  protected override _initProperties(model: SearchOutlineModel & { requestFocusQueryField?: boolean }) {
     if (model.requestFocusQueryField !== undefined) {
       // ignore pseudo property initially (to prevent the function SearchOutlineAdapter#requestFocusQueryField() to be replaced)
       delete model.requestFocusQueryField;

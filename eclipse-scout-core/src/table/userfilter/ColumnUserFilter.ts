@@ -14,11 +14,10 @@ import {TableUserFilterAddedEventData, TableUserFilterRemovedEventData} from './
 import {ColumnComparator} from '../columns/comparators';
 import ColumnUserFilterModel from './ColumnUserFilterModel';
 import {SomeRequired} from '../../types';
-import {ModelOf} from '../../scout';
 
 export default class ColumnUserFilter extends TableUserFilter implements ColumnUserFilterModel {
   declare model: ColumnUserFilterModel;
-  declare initModel: SomeRequired<ModelOf<this>, 'session' | 'table' | 'column'>;
+  declare initModel: SomeRequired<this['model'], 'session' | 'table' | 'column'>;
   declare eventMap: ColumnUserFilterEventMap;
   declare self: ColumnUserFilter;
 

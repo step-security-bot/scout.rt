@@ -11,12 +11,12 @@
 import {arrays, Event, objects, ResponsiveHandlerModel, ResponsiveManager, Widget} from '../index';
 import $ from 'jquery';
 import {ResponsiveState} from './ResponsiveManager';
-import {InitModelOf, ModelOf} from '../scout';
+import {InitModelOf} from '../scout';
 import {SomeRequired} from '../types';
 
 export default class ResponsiveHandler implements ResponsiveHandlerModel {
   declare model: ResponsiveHandlerModel;
-  declare initModel: SomeRequired<ModelOf<this>, 'widget'>;
+  declare initModel: SomeRequired<this['model'], 'widget'>;
 
   widget: Widget;
   compactThreshold: number;
