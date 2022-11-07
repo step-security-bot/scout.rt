@@ -9,12 +9,11 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {Column, icons, LookupRow, scout, StaticLookupCall, Table, TileTableHeaderSortByLookupCallModel} from '../index';
-import {ModelOf} from '../scout';
 import {SomeRequired} from '../types';
 
 export default class TileTableHeaderSortByLookupCall extends StaticLookupCall<TileTableHeaderSortKey> implements TileTableHeaderSortByLookupCallModel {
   declare model: TileTableHeaderSortByLookupCallModel;
-  declare initModel: SomeRequired<ModelOf<this>, 'session' | 'table'>;
+  declare initModel: SomeRequired<this['model'], 'session' | 'table'>;
   table: Table;
 
   constructor() {

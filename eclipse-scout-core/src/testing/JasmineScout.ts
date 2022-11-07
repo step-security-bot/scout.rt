@@ -8,13 +8,13 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {App, arrays, Desktop, ModelAdapter, ModelAdapterModel, ObjectFactory, RemoteEvent, scout, Session, Widget, WidgetModel} from '../index';
+import {App, arrays, Desktop, DesktopModel, ModelAdapter, ModelAdapterModel, ObjectFactory, RemoteEvent, scout, Session, SessionModel, Widget, WidgetModel} from '../index';
 import {LocaleSpecHelper, TestingApp} from './index';
 import {AdapterData, RemoteRequest, RemoteResponse, SessionStartupResponse} from '../session/Session';
 import 'jasmine-jquery';
 import jasmineScoutMatchers from './scoutMatchers';
 import {JsonErrorResponse} from '../App';
-import {FullModelOf, InitModelOf, ModelOf} from '../scout';
+import {FullModelOf, InitModelOf} from '../scout';
 
 declare global {
 
@@ -36,7 +36,7 @@ declare global {
     override _processErrorResponse(jqXHR: JQuery.jqXHR, textStatus: JQuery.Ajax.ErrorTextStatus, errorThrown: string, request: RemoteRequest);
   }
 
-  function sandboxSession(options?: SandboxSessionOptions & ModelOf<Session>): SandboxSession;
+  function sandboxSession(options?: SandboxSessionOptions & SessionModel): SandboxSession;
 
   function linkWidgetAndAdapter(widget: Widget, adapterClass: (new() => ModelAdapter) | string);
 
@@ -65,12 +65,12 @@ declare global {
 }
 
 export interface SandboxSessionOptions {
-  desktop?: ModelOf<Desktop>;
+  desktop?: DesktopModel;
   renderDesktop?: boolean;
 }
 
 window.sandboxSession = options => {
-  options = options || {} as ModelOf<Session>;
+  options = options || {} as SessionModel;
   let $sandbox = $('#sandbox')
     .addClass('scout');
 

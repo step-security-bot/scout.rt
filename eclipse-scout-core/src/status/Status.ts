@@ -8,15 +8,14 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {arrays, DefaultStatus, EnumObject, ObjectFactory, objects, ParsingFailedStatus, Predicate, StatusModel, strings, ValidationFailedStatus} from '../index';
+import {arrays, DefaultStatus, EnumObject, ObjectFactory, objects, ObjectWithType, ParsingFailedStatus, Predicate, StatusModel, strings, ValidationFailedStatus} from '../index';
 import $ from 'jquery';
-import {ObjectType} from '../ObjectFactory';
-import {FullModelOf, InitModelOf, ModelOf, ObjectOrModel} from '../scout';
+import {FullModelOf, InitModelOf, ObjectOrModel} from '../scout';
 
-export default class Status implements StatusModel {
+export default class Status implements StatusModel, ObjectWithType {
   declare model: StatusModel;
 
-  objectType: ObjectType<Status>;
+  objectType: string;
   message: string;
   severity: StatusSeverity;
   iconId: string;
@@ -247,32 +246,32 @@ export default class Status implements StatusModel {
   /**
    * @returns a {@link Status} object with severity OK.
    */
-  static ok(model?: ModelOf<Status> | string): Status {
+  static ok(model?: StatusModel | string): Status {
     return new Status(Status.ensureModel(model, Status.Severity.OK));
   }
 
   /**
    * @returns a {@link Status} object with severity INFO.
    */
-  static info(model?: ModelOf<Status> | string): Status {
+  static info(model?: StatusModel | string): Status {
     return new Status(Status.ensureModel(model, Status.Severity.INFO));
   }
 
   /**
    * @returns a {@link Status} object with severity WARNING.
    */
-  static warning(model?: ModelOf<Status> | string): Status {
+  static warning(model?: StatusModel | string): Status {
     return new Status(Status.ensureModel(model, Status.Severity.WARNING));
   }
 
   /**
    * @returns a {@link Status} object with severity ERROR.
    */
-  static error(model?: ModelOf<Status> | string): Status {
+  static error(model?: StatusModel | string): Status {
     return new Status(Status.ensureModel(model, Status.Severity.ERROR));
   }
 
-  static ensureModel(model: ModelOf<Status> | string, severity: StatusSeverity | StatusSeverityNames): ModelOf<Status> {
+  static ensureModel(model: StatusModel | string, severity: StatusSeverity | StatusSeverityNames): StatusModel {
     if (typeof model === 'string') {
       model = {
         message: model
@@ -308,7 +307,7 @@ export default class Status implements StatusModel {
    *
    * @returns Status constructor
    */
-  static classForName(className: StatusType): new(model?: ModelOf<Status>) => Status {
+  static classForName(className: StatusType): new(model?: StatusModel) => Status {
     return {
       Status: Status,
       DefaultStatus: DefaultStatus,

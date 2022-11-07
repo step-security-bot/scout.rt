@@ -8,16 +8,15 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {App, arrays, Event, FormField, ModelAdapter, objects} from '../../index';
+import {App, arrays, Event, FormField, FormFieldModel, ModelAdapter, objects} from '../../index';
 import {FileDropEvent} from '../../util/dragAndDrop';
-import {ModelOf} from '../../scout';
 
 export default class FormFieldAdapter extends ModelAdapter {
   declare widget: FormField;
 
   /**
    * Set this property to true when the form-field should stay enabled in offline case.
-   * By default the field will be disabled.
+   * By default, the field will be disabled.
    */
   enabledWhenOffline: boolean;
   protected _currentMenuTypes: string[];
@@ -28,7 +27,7 @@ export default class FormFieldAdapter extends ModelAdapter {
     this._currentMenuTypes = [];
   }
 
-  protected override _initProperties(model: ModelOf<FormField> & { currentMenuTypes: string[] }) {
+  protected override _initProperties(model: FormFieldModel & { currentMenuTypes: string[] }) {
     super._initProperties(model);
     this._currentMenuTypes = arrays.ensure(model.currentMenuTypes);
     delete model.currentMenuTypes;

@@ -10,7 +10,7 @@
  */
 import {Cell, LookupRow, Table, TableRow} from '../index';
 import {Primitive} from '../types';
-import {ObjectModel} from '../scout';
+import {ObjectModel, ObjectOrModel} from '../scout';
 
 export default interface TableRowModel extends ObjectModel<TableRow> {
   parent?: Table;
@@ -22,8 +22,10 @@ export default interface TableRowModel extends ObjectModel<TableRow> {
   enabled?: boolean;
   iconId?: string;
   cssClass?: string;
-  parentRow?: string | TableRow;
+  parentRow?: string | ObjectOrModel<TableRow>;
   expanded?: boolean;
   dataMap?: Record<PropertyKey, any>;
   lookupRow?: LookupRow<any>;
+
+  [property: string]: any; // allow custom properties
 }

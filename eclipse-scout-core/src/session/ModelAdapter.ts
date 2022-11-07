@@ -15,7 +15,7 @@ import $ from 'jquery';
 import EventListener from '../events/EventListener';
 import WidgetModel from '../widget/WidgetModel';
 import {AdapterData} from './Session';
-import {ChildModelOf, FullModelOf, InitModelOf, ModelOf} from '../scout';
+import {ChildModelOf, FullModelOf, InitModelOf} from '../scout';
 import {SomeRequired} from '../types';
 
 /**
@@ -24,7 +24,7 @@ import {SomeRequired} from '../types';
  */
 export default class ModelAdapter extends EventEmitter implements ModelAdapterModel, ModelAdapterLike {
   declare model: ModelAdapterModel;
-  declare initModel: SomeRequired<ModelOf<this>, 'session' | 'id'>;
+  declare initModel: SomeRequired<this['model'], 'session' | 'id'>;
   declare eventMap: ModelAdapterEventMap;
   declare self: ModelAdapter;
   id: string;

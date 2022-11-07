@@ -11,7 +11,6 @@
 import {Dimension, TreeNode, TreeNodeModel} from '../../src/index';
 import {TreeSpecHelper} from '../../src/testing/index';
 import SpecTree from '../../src/testing/tree/SpecTree';
-import {ModelOf} from '../../src/scout';
 
 describe('TreeNodePosition', () => {
 
@@ -169,7 +168,7 @@ describe('TreeNodePosition', () => {
       // This tree does not use a root node
       tree = helper.createTree(helper.createModel([]));
 
-      function createNode(id: string, text: string, expanded: boolean, childNodeIndex?: number): ModelOf<TreeNode> {
+      function createNode(id: string, text: string, expanded: boolean, childNodeIndex?: number): TreeNodeModel {
         let node = helper.createModelNode(id, text, childNodeIndex);
         node.expanded = expanded;
         return node;
@@ -297,7 +296,7 @@ describe('TreeNodePosition', () => {
       // This tree does not use a root node
       tree = helper.createTree(helper.createModel([]));
 
-      function createNode(id: string, text: string, expanded: boolean, childNodeIndex?: number): ModelOf<TreeNode> {
+      function createNode(id: string, text: string, expanded: boolean, childNodeIndex?: number): TreeNodeModel {
         let node = helper.createModelNode(id, text, childNodeIndex);
         node.expanded = expanded;
         return node;

@@ -32,5 +32,7 @@ export default interface TreeNodeModel extends ObjectModel<TreeNode> {
   foregroundColor?: string;
   backgroundColor?: string;
   font?: string;
+
+  [property: string]: any; // allow custom properties
 }
 

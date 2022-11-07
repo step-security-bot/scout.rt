@@ -170,12 +170,11 @@ export default class TreeBox<TValue> extends LookupBox<TValue> implements TreeBo
   }
 
   protected _createNode(lookupRow: LookupRow<TValue>): TreeBoxTreeNode<TValue> {
-    let
-      node = scout.create(TreeNode, {
-        parent: this.tree,
-        text: lookupRow.text,
-        lookupRow: lookupRow
-      }) as TreeBoxTreeNode<TValue>;
+    let node = scout.create(TreeNode, {
+      parent: this.tree,
+      text: lookupRow.text,
+      lookupRow: lookupRow
+    }) as TreeBoxTreeNode<TValue>;
 
     if (lookupRow.iconId) {
       node.iconId = lookupRow.iconId;

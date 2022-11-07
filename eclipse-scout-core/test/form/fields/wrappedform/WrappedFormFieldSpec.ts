@@ -8,9 +8,8 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {focusUtils, WrappedFormField} from '../../../../src/index';
+import {focusUtils, WrappedFormField, WrappedFormFieldModel} from '../../../../src/index';
 import {FormSpecHelper} from '../../../../src/testing/index';
-import {ModelOf} from '../../../../src/scout';
 
 describe('WrappedForm', () => {
   let session: SandboxSession;
@@ -22,7 +21,7 @@ describe('WrappedForm', () => {
     helper = new FormSpecHelper(session);
   });
 
-  function createField(modelProperties: ModelOf<WrappedFormField>): WrappedFormField {
+  function createField(modelProperties: WrappedFormFieldModel): WrappedFormField {
     return helper.createField(WrappedFormField, session.desktop, modelProperties);
   }
 

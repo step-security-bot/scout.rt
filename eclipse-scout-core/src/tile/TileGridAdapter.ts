@@ -8,9 +8,8 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {Event, ModelAdapter, objects, RemoteTileFilter, scout, Tile, TileGrid} from '../index';
+import {Event, ModelAdapter, objects, RemoteTileFilter, scout, Tile, TileGrid, TileGridModel} from '../index';
 import {TileActionEvent, TileClickEvent} from './TileGridEventMap';
-import {ModelOf} from '../scout';
 
 export default class TileGridAdapter extends ModelAdapter {
   declare widget: TileGrid;
@@ -33,7 +32,7 @@ export default class TileGridAdapter extends ModelAdapter {
     this.widget.setTiles(tiles);
   }
 
-  protected override _initProperties(model: ModelOf<TileGrid> & { filteredTiles?: string[] }) {
+  protected override _initProperties(model: TileGridModel & { filteredTiles?: string[] }) {
     super._initProperties(model);
     if (!objects.isNullOrUndefined(model.filteredTiles)) {
       // If filteredTiles is set a server side filter is active -> add a tile filter on JS side as well

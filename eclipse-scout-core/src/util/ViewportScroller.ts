@@ -11,11 +11,11 @@
 
 import {Point, ViewportScrollerModel} from '../index';
 import {SomeRequired} from '../types';
-import {InitModelOf, ModelOf} from '../scout';
+import {InitModelOf} from '../scout';
 
 export default class ViewportScroller implements ViewportScrollerModel {
   declare model: ViewportScrollerModel;
-  declare initModel: SomeRequired<ModelOf<this>, 'viewportWidth' | 'viewportHeight'>;
+  declare initModel: SomeRequired<this['model'], 'viewportWidth' | 'viewportHeight'>;
 
   static SPEED_FACTOR_SLOW = 1 / 20;
   static SPEED_FACTOR_MEDIUM = 1 / 10;

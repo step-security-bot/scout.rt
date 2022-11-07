@@ -11,12 +11,12 @@
 import $ from 'jquery';
 import objects from '../util/objects';
 import LookupRowModel from './LookupRowModel';
-import {InitModelOf, ModelOf} from '../scout';
+import {InitModelOf} from '../scout';
 import {SomeRequired} from '../types';
 
 export default class LookupRow<TKey> implements LookupRowModel<TKey> {
   declare model: LookupRowModel<TKey>;
-  declare initModel: SomeRequired<ModelOf<this>, 'key' | 'text'>;
+  declare initModel: SomeRequired<this['model'], 'key' | 'text'>;
 
   key: TKey;
   text: string;

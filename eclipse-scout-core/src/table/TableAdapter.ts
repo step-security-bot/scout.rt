@@ -8,7 +8,9 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {App, arrays, BooleanColumn, Cell, Column, ColumnModel, ColumnUserFilter, defaultValues, Event, Filter, ModelAdapter, NumberColumn, objects, scout, Table, TableModel, TableRow, TableUserFilter, ValueField} from '../index';
+import {
+  App, arrays, BooleanColumn, Cell, Column, ColumnModel, ColumnUserFilter, defaultValues, Event, Filter, ModelAdapter, NumberColumn, objects, scout, Table, TableModel, TableRow, TableRowModel, TableUserFilter, ValueField
+} from '../index';
 import $ from 'jquery';
 import {
   TableAggregationFunctionChangedEvent, TableAppLinkActionEvent, TableCancelCellEditEvent, TableColumnBackgroundEffectChangedEvent, TableColumnMovedEvent, TableColumnOrganizeActionEvent, TableColumnResizedEvent, TableCompleteCellEditEvent,
@@ -432,7 +434,7 @@ export default class TableAdapter extends ModelAdapter {
     this.widget.selectionHandler.clearLastSelectedRowMarker();
   }
 
-  protected _onRowsChecked(rows: ModelOf<TableRow>[]) {
+  protected _onRowsChecked(rows: TableRowModel[]) {
     let checkedRows: TableRow[] = [],
       uncheckedRows: TableRow[] = [];
 
@@ -455,7 +457,7 @@ export default class TableAdapter extends ModelAdapter {
     });
   }
 
-  protected _onRowsExpanded(rows: ModelOf<TableRow>[]) {
+  protected _onRowsExpanded(rows: TableRowModel[]) {
     let expandedRows: TableRow[] = [],
       collapsedRows: TableRow[] = [];
     rows.forEach(rowData => {
@@ -631,14 +633,14 @@ export default class TableAdapter extends ModelAdapter {
     return adapterData;
   }
 
-  protected _initRowModel(rowModel?: ModelOf<TableRow>): ChildModelOf<TableRow> {
+  protected _initRowModel(rowModel?: TableRowModel): ChildModelOf<TableRow> {
     let model = (rowModel || {}) as ChildModelOf<TableRow>;
     model.objectType = scout.nvl(model.objectType, 'TableRow');
     defaultValues.applyTo(model);
     return model;
   }
 
-  protected static _createRowRemote(rowModel: ModelOf<TableRow>): TableRow {
+  protected static _createRowRemote(rowModel: TableRowModel): TableRow {
     // @ts-expect-error
     if (this.modelAdapter) {
       // @ts-expect-error

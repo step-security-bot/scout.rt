@@ -125,5 +125,4 @@ App.addListener('prepare', () => {
     return;
   }
   instance = scout.create(ResponsiveManager);
-  instance.init(); // FIXME TS: is this necessary? scout.create calls init already?
 });

@@ -10,9 +10,9 @@
  */
 
 /* eslint-disable max-classes-per-file */
-import {Filter, FilterOrFunction, FilterResult, FilterSupport, HtmlComponent, KeyStrokeContext, NullWidget, numbers, StringField, strings, UpdateFilteredElementsOptions, Widget} from '../../src/index';
+import {Filter, FilterOrFunction, FilterResult, FilterSupport, HtmlComponent, KeyStrokeContext, NullWidget, numbers, StringField, strings, UpdateFilteredElementsOptions, WidgetModel} from '../../src/index';
 import $ from 'jquery';
-import {FullModelOf, InitModelOf, ModelOf} from '../../src/scout';
+import {FullModelOf, InitModelOf} from '../../src/scout';
 
 describe('FilterSupport', () => {
 
@@ -149,7 +149,7 @@ describe('FilterSupport', () => {
     session = sandboxSession();
   });
 
-  function createWidget(model: ModelOf<Widget> & { elements?: object }): FilterSupportWidget {
+  function createWidget(model: WidgetModel & { elements?: object }): FilterSupportWidget {
     let defaults = {
       parent: session.desktop,
       session: session

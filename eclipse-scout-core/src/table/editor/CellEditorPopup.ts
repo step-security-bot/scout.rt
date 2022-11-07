@@ -15,12 +15,12 @@ import {
 import $ from 'jquery';
 import {KeyStrokeManagerKeyStrokeEvent} from '../../keystroke/KeyStrokeManagerEventMap';
 import {TableRowOrderChangedEvent} from '../TableEventMap';
-import {InitModelOf, ModelOf} from '../../scout';
+import {InitModelOf} from '../../scout';
 import {SomeRequired} from '../../types';
 
 export default class CellEditorPopup<TValue> extends Popup implements CellEditorPopupModel<TValue> {
   declare model: CellEditorPopupModel<TValue>;
-  declare initModel: SomeRequired<ModelOf<this>, 'parent' | 'column' | 'cell'>;
+  declare initModel: SomeRequired<this['model'], 'parent' | 'column' | 'cell'>;
 
   table: Table;
   column: Column<TValue>;

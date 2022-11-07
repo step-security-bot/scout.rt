@@ -12,12 +12,12 @@ import {dates, Device, HtmlComponent, scrollbars, TimePickerModel, TimePickerTou
 import $ from 'jquery';
 import {ScrollbarInstallOptions} from '../scrollbar/scrollbars';
 import TimePickerEventMap from './TimePickerEventMap';
-import {InitModelOf, ModelOf} from '../scout';
+import {InitModelOf} from '../scout';
 import {SomeRequired} from '../types';
 
 export default class TimePicker extends Widget implements TimePickerModel {
   declare model: TimePickerModel;
-  declare initModel: SomeRequired<ModelOf<this>, 'parent' | 'timeResolution'>;
+  declare initModel: SomeRequired<this['model'], 'parent' | 'timeResolution'>;
   declare eventMap: TimePickerEventMap;
   declare self: TimePicker;
 

@@ -12,7 +12,7 @@ import {MessageBox, MessageBoxesModel, scout, Status, strings, Widget} from '../
 import $ from 'jquery';
 import {StatusSeverity} from '../status/Status';
 import {MessageBoxOption} from './MessageBox';
-import {InitModelOf, ModelOf} from '../scout';
+import {InitModelOf} from '../scout';
 import {SomeRequired} from '../types';
 
 /**
@@ -21,7 +21,7 @@ import {SomeRequired} from '../types';
  */
 export default class MessageBoxes implements MessageBoxesModel {
   declare model: MessageBoxesModel;
-  declare initModel: SomeRequired<ModelOf<this>, 'parent'>;
+  declare initModel: SomeRequired<this['model'], 'parent'>;
 
   parent: Widget;
   yesText: string;

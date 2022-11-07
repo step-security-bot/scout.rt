@@ -8,16 +8,16 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {Box, LogoutApp, LogoutAppModel, strings, TextMap, webstorage} from '../index';
+import {Box, LogoutAppModel, strings, TextMap, webstorage} from '../index';
 import $ from 'jquery';
-import {InitModelOf, ModelOf} from '../scout';
+import {InitModelOf} from '../scout';
 
 export default class LogoutBox extends Box {
   declare model: LogoutAppModel;
 
   texts: TextMap;
   loginUrl: string;
-  options: ModelOf<LogoutApp>;
+  options: LogoutAppModel;
   $buttonBar: JQuery;
 
   constructor() {
@@ -30,7 +30,7 @@ export default class LogoutBox extends Box {
   }
 
   init(opts: InitModelOf<this>) {
-    let defaultOpts: ModelOf<LogoutApp> = {
+    let defaultOpts: LogoutAppModel = {
       loginUrl: webstorage.getItemFromSessionStorage('scout:loginUrl') || './',
       logoUrl: 'logo.png'
     };

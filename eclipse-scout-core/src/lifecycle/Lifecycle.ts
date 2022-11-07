@@ -11,7 +11,7 @@
 import {arrays, EventEmitter, LifecycleModel, MessageBox, MessageBoxes, objects, scout, Session, Status, Widget} from '../index';
 import $ from 'jquery';
 import LifecycleEventMap from './LifecycleEventMap';
-import {InitModelOf, ModelOf} from '../scout';
+import {InitModelOf} from '../scout';
 import {SomeRequired} from '../types';
 
 /**
@@ -23,7 +23,7 @@ import {SomeRequired} from '../types';
  */
 export default abstract class Lifecycle<TValidationResult> extends EventEmitter implements LifecycleModel {
   declare model: LifecycleModel;
-  declare initModel: SomeRequired<ModelOf<this>, 'widget'>;
+  declare initModel: SomeRequired<this['model'], 'widget'>;
   declare eventMap: LifecycleEventMap<TValidationResult>;
   declare self: Lifecycle<any>;
 

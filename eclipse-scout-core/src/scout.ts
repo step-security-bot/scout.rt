@@ -116,18 +116,15 @@ export interface ObjectWithType {
 export interface ObjectModel<TObject = object, TId = string> {
   objectType?: ObjectType<TObject>;
   id?: TId;
-
-  [property: string]: any; // allow custom properties
 }
 
-// TODO: namings
 /**
  * The minimal model declaration (usually extends {@link ObjectModel}) as it would be used in a nested declaration (e.g. a {@link FormField} within a {@link GroupBox}).
- * The {@link objectType} is optional as sometimes it might be already given by the context (e.g. when passing a {@link MenuModel} to a method {@link insertMenu()} where the method includes a default {@link objectType} already).
+ * The {@link objectType} is optional as sometimes it might be already given by the context (e.g. when passing a {@link MenuModel} to a method {@link insertMenu()} where the method sets a default {@link objectType} if missing).
  */
 export type ModelOf<TObject> = TObject extends { model: infer TModel } ? TModel : object;
 /**
- * Model used to initialize an object instance. Usually the same as {@link ModelOf} but extended with some minimal required properties (mandatory properties).
+ * Model used to initialize an object instance. Usually the same as {@link ModelOf} but with some minimal required properties (mandatory properties).
  * Typically, adds an e.g. {@link parent} or {@link session} property which needs to be present when initializing an already created instance.
  */
 export type InitModelOf<TObject> = TObject extends { initModel: infer TInitModel } ? TInitModel : ModelOf<TObject>;

@@ -12,13 +12,13 @@ import $ from 'jquery';
 import {AggregateTableRow} from './Table';
 import {Cell, EnumObject, LookupRow, Page, Table, TableRowModel} from '../index';
 import {SomeRequired} from '../types';
-import {InitModelOf, ModelOf} from '../scout';
+import {InitModelOf} from '../scout';
 
 export type TableRowStatus = EnumObject<typeof TableRow.Status>;
 
 export default class TableRow implements TableRowModel {
   declare model: TableRowModel;
-  declare initModel: SomeRequired<ModelOf<this>, 'parent'>;
+  declare initModel: SomeRequired<this['model'], 'parent'>;
 
   cells: Cell[];
   checked: boolean;

@@ -8,14 +8,13 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {BasicFieldAdapter, Event, StringField} from '../../../index';
+import {BasicFieldAdapter, Event, StringField, StringFieldModel} from '../../../index';
 import {StringFieldSelectionChangeEvent} from './StringFieldEventMap';
-import {ModelOf} from '../../../scout';
 
 export default class StringFieldAdapter extends BasicFieldAdapter {
   declare widget: StringField;
 
-  protected override _initProperties(model: ModelOf<StringField> & { insertText?: boolean }) {
+  protected override _initProperties(model: StringFieldModel & { insertText?: boolean }) {
     if (model.insertText !== undefined) {
       // ignore pseudo property initially (to prevent the function StringField#insertText() to be replaced)
       delete model.insertText;

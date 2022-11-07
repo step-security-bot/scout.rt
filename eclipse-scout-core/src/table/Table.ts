@@ -9,12 +9,12 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {
-  Action, AggregateTableControl, AppLinkKeyStroke, arrays, BooleanColumn, Cell, CellEditorPopup, clipboard, Column, CompactColumn, ContextMenuKeyStroke, ContextMenuPopup, Desktop, Device, DoubleClickSupport, dragAndDrop, DragAndDropHandler,
-  EnumObject, EventHandler, Filter, FilterOrFunction, FilterResult, FilterSupport, graphics, HtmlComponent, IconColumn, Insets, KeyStrokeContext, LoadingSupport, Menu, MenuBar, MenuDestinations, MenuItemsOrder, menus, NumberColumn, objects,
-  Predicate, PropertyChangeEvent, Range, scout, scrollbars, Status, strings, styles, TableCompactHandler, TableControl, TableCopyKeyStroke, TableEventMap, TableFooter, TableHeader, TableLayout, TableModel, TableNavigationCollapseKeyStroke,
-  TableNavigationDownKeyStroke, TableNavigationEndKeyStroke, TableNavigationExpandKeyStroke, TableNavigationHomeKeyStroke, TableNavigationPageDownKeyStroke, TableNavigationPageUpKeyStroke, TableNavigationUpKeyStroke, TableRefreshKeyStroke,
-  TableRow, TableRowModel, TableSelectAllKeyStroke, TableSelectionHandler, TableStartCellEditKeyStroke, TableTextUserFilter, TableTileGridMediator, TableToggleRowKeyStroke, TableTooltip, TableUpdateBuffer, TableUserFilter, Tile,
-  TileTableHeaderBox, tooltips, UpdateFilteredElementsOptions, ValueField, Widget
+  Action, AggregateTableControl, AppLinkKeyStroke, arrays, BooleanColumn, Cell, CellEditorPopup, clipboard, Column, ColumnModel, CompactColumn, ContextMenuKeyStroke, ContextMenuPopup, Desktop, Device, DoubleClickSupport, dragAndDrop,
+  DragAndDropHandler, EnumObject, EventHandler, Filter, FilterOrFunction, FilterResult, FilterSupport, graphics, HtmlComponent, IconColumn, Insets, KeyStrokeContext, LoadingSupport, Menu, MenuBar, MenuDestinations, MenuItemsOrder, menus,
+  NumberColumn, objects, Predicate, PropertyChangeEvent, Range, scout, scrollbars, Status, strings, styles, TableCompactHandler, TableControl, TableCopyKeyStroke, TableEventMap, TableFooter, TableHeader, TableLayout, TableModel,
+  TableNavigationCollapseKeyStroke, TableNavigationDownKeyStroke, TableNavigationEndKeyStroke, TableNavigationExpandKeyStroke, TableNavigationHomeKeyStroke, TableNavigationPageDownKeyStroke, TableNavigationPageUpKeyStroke,
+  TableNavigationUpKeyStroke, TableRefreshKeyStroke, TableRow, TableRowModel, TableSelectAllKeyStroke, TableSelectionHandler, TableStartCellEditKeyStroke, TableTextUserFilter, TableTileGridMediator, TableToggleRowKeyStroke, TableTooltip,
+  TableUpdateBuffer, TableUserFilter, TableUserFilterModel, Tile, TileTableHeaderBox, tooltips, UpdateFilteredElementsOptions, ValueField, Widget
 } from '../index';
 import $ from 'jquery';
 import {ScrollToOptions} from '../scrollbar/scrollbars';
@@ -25,7 +25,7 @@ import {Alignment} from '../cell/Cell';
 import {DropType} from '../util/dragAndDrop';
 import {DisplayViewId} from '../tabbox/SimpleTab';
 import {DesktopPopupOpenEvent} from '../desktop/DesktopEventMap';
-import {FullModelOf, InitModelOf, ModelOf, ObjectOrChildModel, ObjectOrModel} from '../scout';
+import {FullModelOf, InitModelOf, ObjectOrChildModel, ObjectOrModel} from '../scout';
 
 export default class Table extends Widget implements TableModel {
   declare model: TableModel;
@@ -270,7 +270,7 @@ export default class Table extends Widget implements TableModel {
      */
     CHECKBOX: 'checkbox',
     /**
-     * When a row is checked the table-row is marked as checked. By default a background
+     * When a row is checked the table-row is marked as checked. By default, a background
      * color is set on the table-row when the row is checked.
      */
     TABLE_ROW: 'tableRow',
@@ -281,7 +281,7 @@ export default class Table extends Widget implements TableModel {
   } as const;
 
   /**
-   * This enum defines the reload reasons for a table reload operation
+   * This enum defines the reload-reasons for a table reload operation
    */
   static ReloadReason = {
     /**
@@ -757,7 +757,7 @@ export default class Table extends Widget implements TableModel {
     let $row = $mouseUpRow;
     let column = this._columnAtX(event.pageX);
     if (column !== this._mouseDownColumn) {
-      // Don't execute click / appLinks when the mouse gets pressed and moved outside of a cell
+      // Don't execute click / appLinks when the mouse gets pressed and moved outside a cell
       return;
     }
     let $target = $(event.target);
@@ -1930,7 +1930,7 @@ export default class Table extends Widget implements TableModel {
       let rowInViewRange = this.viewRangeRendered.contains(rowIndex);
 
       // Note: these checks can only be done, when table is rendered _and_ attached. When the table is detached it can
-      // still add rows, but these new rows are not rendered while the table is detached. Thus this check would fail,
+      // still add rows, but these new rows are not rendered while the table is detached. Thus, this check would fail,
       // when a row that has been added in detached state is removed again while table is still detached.
       if (tableAttached) {
         // if row is not rendered but its row-index is inside the view range -> inconsistency
@@ -2022,7 +2022,7 @@ export default class Table extends Widget implements TableModel {
         }
         $row.remove();
         if ($row[0] === row.$row[0]) {
-          // Only set to null if row still is linked to to original $row
+          // Only set to null if row still is linked to the original $row
           // If row got rendered again while the animation is still running, row.$row points to the new $row
           row.$row = null;
         }
@@ -2198,7 +2198,7 @@ export default class Table extends Widget implements TableModel {
 
   /**
    * @param openFieldPopupOnCellEdit when this parameter is set to true, the field instance may use this property (passed to onCellEditorRendered of the field)
-   * to decide whether or not it should open a popup immediately after it is rendered. This is used for Smart- and DateFields. Default is false.
+   * to decide whether it should open a popup immediately after it is rendered. This is used for Smart- and DateFields. Default is false.
    */
   prepareCellEditInternal(column: Column<any>, row: TableRow, openFieldPopupOnCellEdit?: boolean) {
     this.openFieldPopupOnCellEdit = scout.nvl(openFieldPopupOnCellEdit, false);
@@ -2763,8 +2763,8 @@ export default class Table extends Widget implements TableModel {
 
   doRowAction(row: TableRow, column?: Column<any>) {
     if (this.selectedRows.length !== 1 || this.selectedRows[0] !== row) {
-      // Only allow row action if the selected row was double clicked because the handler of the event expects a selected row.
-      // This may happen if the user modifies the selection using ctrl or shift while double clicking.
+      // Only allow row action if the selected row was double-clicked because the handler of the event expects a selected row.
+      // This may happen if the user modifies the selection using ctrl or shift while double-clicking.
       return;
     }
 
@@ -3090,8 +3090,7 @@ export default class Table extends Widget implements TableModel {
       return;
     }
 
-    // Has to be called before the property is set! Otherwise the grouping will not completely removed,
-    // since isGroupingPossible() will return false.
+    // Has to be called before the property is set! Otherwise, the grouping will not completely be removed, since isGroupingPossible() will return false.
     if (hierarchical) {
       this.removeAllColumnGroupings();
     }
@@ -3178,7 +3177,7 @@ export default class Table extends Widget implements TableModel {
       field.destroy();
       return;
     }
-    // Remove the cell-editor popup prior to destroying the field, so that the 'cell-editor-popup's focus context is
+    // Remove the cell-editor popup prior to destroying the field, so that the cell-editor-popup's focus context is
     // uninstalled first and the focus can be restored onto the last focused element of the surrounding focus context.
     // Otherwise, if the currently focused field is removed from DOM, the $entryPoint would be focused first, which can
     // be avoided if removing the popup first.
@@ -3884,13 +3883,15 @@ export default class Table extends Widget implements TableModel {
     }));
   }
 
-  protected _ensureFilter<T extends Filter<TableRow>>(filter: ModelOf<TableUserFilter> | FilterOrFunction<TableRow>): Filter<TableRow> {
+  protected _ensureFilter<T extends Filter<TableRow>>(filter: TableUserFilterModel | FilterOrFunction<TableRow>): Filter<TableRow> {
     if (filter instanceof TableUserFilter || !filter['objectType']) {
       return filter as Filter<TableRow>;
     }
 
     let filterModel = filter as FullModelOf<TableUserFilter>;
+    // @ts-expect-error
     if (filterModel.column) {
+      // @ts-expect-error
       filterModel.column = this.columnById(filterModel.column as string);
     }
     filterModel.table = this;
@@ -3998,7 +3999,7 @@ export default class Table extends Widget implements TableModel {
   _resizeAggregateCell($cell: JQuery) {
     // A resize of aggregate columns might also be necessary if the current resize column itself does not contain any content.
     // E.g. when having 3 columns: first and last have content, middle column is empty. While resizing the middle column,
-    // it might happen that the overlapping content from the first and the last collide. Therefore always update aggregate columns
+    // it might happen that the overlapping content from the first and the last collide. Therefore, always update aggregate columns
     // closest to $cell.
     let range = this._getAggrCellRange($cell);
     this._updateAggrCell(range[0]);
@@ -4133,7 +4134,7 @@ export default class Table extends Widget implements TableModel {
 
   /**
    * Sets the aggregation cell icon visible or not depending on the space available.
-   * If the available space is big enough to hold the content of the cell text and the icon, the icon will become visible. Otherwise the icon will be hidden.
+   * If the available space is big enough to hold the content of the cell text and the icon, the icon will become visible. Otherwise, the icon will be hidden.
    * This way no ellipsis will be shown as long as there is enough space for the text only.
    *
    * @param $icon The icon for which the visibility should be changed
@@ -4989,7 +4990,7 @@ export default class Table extends Widget implements TableModel {
    * The view range size is this value * 2.
    */
   calculateViewRangeSize(): number {
-    // Make sure row height is up to date (row height may be different after zooming)
+    // Make sure row height is up-to-date (row height may be different after zooming)
     this._updateRowHeight();
 
     if (this.rowHeight === 0) {
@@ -5329,7 +5330,7 @@ export default class Table extends Widget implements TableModel {
    * @param columns array of columns which were updated.
    */
   updateColumnHeaders(columns: Column[]) {
-    let oldColumnState: ModelOf<Column>;
+    let oldColumnState: ColumnModel;
 
     // Update model columns
     for (let i = 0; i < columns.length; i++) {

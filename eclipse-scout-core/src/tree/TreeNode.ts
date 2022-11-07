@@ -10,12 +10,12 @@
  */
 import {icons, objects, scout, Session, styles, texts, Tree, TreeNodeModel} from '../index';
 import $ from 'jquery';
-import {InitModelOf, ModelOf} from '../scout';
+import {InitModelOf} from '../scout';
 import {SomeRequired} from '../types';
 
 export default class TreeNode implements TreeNodeModel {
   declare model: TreeNodeModel;
-  declare initModel: SomeRequired<ModelOf<this>, 'parent'>;
+  declare initModel: SomeRequired<this['model'], 'parent'>;
 
   checked: boolean;
   childNodes: TreeNode[];

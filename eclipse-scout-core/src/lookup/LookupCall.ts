@@ -14,7 +14,7 @@ import LookupCallModel from './LookupCallModel';
 import LookupResult from './LookupResult';
 import {SomeRequired} from '../types';
 import {ObjectType} from '../ObjectFactory';
-import {ChildModelOf, FullModelOf, InitModelOf, ModelOf} from '../scout';
+import {ChildModelOf, FullModelOf, InitModelOf} from '../scout';
 
 /**
  * Base class for lookup calls. A concrete implementation of LookupCall.js which uses resources over a network
@@ -23,7 +23,7 @@ import {ChildModelOf, FullModelOf, InitModelOf, ModelOf} from '../scout';
  */
 export default class LookupCall<TKey> implements LookupCallModel<TKey> {
   declare model: LookupCallModel<TKey>;
-  declare initModel: SomeRequired<ModelOf<this>, 'session'>;
+  declare initModel: SomeRequired<this['model'], 'session'>;
 
   id: string;
   objectType: ObjectType<LookupCall<TKey>>;

@@ -10,12 +10,12 @@
  */
 import {Menu, StatusMenuMappingModel, Widget} from '../../index';
 import {StatusSeverity} from '../../status/Status';
-import {ModelOf, ObjectOrChildModel} from '../../scout';
+import {ObjectOrChildModel} from '../../scout';
 import {SomeRequired} from '../../types';
 
 export default class StatusMenuMapping extends Widget implements StatusMenuMappingModel {
   declare model: StatusMenuMappingModel;
-  declare initModel: SomeRequired<ModelOf<this>, 'parent' | 'menu'>;
+  declare initModel: SomeRequired<this['model'], 'parent' | 'menu'>;
 
   codes: number[];
   severities: StatusSeverity[];

@@ -8,10 +8,9 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {Action, Button, ButtonAdapterMenu, Dimension, EllipsisMenu, GroupBoxMenuItemsOrder, HtmlComponent, Menu, MenuBar, MenuItemsOrder, scout} from '../../src/index';
+import {Action, Button, ButtonAdapterMenu, Dimension, EllipsisMenu, GroupBoxMenuItemsOrder, HtmlComponent, Menu, MenuBar, MenuItemsOrder, MenuModel, scout} from '../../src/index';
 import {MenuSpecHelper} from '../../src/testing/index';
 import {MenuOrder} from '../../src/menu/MenuItemsOrder';
-import {ModelOf} from '../../src/scout';
 
 describe('MenuBar', () => {
   let helper: MenuSpecHelper, session: SandboxSession;
@@ -29,7 +28,7 @@ describe('MenuBar', () => {
       '</style>').appendTo($('#sandbox'));
   });
 
-  function createModel(text?: string, iconId?: string, menuTypes?: string[]): ModelOf<Menu> {
+  function createModel(text?: string, iconId?: string, menuTypes?: string[]): MenuModel {
     text = scout.nvl(text, 'Foo');
     menuTypes = scout.nvl(menuTypes, ['Table.EmptySpace']);
     return helper.createModel(text, iconId, menuTypes);

@@ -8,9 +8,11 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {arrays, CompactTreeDownKeyStroke, CompactTreeLeftKeyStroke, CompactTreeNode, CompactTreeRightKeyStroke, CompactTreeUpKeyStroke, HtmlComponent, MenuBar, MenuItemsOrder, Range, scout, Tree, TreeLayout, TreeNode} from '../index';
+import {
+  arrays, CompactTreeDownKeyStroke, CompactTreeLeftKeyStroke, CompactTreeNode, CompactTreeRightKeyStroke, CompactTreeUpKeyStroke, HtmlComponent, MenuBar, MenuItemsOrder, Range, scout, Tree, TreeLayout, TreeNode, TreeNodeModel
+} from '../index';
 import {TreeRenderExpansionOptions} from './Tree';
-import {InitModelOf, ModelOf} from '../scout';
+import {InitModelOf} from '../scout';
 
 export default class CompactTree extends Tree {
 
@@ -30,7 +32,7 @@ export default class CompactTree extends Tree {
     ]);
   }
 
-  protected override _createTreeNode(nodeModel?: ModelOf<CompactTreeNode>): CompactTreeNode {
+  protected override _createTreeNode(nodeModel?: TreeNodeModel): CompactTreeNode {
     nodeModel = scout.nvl(nodeModel, {});
     nodeModel.parent = this;
     return scout.create(CompactTreeNode, nodeModel as InitModelOf<CompactTreeNode>);

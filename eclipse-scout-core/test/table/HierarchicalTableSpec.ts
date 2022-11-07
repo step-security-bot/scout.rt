@@ -8,10 +8,9 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {arrays, Column, ColumnUserFilter, Table, TableRow} from '../../src/index';
+import {arrays, Column, ColumnUserFilter, Table, TableRow, TableRowModel} from '../../src/index';
 import {TableSpecHelper} from '../../src/testing/index';
 import SpecTable from '../../src/testing/table/SpecTable';
-import {ModelOf} from '../../src/scout';
 
 describe('HierarchicalTableSpec', () => {
   let session: SandboxSession;
@@ -71,7 +70,7 @@ describe('HierarchicalTableSpec', () => {
   }
 
   describe('add', () => {
-    let table: SpecTable, rowIds: string[], rows: ModelOf<TableRow>[];
+    let table: SpecTable, rowIds: string[], rows: TableRowModel[];
 
     /**
      * initial table
@@ -178,9 +177,8 @@ describe('HierarchicalTableSpec', () => {
     });
 
     it('a child row to a model row that was inserted before', () => {
-      let parentRow: ModelOf<TableRow> = {cells: ['newRow'], expanded: true};
-      // @ts-expect-error
-      let childRow: ModelOf<TableRow> = {cells: ['childRow'], parentRow: parentRow};
+      let parentRow: TableRowModel = {cells: ['newRow'], expanded: true};
+      let childRow: TableRowModel = {cells: ['childRow'], parentRow: parentRow};
 
       table.deleteAllRows();
       table.insertRows([parentRow, childRow]);

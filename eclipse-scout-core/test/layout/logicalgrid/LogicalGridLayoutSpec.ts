@@ -9,8 +9,8 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 // eslint-disable-next-line max-classes-per-file
-import {AbstractLayout, Dimension, GridData, HtmlComponent, HtmlCompPrefSizeOptions, LogicalGridData, LogicalGridLayout, Widget} from '../../../src/index';
-import {InitModelOf, ModelOf} from '../../../src/scout';
+import {AbstractLayout, Dimension, GridData, HtmlComponent, HtmlCompPrefSizeOptions, LogicalGridData, LogicalGridLayout, Widget, WidgetModel} from '../../../src/index';
+import {InitModelOf} from '../../../src/scout';
 
 describe('LogicalGridLayout', () => {
   let session: SandboxSession;
@@ -75,7 +75,7 @@ describe('LogicalGridLayout', () => {
     }
   }
 
-  function createLglChild(model: ModelOf<LglChild>): LglChild {
+  function createLglChild(model: WidgetModel): LglChild {
     let defaults = {
       parent: session.desktop
     };

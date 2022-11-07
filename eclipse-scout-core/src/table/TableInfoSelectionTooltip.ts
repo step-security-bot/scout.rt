@@ -9,12 +9,12 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {Menu, scout, TableFooter, TableInfoSelectionTooltipModel, Tooltip} from '../index';
-import {InitModelOf, ModelOf} from '../scout';
+import {InitModelOf} from '../scout';
 import {SomeRequired} from '../types';
 
 export default class TableInfoSelectionTooltip extends Tooltip implements TableInfoSelectionTooltipModel {
   declare model: TableInfoSelectionTooltipModel;
-  declare initModel: SomeRequired<ModelOf<this>, 'parent' | 'tableFooter'>;
+  declare initModel: SomeRequired<this['model'], 'parent' | 'tableFooter'>;
 
   tableFooter: TableFooter;
 

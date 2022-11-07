@@ -11,7 +11,7 @@
 import {scout, Tooltip, tooltips} from '../index';
 import $ from 'jquery';
 import TooltipModel from './TooltipModel';
-import {InitModelOf, ModelOf} from '../scout';
+import {InitModelOf} from '../scout';
 import {SomeRequired} from '../types';
 import MouseEnterEvent = JQuery.MouseEnterEvent;
 import MouseLeaveEvent = JQuery.MouseLeaveEvent;
@@ -36,7 +36,7 @@ export interface TooltipSupportOptions extends TooltipModel {
 
 export default class TooltipSupport {
   declare model: TooltipSupportOptions;
-  declare initModel: SomeRequired<ModelOf<this>, 'parent'>;
+  declare initModel: SomeRequired<this['model'], 'parent'>;
   declare self: TooltipSupport;
 
   protected _options: InitModelOf<TooltipSupport>;

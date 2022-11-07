@@ -13,6 +13,6 @@ import {ModelOf} from '../../scout';
 
 export default interface JsFormModel extends FormModel {
   jsFormObjectType: string;
-  jsFormModel?: ModelOf<Form>;
+  jsFormModel?: FormModel;
   inputData?: object;
 }

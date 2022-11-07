@@ -279,6 +279,7 @@ describe('SequenceBox', () => {
     it('shows the error status of the seq box', () => {
       let field = createField({
         errorStatus: {
+          // @ts-expect-error
           statusVisible: false,
           message: 'foo'
         }

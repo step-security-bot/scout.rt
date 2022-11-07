@@ -9,12 +9,12 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {Button, Event, Outline, Page, PageTileButtonModel, TileButton} from '../../../index';
-import {InitModelOf, ModelOf} from '../../../scout';
+import {InitModelOf} from '../../../scout';
 import {SomeRequired} from '../../../types';
 
 export default class PageTileButton extends TileButton implements PageTileButtonModel {
   declare model: PageTileButtonModel;
-  declare initModel: SomeRequired<ModelOf<this>, 'parent' | 'page' | 'outline'>;
+  declare initModel: SomeRequired<this['model'], 'parent' | 'page' | 'outline'>;
 
   page: Page;
   outline: Outline;

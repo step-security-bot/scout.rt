@@ -12,12 +12,12 @@ import {AbstractLayout, Device, Event, FormField, LookupRow, Popup, ProposalChoo
 import {ProposalChooserActiveFilterSelectedEvent, ProposalChooserLookupRowSelectedEvent} from './ProposalChooserEventMap';
 import {SmartFieldLookupResult} from './SmartField';
 import {StatusOrModel} from '../../../status/Status';
-import {InitModelOf, ModelOf} from '../../../scout';
+import {InitModelOf} from '../../../scout';
 import {SomeRequired} from '../../../types';
 
 export default class SmartFieldPopup<TValue> extends Popup implements SmartFieldPopupModel<TValue> {
   declare model: SmartFieldPopupModel<TValue>;
-  declare initModel: SomeRequired<ModelOf<this>, 'parent' | 'field'>;
+  declare initModel: SomeRequired<this['model'], 'parent' | 'field'>;
   declare eventMap: SmartFieldPopupEventMap<TValue>;
   declare self: SmartFieldPopup<any>;
 

@@ -8,9 +8,8 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {Locale} from '../../index';
+import {Locale, LocaleModel} from '../../index';
 import {DateFormatSymbols, DecimalFormatSymbols} from '../../session/LocaleModel';
-import {ModelOf} from '../../scout';
 
 export default class LocaleSpecHelper {
   static DEFAULT_LOCALE = 'de-CH';
@@ -27,7 +26,7 @@ export default class LocaleSpecHelper {
     this._initDateFormatDefaultPatterns();
   }
 
-  createModel(languageTag: string): ModelOf<Locale> {
+  createModel(languageTag: string): LocaleModel {
     return {
       languageTag: languageTag
     };

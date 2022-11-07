@@ -12,7 +12,7 @@ import {EnumObject, graphics, Insets, Rectangle, ResizableModel, scout} from '..
 import $ from 'jquery';
 import arrays from '../util/arrays';
 import {SomeRequired} from '../types';
-import {InitModelOf, ModelOf} from '../scout';
+import {InitModelOf} from '../scout';
 import MouseDownEvent = JQuery.MouseDownEvent;
 import MouseUpEvent = JQuery.MouseUpEvent;
 import MouseMoveEvent = JQuery.MouseMoveEvent;
@@ -33,7 +33,7 @@ export type ResizableMode = EnumObject<typeof Resizable.MODES>;
  */
 export default class Resizable implements ResizableModel {
   declare model: ResizableModel;
-  declare initModel: SomeRequired<ModelOf<this>, '$container'>;
+  declare initModel: SomeRequired<this['model'], '$container'>;
 
   modes: ResizableMode[];
   boundaries: Insets;

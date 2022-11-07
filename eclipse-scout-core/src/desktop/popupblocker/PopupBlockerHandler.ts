@@ -10,12 +10,12 @@
  */
 import {ErrorHandler, Event, EventHandler, MessageBoxes, PopupBlockerDesktopNotification, PopupBlockerHandlerModel, scout, Session, Status} from '../../index';
 import $ from 'jquery';
-import {InitModelOf, ModelOf} from '../../scout';
+import {InitModelOf} from '../../scout';
 import {SomeRequired} from '../../types';
 
 export default class PopupBlockerHandler implements PopupBlockerHandlerModel {
   declare model: PopupBlockerHandlerModel;
-  declare initModel: SomeRequired<ModelOf<this>, 'session'>;
+  declare initModel: SomeRequired<this['model'], 'session'>;
 
   session: Session;
   preserveOpener: boolean;

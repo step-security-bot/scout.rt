@@ -8,16 +8,15 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {Cell, LookupRow, scout, TableRow} from '../../../index';
-import {ModelOf} from '../../../scout';
+import {Cell, LookupRow, scout, TableRowModel} from '../../../index';
 
 /**
  * Creates a table-row for the given lookup-row.
  */
-export function createTableRow(lookupRow: LookupRow<any>, multipleColumns?: boolean): ModelOf<TableRow> {
+export function createTableRow(lookupRow: LookupRow<any>, multipleColumns?: boolean): TableRowModel {
   multipleColumns = scout.nvl(multipleColumns, false);
   let cells: Cell[] = [],
-    row: ModelOf<TableRow> = {
+    row: TableRowModel = {
       cells: cells,
       lookupRow: lookupRow
     };

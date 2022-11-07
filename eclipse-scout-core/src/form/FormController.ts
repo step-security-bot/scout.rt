@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {arrays, Desktop, DisplayParent, Form, FormControllerModel, Outline, scout, Session} from '../index';
-import {InitModelOf, ModelOf} from '../scout';
+import {InitModelOf} from '../scout';
 import {SomeRequired} from '../types';
 
 /**
@@ -19,7 +19,7 @@ import {SomeRequired} from '../types';
  */
 export default class FormController implements FormControllerModel {
   declare model: FormControllerModel;
-  declare initModel: SomeRequired<ModelOf<this>, 'displayParent' | 'session'>;
+  declare initModel: SomeRequired<this['model'], 'displayParent' | 'session'>;
 
   displayParent: DisplayParent;
   session: Session;

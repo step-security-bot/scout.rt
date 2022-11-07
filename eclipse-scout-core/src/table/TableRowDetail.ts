@@ -10,12 +10,12 @@
  */
 import {arrays, Column, EventHandler, HtmlComponent, Page, strings, Table, TableRow, TableRowDetailModel, Widget} from '../index';
 import {TableRowsInsertedEvent, TableRowsUpdatedEvent} from './TableEventMap';
-import {InitModelOf, ModelOf} from '../scout';
+import {InitModelOf} from '../scout';
 import {SomeRequired} from '../types';
 
 export default class TableRowDetail extends Widget implements TableRowDetailModel {
   declare model: TableRowDetailModel;
-  declare initModel: SomeRequired<ModelOf<this>, 'parent' | 'table' | 'page'>;
+  declare initModel: SomeRequired<this['model'], 'parent' | 'table' | 'page'>;
 
   table: Table;
   page: Page;

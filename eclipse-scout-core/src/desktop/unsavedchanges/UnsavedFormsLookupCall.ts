@@ -10,11 +10,10 @@
  */
 import {Form, StaticLookupCall, UnsavedFormChangesForm, UnsavedFormsLookupCallModel} from '../../index';
 import {SomeRequired} from '../../types';
-import {ModelOf} from '../../scout';
 
 export default class UnsavedFormsLookupCall extends StaticLookupCall<Form> implements UnsavedFormsLookupCallModel {
   declare model: UnsavedFormsLookupCallModel;
-  declare initModel: SomeRequired<ModelOf<this>, 'session' | 'unsavedForms'>;
+  declare initModel: SomeRequired<this['model'], 'session' | 'unsavedForms'>;
 
   unsavedForms: Form[];
 

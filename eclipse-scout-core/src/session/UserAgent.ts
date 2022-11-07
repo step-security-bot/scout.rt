@@ -12,11 +12,11 @@ import {scout} from '../index';
 import {DeviceType} from '../util/Device';
 import UserAgentModel from './UserAgentModel';
 import {SomeRequired} from '../types';
-import {InitModelOf, ModelOf} from '../scout';
+import {InitModelOf} from '../scout';
 
 export default class UserAgent implements UserAgentModel {
   declare model: UserAgentModel;
-  declare initModel: SomeRequired<ModelOf<this>, 'deviceType'>;
+  declare initModel: SomeRequired<this['model'], 'deviceType'>;
 
   deviceType: DeviceType;
   touch: boolean;
