@@ -19,7 +19,7 @@ import {Comparator} from '../types';
 import TileGridModel from './TileGridModel';
 import {MenuFilter} from '../menu/Menu';
 import {ScrollToOptions} from '../scrollbar/scrollbars';
-import {InitModelOf, ObjectOrChildModel, ObjectOrModel} from '../scout';
+import {FullModelOf, InitModelOf, ObjectOrChildModel, ObjectOrModel} from '../scout';
 
 /**
  * Only select top-level tile elements. Do not select elements with a 'tile' class deeper in the tree.
@@ -62,6 +62,7 @@ export default class TileGrid extends Widget implements TileGridModel {
   virtual: boolean;
   virtualScrolling: VirtualScrolling;
   withPlaceholders: boolean;
+  placeholderProducer: () => ObjectOrModel<PlaceholderTile>;
   textFilterEnabled: boolean;
   filterSupport: FilterSupport<Tile>;
   createTextFilter: () => TextFilter<Tile>;
@@ -662,7 +663,7 @@ export default class TileGrid extends Widget implements TileGridModel {
     this.invalidateLayoutTree();
   }
 
-  setPlaceholderProducer(placeholderProducer) {
+  setPlaceholderProducer(placeholderProducer: () => ObjectOrModel<PlaceholderTile>) {
     this.setProperty('placeholderProducer', placeholderProducer);
   }
 
@@ -718,7 +719,7 @@ export default class TileGrid extends Widget implements TileGridModel {
       return scout.create($.extend(true, {}, {
         objectType: PlaceholderTile,
         parent: this
-      }, placeholder));
+      }, placeholder) as FullModelOf<PlaceholderTile>);
     }
     throw new Error('Placeholder producer returned unexpected result.');
   }
