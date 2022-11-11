@@ -71,7 +71,7 @@ const widgetColumnMapPlugin = {
       let widgetName = className.substring(0, className.lastIndexOf('Model')),
         widgetMapName = `${widgetName}WidgetMap`,
         widgetMapType = getOrCreateExportedType(widgetMapName, root, body),
-        widgetMapMembers = widgetMapType.typeAnnotation.members,
+        widgetMapMembers = getMembers(widgetMapType),
         widgetMapProperties = [];
 
       // create a property for every entry of widgets
@@ -92,7 +92,7 @@ const widgetColumnMapPlugin = {
         // get/create columnMap
         let columnMapName = `${tableInfo.tableClassName}ColumnMap`,
           columnMapType = getOrCreateExportedType(columnMapName, root, body),
-          columnMapMembers = columnMapType.typeAnnotation.members,
+          columnMapMembers = getMembers(columnMapType),
           columnMapProperties = [];
 
         // create a property for every entry of tableInfo.columns
@@ -184,6 +184,13 @@ function getOrCreateExportedType(name, root, body) {
   let type = j.tsTypeAliasDeclaration(j.identifier(name), j.tsTypeLiteral([]));
   body.push(j.exportNamedDeclaration(type));
   return type;
+}
+
+function getMembers(type) {
+  if (type.typeAnnotation.type === 'TSIntersectionType') {
+    return (type.typeAnnotation.types.find(t => t.type === 'TSTypeLiteral') || {members: []}).members;
+  }
+  return type.typeAnnotation.members;
 }
 
 function getOrCreateExportedClass(name, root, body) {
