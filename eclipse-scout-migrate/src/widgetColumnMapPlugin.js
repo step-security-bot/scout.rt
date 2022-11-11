@@ -53,7 +53,7 @@ const widgetColumnMapPlugin = {
             let tableFieldPath = findParentTableFieldPath(tablePath);
             tableInfo = {
               // create a table class name from the id of the table or the id of the tableField
-              tableClassName: createTableClassName(getId(tablePath.node), getId(tableFieldPath.node)),
+              tableClassName: createTableClassName(getId(tablePath.node), tableFieldPath && getId(tableFieldPath.node)),
               columns: new Map()
             };
             tables.set(tablePath.node, tableInfo);
