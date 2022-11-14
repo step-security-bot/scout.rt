@@ -36,7 +36,7 @@ const widgetColumnMapPlugin = {
     // noinspection JSCheckFunctionSignatures
     root.find(j.ExportDefaultDeclaration)
       .find(j.ArrowFunctionExpression)
-      .find(j.ObjectExpression, createObjectPropertyFilter('id', 'objectType'))
+      .find(j.ObjectExpression, node => findObjectProperty(node, 'id') && findObjectProperty(node, 'objectType'))
       .forEach(path => {
         let node = path.node,
           idAndObjectType = getIdAndObjectType(node),
@@ -122,10 +122,6 @@ const widgetColumnMapPlugin = {
     return root.toSource(defaultRecastOptions);
   }
 };
-
-function createObjectPropertyFilter(...propertyNames) {
-  return {properties: propertyNames.map(name => ({type: 'ObjectProperty', key: {name: name}}))};
-}
 
 function findObjectProperty(objectNode, propertyName) {
   return objectNode.properties.find(
