@@ -204,13 +204,13 @@ function getOrCreateExportedClass(name, root, body) {
 function createMapProperty(id, objectType) {
   let identifier = j.identifier(`'${id}'`),
     // add trailing ; to type, otherwise there is no ; at the end of the line when you use tsPropertySignature
-    typeAnnotation = j.tsTypeAnnotation(j.tsTypeReference(j.identifier(`${objectType};`)));
+    typeAnnotation = j.tsTypeAnnotation(j.tsTypeReference(j.identifier(`${addGenericIfNecessary(objectType)};`)));
   return j.tsPropertySignature(identifier, typeAnnotation);
 }
 
 function createClassProperty(id, objectType) {
   let identifier = j.identifier(id),
-    typeAnnotation = j.tsTypeAnnotation(j.tsTypeReference(j.identifier(objectType)));
+    typeAnnotation = j.tsTypeAnnotation(j.tsTypeReference(j.identifier(addGenericIfNecessary(objectType))));
   return j.classProperty(identifier, null, typeAnnotation);
 }
 
@@ -234,6 +234,23 @@ function isTable(objectType) {
 
 function isTableField(objectType) {
   return objectType && objectType.endsWith('TableField');
+}
+
+function needsGeneric(objectType) {
+  return objectType && (objectType === 'SmartField'
+    || objectType === 'SmartColumn'
+    || objectType === 'ListBox'
+    || objectType === 'TreeBox'
+    || objectType === 'ModeSelectorField'
+    || objectType === 'RadioButtonGroup'
+    || objectType === 'RadioButton');
+}
+
+function addGenericIfNecessary(objectType) {
+  if (needsGeneric(objectType)) {
+    return `${objectType}<any>`;
+  }
+  return objectType;
 }
 
 export default widgetColumnMapPlugin;
