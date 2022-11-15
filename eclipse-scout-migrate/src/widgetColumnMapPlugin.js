@@ -134,12 +134,12 @@ function findObjectProperty(objectNode, propertyName) {
 
 function getId(node) {
   let idProperty = findObjectProperty(node, 'id');
-  return idProperty.value.value;
+  return ((idProperty || {}).value || {}).value;
 }
 
 function getObjectType(node) {
   let objectTypeProperty = findObjectProperty(node, 'objectType');
-  return objectTypeProperty.value.name;
+  return ((objectTypeProperty || {}).value || {}).name;
 }
 
 function getIdAndObjectType(node) {
