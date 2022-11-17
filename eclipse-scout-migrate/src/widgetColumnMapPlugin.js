@@ -47,8 +47,11 @@ const widgetColumnMapPlugin = {
         }
         if (isColumn(objectType)) {
           // collect all column infos for one table
-          let tablePath = findParentTablePath(path),
-            tableInfo = tables.get(tablePath.node);
+          let tablePath = findParentTablePath(path);
+          if (!tablePath) {
+            return;
+          }
+          let tableInfo = tables.get(tablePath.node);
           if (!tableInfo) {
             let tableFieldPath = findParentTableFieldPath(tablePath);
             tableInfo = {
