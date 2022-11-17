@@ -10,8 +10,9 @@
  */
 
 // noinspection SpellCheckingInspection
+import fs from 'fs';
 import jscodeshift from 'jscodeshift';
-import {defaultRecastOptions, findParentPath} from './common.js';
+import {crlfToLf, defaultRecastOptions, findParentPath, insertMissingImportsForTypes, mapType, removeEmptyLinesBetweenImports} from './common.js';
 
 const j = jscodeshift.withParser('ts');
 
@@ -120,11 +121,90 @@ const widgetColumnMapPlugin = {
         columnMapProperty.declare = true;
         tableMembers.splice(0, tableMembers.length, columnMapProperty);
       });
+
+      let mainWidgetFileNameWithoutFileExtension = fileName.substring(0, fileName.lastIndexOf('Model')),
+        mainWidgetFileName, mainWidgetRoot;
+
+      // look for main widget as .js
+      mainWidgetFileName = mainWidgetFileNameWithoutFileExtension + '.js';
+      mainWidgetRoot = getMainWidgetRoot(mainWidgetFileName);
+
+      // look for main widget as .ts
+      if (!mainWidgetRoot) {
+        mainWidgetFileName = mainWidgetFileNameWithoutFileExtension + '.ts';
+        mainWidgetRoot = getMainWidgetRoot(mainWidgetFileName);
+      }
+
+      if (mainWidgetRoot) {
+        if (mainWidgetFileName.endsWith('.js')) {
+          // add widgetMap property with @type in .js case
+          // noinspection JSCheckFunctionSignatures
+          mainWidgetRoot
+            .find(j.ClassDeclaration, {id: {name: widgetName}})
+            .find(j.ClassMethod, {kind: 'constructor'})
+            .forEach(/** NodePath<namedTypes.ClassMethod, namedTypes.ClassMethod> */path => {
+              let node = path.node,
+                constructorMembers = node.body.body,
+                widgetMapAssignmentExpression = findConstructorAssignmentExpression(constructorMembers, 'widgetMap');
+              if (!widgetMapAssignmentExpression) {
+                // create an assignment expression after the super call
+                let superCall = findConstructorSuperCall(constructorMembers),
+                  superCallIndex = constructorMembers.indexOf(superCall) + 1;
+                widgetMapAssignmentExpression = createAssignmentExpressionWithNull('widgetMap');
+                constructorMembers.splice(superCallIndex, 0, widgetMapAssignmentExpression);
+              }
+              // add type comment
+              widgetMapAssignmentExpression.comments = [createJsDocTypeComment(widgetMapName)];
+            });
+        }
+        if (mainWidgetFileName.endsWith('.ts')) {
+          // declare widgetMap property in .ts case
+          // noinspection JSCheckFunctionSignatures
+          mainWidgetRoot
+            .find(j.ClassDeclaration, {id: {name: widgetName}})
+            .forEach(/** NodePath<namedTypes.ClassDeclaration, namedTypes.ClassDeclaration> */path => {
+              let node = path.node,
+                classMembers = node.body.body,
+                widgetMapProperty = findClassProperty(classMembers, 'widgetMap');
+              if (widgetMapProperty) {
+                widgetMapProperty.typeAnnotation = createTypeAnnotation(widgetMapName);
+              } else {
+                widgetMapProperty = createClassProperty('widgetMap', widgetMapName);
+                classMembers.splice(0, 0, widgetMapProperty);
+              }
+              widgetMapProperty.declare = true;
+
+              // remove widgetMap assignment from constructor
+              let classConstructor = findConstructor(classMembers),
+                constructorMembers = classConstructor ? classConstructor.body.body : [],
+                widgetMapAssignmentExpression = classConstructor ? findConstructorAssignmentExpression(constructorMembers, 'widgetMap') : null;
+              if (widgetMapAssignmentExpression) {
+                constructorMembers.splice(constructorMembers.indexOf(widgetMapAssignmentExpression), 1);
+              }
+            });
+
+          // insert missing imports
+          insertMissingImportsForTypes(j, mainWidgetRoot, [mapType(j, `tempModule.${widgetMapName}`)], {tempModule: `./${className}`}, mainWidgetFileName);
+        }
+
+        // write file
+        fs.writeFileSync(mainWidgetFileName, crlfToLf(removeEmptyLinesBetweenImports(mainWidgetRoot.toSource(defaultRecastOptions))));
+      }
     }
 
     return root.toSource(defaultRecastOptions);
   }
 };
+
+function getMainWidgetRoot(mainWidgetFileName) {
+  try {
+    let mainWidgetBuffer = fs.readFileSync(mainWidgetFileName);
+    return j(mainWidgetBuffer.toString());
+  } catch (error) {
+    // nop
+  }
+  return null;
+}
 
 function findObjectProperty(objectNode, propertyName) {
   return objectNode.properties.find(
@@ -133,6 +213,51 @@ function findObjectProperty(objectNode, propertyName) {
       n.key.type === 'Identifier' &&
       n.key.name === propertyName
   );
+}
+
+function findClassProperty(classMembers, propertyName) {
+  return classMembers.find(n =>
+    n.type === 'ClassProperty' &&
+    n.key.type === 'Identifier' &&
+    n.key.name === propertyName);
+}
+
+function findConstructor(classMembers) {
+  return classMembers.find(n =>
+    n.type === 'ClassMethod' &&
+    n.kind === 'constructor'
+  );
+}
+
+function findConstructorAssignmentExpression(constructorMembers, propertyName) {
+  return constructorMembers.find(n =>
+    n.type === 'ExpressionStatement' &&
+    n.expression.type === 'AssignmentExpression' &&
+    n.expression.left.type === 'MemberExpression' &&
+    n.expression.left.object.type === 'ThisExpression' &&
+    n.expression.left.property.type === 'Identifier' &&
+    n.expression.left.property.name === propertyName
+  );
+}
+
+function findConstructorSuperCall(constructorMembers) {
+  return constructorMembers.find(n =>
+    n.type === 'ExpressionStatement' &&
+    n.expression.type === 'CallExpression' &&
+    n.expression.callee.type === 'Super'
+  );
+}
+
+function findParentTablePath(columnPath) {
+  return findParentPathByObjectType(columnPath, isTable);
+}
+
+function findParentTableFieldPath(tablePath) {
+  return findParentPathByObjectType(tablePath, isTableField);
+}
+
+function findParentPathByObjectType(path, objectTypePredicate) {
+  return findParentPath(path, p => p.node.type === 'ObjectExpression' && objectTypePredicate((findObjectProperty(p.node, 'objectType') || {value: {}}).value.name));
 }
 
 function getId(node) {
@@ -149,18 +274,6 @@ function getIdAndObjectType(node) {
   let id = getId(node),
     objectType = getObjectType(node);
   return {id, objectType};
-}
-
-function findParentTablePath(columnPath) {
-  return findParentPathByObjectType(columnPath, isTable);
-}
-
-function findParentTableFieldPath(tablePath) {
-  return findParentPathByObjectType(tablePath, isTableField);
-}
-
-function findParentPathByObjectType(path, objectTypePredicate) {
-  return findParentPath(path, p => p.node.type === 'ObjectExpression' && objectTypePredicate((findObjectProperty(p.node, 'objectType') || {value: {}}).value.name));
 }
 
 function createTableClassName(tableId, tableFieldId) {
@@ -207,14 +320,29 @@ function getOrCreateExportedClass(name, root, body) {
 function createMapProperty(id, objectType) {
   let identifier = j.identifier(`'${id}'`),
     // add trailing ; to type, otherwise there is no ; at the end of the line when you use tsPropertySignature
-    typeAnnotation = j.tsTypeAnnotation(j.tsTypeReference(j.identifier(`${addGenericIfNecessary(objectType)};`)));
+    typeAnnotation = createTypeAnnotation(`${addGenericIfNecessary(objectType)};`);
   return j.tsPropertySignature(identifier, typeAnnotation);
 }
 
 function createClassProperty(id, objectType) {
   let identifier = j.identifier(id),
-    typeAnnotation = j.tsTypeAnnotation(j.tsTypeReference(j.identifier(addGenericIfNecessary(objectType))));
+    typeAnnotation = createTypeAnnotation(addGenericIfNecessary(objectType));
   return j.classProperty(identifier, null, typeAnnotation);
+}
+
+function createTypeAnnotation(objectType) {
+  return j.tsTypeAnnotation(j.tsTypeReference(j.identifier(objectType)));
+}
+
+function createAssignmentExpressionWithNull(propertyName) {
+  let identifier = j.identifier(propertyName),
+    member = j.memberExpression(j.thisExpression(), identifier),
+    assignment = j.assignmentExpression('=', member, j.nullLiteral());
+  return j.expressionStatement(assignment);
+}
+
+function createJsDocTypeComment(type) {
+  return j.commentBlock(`* @type ${type} `);
 }
 
 function isWidget(objectType) {
