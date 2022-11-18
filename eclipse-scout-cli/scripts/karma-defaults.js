@@ -53,7 +53,10 @@ module.exports = (config, specEntryPoint) => {
 
   if (webpackConfig.externals) {
     // Remove externals so they don't have to be provided
-    delete webpackConfig.externals;
+    // Add jquery as the only external, so it won't be loaded twice because it is provided by @metahub/karma-jasmine-jquery
+    webpackConfig.externals = {
+      'jquery': 'jQuery'
+    };
   }
 
   // specify output directory for webpack (use different from normal output dir so that they are not polluted with test artifacts)
