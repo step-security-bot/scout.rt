@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {keys, scout, TabBox, TabItem} from '../../../../src/index';
-import {JQueryTesting, TabBoxSpecHelper} from '../../../../src/testing/index';
+import {JQueryTesting, TabBoxSpecHelper} from '../../../../src/testing/testing-index';
 
 describe('TabBox', () => {
   let session: SandboxSession;

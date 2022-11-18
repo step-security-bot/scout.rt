@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {BooleanColumn, Cell, TableRow} from '../../../src/index';
-import {JQueryTesting, TableSpecHelper} from '../../../src/testing/index';
+import {JQueryTesting, TableSpecHelper} from '../../../src/testing/testing-index';
 
 describe('BooleanColumn', () => {
   let session: SandboxSession;

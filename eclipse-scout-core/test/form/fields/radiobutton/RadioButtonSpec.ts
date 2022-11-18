@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {keys, RadioButton, scout} from '../../../../src/index';
-import {JQueryTesting} from '../../../../src/testing';
+import {JQueryTesting} from '../../../../src/testing/testing-index';
 
 describe('RadioButton', () => {
   let session: SandboxSession;

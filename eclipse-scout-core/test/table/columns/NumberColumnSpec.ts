@@ -8,7 +8,7 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {LocaleSpecHelper, TableSpecHelper} from '../../../src/testing/index';
+import {LocaleSpecHelper, TableSpecHelper} from '../../../src/testing/testing-index';
 import {Cell, DecimalFormat, Locale, NumberColumn, Range, RemoteEvent, Status, styles} from '../../../src/index';
 
 describe('NumberColumn', () => {

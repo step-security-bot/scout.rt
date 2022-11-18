@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {arrays, CompactTree, InitModelOf, ModelAdapter, ObjectFactory, ObjectType, RemoteEvent, Session, Tree, TreeAdapter, TreeModel, TreeNode, TreeNodeModel, Widget} from '../../index';
-import {SpecTree, SpecTreeAdapter} from '../index';
+import {SpecTree, SpecTreeAdapter} from '../testing-index';
 import $ from 'jquery';
 
 export class TreeSpecHelper {

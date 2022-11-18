@@ -12,7 +12,7 @@ import {
   arrays, Cell, CellModel, ChildModelOf, Column, ColumnModel, comparators, DecimalFormat, Filter, InitModelOf, MenuModel, ModelAdapter, NumberColumnModel, ObjectFactory, ObjectOrChildModel, ObjectOrModel, objects, ObjectType, Primitive,
   RemoteEvent, scout, Session, Table, TableModel, TableRow, TableRowModel, TableTextUserFilter, TextColumnUserFilter, Widget
 } from '../../index';
-import {MenuSpecHelper, SpecTable, SpecTableAdapter} from '../index';
+import {MenuSpecHelper, SpecTable, SpecTableAdapter} from '../testing-index';
 import $ from 'jquery';
 
 export class TableSpecHelper {

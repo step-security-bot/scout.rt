@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {StringField} from '../../../../src/index';
-import {FormSpecHelper} from '../../../../src/testing/index';
+import {FormSpecHelper} from '../../../../src/testing/testing-index';
 import {FullModelOf, InitModelOf} from '../../../../src/scout';
 
 describe('StringFieldAdapter', () => {

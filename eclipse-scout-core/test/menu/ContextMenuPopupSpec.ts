@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {ContextMenuPopup, Menu, Popup, scout, Widget} from '../../src/index';
-import {MenuSpecHelper} from '../../src/testing/index';
+import {MenuSpecHelper} from '../../src/testing/testing-index';
 
 describe('ContextMenuPopup', () => {
   let helper: MenuSpecHelper, session: SandboxSession;

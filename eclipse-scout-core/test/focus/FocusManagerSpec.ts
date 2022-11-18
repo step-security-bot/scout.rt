@@ -8,7 +8,7 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {FocusManagerSpecHelper, FormSpecHelper} from '../../src/testing/index';
+import {FocusManagerSpecHelper, FormSpecHelper} from '../../src/testing/testing-index';
 import {FocusManager, FocusRule, focusUtils, GlassPane, scout} from '../../src/index';
 
 /* global FocusManagerSpecHelper */

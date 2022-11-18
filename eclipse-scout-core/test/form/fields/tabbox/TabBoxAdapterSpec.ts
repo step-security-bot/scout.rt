@@ -8,7 +8,7 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {TabBoxSpecHelper} from '../../../../src/testing/index';
+import {TabBoxSpecHelper} from '../../../../src/testing/testing-index';
 
 describe('TabBoxAdapter', () => {
   let session: SandboxSession;

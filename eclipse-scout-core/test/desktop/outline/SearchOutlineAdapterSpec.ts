@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {scout, SearchOutline} from '../../../src/index';
-import {OutlineSpecHelper} from '../../../src/testing/index';
+import {OutlineSpecHelper} from '../../../src/testing/testing-index';
 
 describe('SearchOutlineAdapter', () => {
   let helper: OutlineSpecHelper, session: SandboxSession;

@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {DateField, DateFieldModel, dates, InitModelOf, keys, RemoteEvent, scout} from '../../../../src/index';
-import {JQueryTesting} from '../../../../src/testing/index';
+import {JQueryTesting} from '../../../../src/testing/testing-index';
 
 describe('DateFieldAdapter', () => {
   let session: SandboxSession;

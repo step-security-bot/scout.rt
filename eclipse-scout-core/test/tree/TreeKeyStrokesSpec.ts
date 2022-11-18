@@ -11,7 +11,7 @@
 
 /* eslint-disable no-multi-assign */
 import {keys} from '../../src/index';
-import {JQueryTesting, TreeSpecHelper} from '../../src/testing/index';
+import {JQueryTesting, TreeSpecHelper} from '../../src/testing/testing-index';
 
 describe('TreeKeyStrokes', () => {
   let session: SandboxSession;

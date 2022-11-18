@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {RemoteEvent, Tree} from '../../src/index';
-import {TreeSpecHelper} from '../../src/testing/index';
+import {TreeSpecHelper} from '../../src/testing/testing-index';
 
 describe('CompactTreeAdapter', () => {
   let session: SandboxSession;

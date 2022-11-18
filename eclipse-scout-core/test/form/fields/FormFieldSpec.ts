@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {CheckBoxField, FormField, GridData, GroupBox, Menu, RadioButton, RadioButtonGroup, scout, Status, StringField, TreeVisitResult, Widget} from '../../../src/index';
-import {FormSpecHelper, MenuSpecHelper} from '../../../src/testing/index';
+import {FormSpecHelper, MenuSpecHelper} from '../../../src/testing/testing-index';
 import {InitModelOf} from '../../../src/scout';
 
 describe('FormField', () => {

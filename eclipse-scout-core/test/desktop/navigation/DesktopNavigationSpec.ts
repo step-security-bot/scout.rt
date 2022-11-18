@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {Desktop, scout, Tree, ViewButton} from '../../../src/index';
-import {OutlineSpecHelper} from '../../../src/testing/index';
+import {OutlineSpecHelper} from '../../../src/testing/testing-index';
 
 describe('DesktopNavigation', () => {
   let session: SandboxSession, desktop: Desktop, outlineHelper: OutlineSpecHelper;

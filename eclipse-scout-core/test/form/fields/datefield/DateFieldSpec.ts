@@ -11,7 +11,7 @@
 import {
   DateField, DateFieldModel, DateFieldPredictionResult, DateFormat, DatePicker, DatePickerTouchPopup, dates, FullModelOf, keys, Popup, RemoteEvent, scout, Status, TimePicker, TimePickerTouchPopup, ValidationFailedStatus
 } from '../../../../src/index';
-import {FormSpecHelper, JQueryTesting} from '../../../../src/testing/index';
+import {FormSpecHelper, JQueryTesting} from '../../../../src/testing/testing-index';
 
 describe('DateField', () => {
   let session: SandboxSession;

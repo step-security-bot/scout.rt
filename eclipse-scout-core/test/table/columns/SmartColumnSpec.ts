@@ -8,7 +8,7 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {TableSpecHelper} from '../../../src/testing/index';
+import {TableSpecHelper} from '../../../src/testing/testing-index';
 import {arrays, Cell, LookupCall, objects, scout, SmartColumn} from '../../../src';
 
 describe('SmartColumn', () => {

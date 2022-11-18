@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {Dimension, HtmlComponent, Popup, scout, StringField, Widget, WidgetPopup} from '../../src/index';
-import {JQueryTesting} from '../../src/testing';
+import {JQueryTesting} from '../../src/testing/testing-index';
 
 describe('Popup', () => {
   let session: SandboxSession, $desktop: JQuery;

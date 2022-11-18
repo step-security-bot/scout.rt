@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {DecimalFormat, Locale, RoundingMode} from '../../src/index';
-import {LocaleSpecHelper} from '../../src/testing/index';
+import {LocaleSpecHelper} from '../../src/testing/testing-index';
 
 describe('DecimalFormat', () => {
   let locale: Locale;

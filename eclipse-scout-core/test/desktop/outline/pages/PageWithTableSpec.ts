@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {arrays, Column, Outline, Page, PageWithTable, scout, SmartColumn, StaticLookupCall, Table, TableRow} from '../../../../src/index';
-import {OutlineSpecHelper} from '../../../../src/testing/index';
+import {OutlineSpecHelper} from '../../../../src/testing/testing-index';
 
 describe('PageWithTable', () => {
 

@@ -8,7 +8,7 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {DummyLookupCall} from '../index';
+import {DummyLookupCall} from '../testing-index';
 import {LookupRow} from '../../index';
 
 export class ColumnDescriptorDummyLookupCall extends DummyLookupCall {

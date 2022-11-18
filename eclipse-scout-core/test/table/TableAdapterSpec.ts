@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {defaultValues, RemoteEvent, RemoteResponse, Table, TableAdapter, TableRow, TableTextUserFilter} from '../../src/index';
-import {LocaleSpecHelper, SpecTable, SpecTableAdapter, TableModelWithCells, TableSpecHelper} from '../../src/testing/index';
+import {LocaleSpecHelper, SpecTable, SpecTableAdapter, TableModelWithCells, TableSpecHelper} from '../../src/testing/testing-index';
 
 describe('TableAdapter', () => {
   let session: SandboxSession;

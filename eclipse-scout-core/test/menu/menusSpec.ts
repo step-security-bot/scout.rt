@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {Menu, menus, scout} from '../../src/index';
-import {MenuSpecHelper} from '../../src/testing/index';
+import {MenuSpecHelper} from '../../src/testing/testing-index';
 
 describe('menus', () => {
   let helper: MenuSpecHelper, session: SandboxSession;

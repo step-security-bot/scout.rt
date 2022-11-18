@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {arrays, Column, ColumnUserFilter, Table, TableRow, TableRowModel} from '../../src/index';
-import {SpecTable, TableSpecHelper} from '../../src/testing/index';
+import {SpecTable, TableSpecHelper} from '../../src/testing/testing-index';
 
 describe('HierarchicalTableSpec', () => {
   let session: SandboxSession;

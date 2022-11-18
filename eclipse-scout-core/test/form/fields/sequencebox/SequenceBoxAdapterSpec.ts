@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {DateField, scout, SequenceBox, SequenceBoxAdapter, StringField} from '../../../../src/index';
-import {CloneSpecHelper, FormSpecHelper, MenuSpecHelper} from '../../../../src/testing/index';
+import {CloneSpecHelper, FormSpecHelper, MenuSpecHelper} from '../../../../src/testing/testing-index';
 
 describe('SequenceBoxAdapter', () => {
   let session: SandboxSession, helper: FormSpecHelper, menuHelper: MenuSpecHelper;

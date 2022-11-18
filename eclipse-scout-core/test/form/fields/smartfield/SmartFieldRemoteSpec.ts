@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {LookupRow, QueryBy, RemoteEvent, scout, SmartField, SmartFieldPopup, Status} from '../../../../src/index';
-import {FormSpecHelper, JQueryTesting} from '../../../../src/testing/index';
+import {FormSpecHelper, JQueryTesting} from '../../../../src/testing/testing-index';
 
 /* global linkWidgetAndAdapter */
 describe('SmartFieldRemote', () => {

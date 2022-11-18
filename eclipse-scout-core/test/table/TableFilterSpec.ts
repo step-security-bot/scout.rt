@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {ChildModelOf, Column, ColumnUserFilter, Range, RemoteEvent, Table, TextColumnUserFilter} from '../../src/index';
-import {SpecTable, TableSpecHelper} from '../../src/testing';
+import {SpecTable, TableSpecHelper} from '../../src/testing/testing-index';
 
 describe('TableFilter', () => {
   let session: SandboxSession;

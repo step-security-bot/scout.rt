@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {BeanColumn, NullWidget, ObjectFactory, scout, Table, TableTextUserFilter} from '../../../src/index';
-import {TableSpecHelper} from '../../../src/testing/index';
+import {TableSpecHelper} from '../../../src/testing/testing-index';
 
 describe('TableTextUserFilter', () => {
   let session: SandboxSession;

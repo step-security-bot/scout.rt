@@ -8,7 +8,7 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {TestingApp} from '../src/testing/index';
+import {TestingApp} from '../src/testing/testing-index';
 
 describe('RemoteApp', () => {
   let session: SandboxSession;

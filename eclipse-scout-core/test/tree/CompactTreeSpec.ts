@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {Range} from '../../src/index';
-import {JQueryTesting, TreeSpecHelper} from '../../src/testing/index';
+import {JQueryTesting, TreeSpecHelper} from '../../src/testing/testing-index';
 
 describe('CompactTree', () => {
   let session: SandboxSession;

@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {fields, Form, StringField, TabBox, TabItem} from '../../../src/index';
-import {FormSpecHelper} from '../../../src/testing';
+import {FormSpecHelper} from '../../../src/testing/testing-index';
 
 describe('scout.fields', () => {
   let session: SandboxSession;

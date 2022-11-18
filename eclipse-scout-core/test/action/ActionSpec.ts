@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {Action, keys, scout} from '../../src/index';
-import {JQueryTesting} from '../../src/testing';
+import {JQueryTesting} from '../../src/testing/testing-index';
 
 describe('Action', () => {
   let $sandbox: JQuery, session: SandboxSession;

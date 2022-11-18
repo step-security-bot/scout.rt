@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {InitModelOf, RemoteEvent, scout, Session, TableControl, TableControlAdapter, Widget} from '../../../src/index';
-import {SpecTable, TableSpecHelper} from '../../../src/testing/index';
+import {SpecTable, TableSpecHelper} from '../../../src/testing/testing-index';
 
 describe('TableControl', () => {
   let session: SandboxSession;

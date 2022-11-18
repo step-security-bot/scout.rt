@@ -8,7 +8,7 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {FormSpecHelper, JQueryTesting} from '../../src/testing/index';
+import {FormSpecHelper, JQueryTesting} from '../../src/testing/testing-index';
 import {tooltips, ValueField} from '../../src/index';
 
 describe('scout.tooltips', () => {

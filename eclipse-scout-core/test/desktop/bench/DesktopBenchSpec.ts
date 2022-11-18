@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {Desktop, Form} from '../../../src/index';
-import {FormSpecHelper, OutlineSpecHelper} from '../../../src/testing/index';
+import {FormSpecHelper, OutlineSpecHelper} from '../../../src/testing/testing-index';
 
 describe('DesktopBench', () => {
   let helper: OutlineSpecHelper, session: SandboxSession, desktop: Desktop, formHelper: FormSpecHelper;

@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {Extension, scout, StringField} from '../src/index';
-import {LocaleSpecHelper} from '../src/testing/index';
+import {LocaleSpecHelper} from '../src/testing/testing-index';
 import {InitModelOf} from '../src/scout';
 
 describe('Extension', () => {

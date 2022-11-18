@@ -8,7 +8,7 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {FormSpecHelper, OutlineSpecHelper} from '../../src/testing/index';
+import {FormSpecHelper, OutlineSpecHelper} from '../../src/testing/testing-index';
 import {CancelMenu, CloseMenu, Dimension, fields, Form, NullWidget, OkMenu, Popup, Rectangle, ResetMenu, SaveMenu, scout, Session, Status, StringField, TabBox, TabItem, webstorage, WrappedFormField} from '../../src/index';
 import {DateField, GroupBox} from '../../src';
 

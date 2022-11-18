@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {DialogLayout, Form, FormField, GroupBox, GroupBoxModel, HorizontalGrid, LabelField, scout, StringField, VerticalSmartGrid, Widget} from '../../../../src/index';
-import {FormSpecHelper} from '../../../../src/testing/index';
+import {FormSpecHelper} from '../../../../src/testing/testing-index';
 import {InitModelOf} from '../../../../src/scout';
 
 describe('GroupBox', () => {

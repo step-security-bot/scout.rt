@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {BasicField, BasicFieldAdapter, RemoteEvent, scout, StringField, StringFieldModel} from '../../../src/index';
-import {FormSpecHelper, JQueryTesting} from '../../../src/testing/index';
+import {FormSpecHelper, JQueryTesting} from '../../../src/testing/testing-index';
 
 describe('BasicField', () => {
   let session: SandboxSession, helper: FormSpecHelper, field: BasicField<any>;

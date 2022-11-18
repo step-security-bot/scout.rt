@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {CheckBoxField, FormField, GroupBox, HtmlEnvironment, LabelField, RadioButton, RadioButtonGroup, ResponsiveManager, scout, StringField} from '../../../../src/index';
-import {FormSpecHelper} from '../../../../src/testing/index';
+import {FormSpecHelper} from '../../../../src/testing/testing-index';
 import {ChildModelOf} from '../../../../src/scout';
 
 describe('GroupBoxResponsiveHandler', () => {

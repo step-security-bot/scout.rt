@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {Form, Status} from '../../index';
-import {SpecLifecycle} from '../index';
+import {SpecLifecycle} from '../testing-index';
 
 export class SpecForm extends Form {
   declare lifecycle: SpecLifecycle;

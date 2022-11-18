@@ -8,7 +8,7 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {MenuSpecHelper} from '../../src/testing/index';
+import {MenuSpecHelper} from '../../src/testing/testing-index';
 
 describe('MenuBarPopup', () => {
 

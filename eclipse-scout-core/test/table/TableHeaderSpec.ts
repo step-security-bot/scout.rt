@@ -8,7 +8,7 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {TableSpecHelper} from '../../src/testing/index';
+import {TableSpecHelper} from '../../src/testing/testing-index';
 import {Menu, scout} from '../../src';
 
 describe('TableHeaderSpec', () => {

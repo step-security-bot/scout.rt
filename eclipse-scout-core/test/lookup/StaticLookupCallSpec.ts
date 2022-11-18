@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {scout} from '../../src/index';
-import {ActiveDummyLookupCall} from '../../src/testing';
+import {ActiveDummyLookupCall} from '../../src/testing/testing-index';
 
 describe('StaticLookupCall', () => {
 

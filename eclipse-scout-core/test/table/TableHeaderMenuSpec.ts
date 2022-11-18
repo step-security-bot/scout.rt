@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {Column, ColumnUserFilter, Table, TableHeaderMenu} from '../../src/index';
-import {JQueryTesting, TableSpecHelper} from '../../src/testing/index';
+import {JQueryTesting, TableSpecHelper} from '../../src/testing/testing-index';
 
 describe('TableHeaderMenu', () => {
   let session: SandboxSession;

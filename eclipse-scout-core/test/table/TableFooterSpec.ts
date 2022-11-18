@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {scout, Status, TableControl} from '../../src/index';
-import {JQueryTesting, TableSpecHelper} from '../../src/testing/index';
+import {JQueryTesting, TableSpecHelper} from '../../src/testing/testing-index';
 
 describe('TableFooterSpec', () => {
   let session: SandboxSession;

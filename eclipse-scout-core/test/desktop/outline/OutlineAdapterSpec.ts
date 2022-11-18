@@ -8,7 +8,7 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {OutlineSpecHelper, TableSpecHelper, TreeSpecHelper} from '../../../src/testing';
+import {OutlineSpecHelper, TableSpecHelper, TreeSpecHelper} from '../../../src/testing/testing-index';
 import {defaultValues, Outline} from '../../../src';
 
 describe('OutlineAdapter', () => {

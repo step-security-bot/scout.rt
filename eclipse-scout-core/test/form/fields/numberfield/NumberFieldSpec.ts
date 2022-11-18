@@ -8,7 +8,7 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {FormSpecHelper, JQueryTesting, LocaleSpecHelper} from '../../../../src/testing/index';
+import {FormSpecHelper, JQueryTesting, LocaleSpecHelper} from '../../../../src/testing/testing-index';
 import {DecimalFormat, Locale, NumberField, scout, Status} from '../../../../src/index';
 
 describe('NumberField', () => {

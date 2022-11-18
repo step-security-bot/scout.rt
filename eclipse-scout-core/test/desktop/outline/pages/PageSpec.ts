@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {Form, Outline, Page, PageWithTable, scout, Table, Widget} from '../../../../src';
-import {OutlineSpecHelper} from '../../../../src/testing';
+import {OutlineSpecHelper} from '../../../../src/testing/testing-index';
 import {ChildModelOf} from '../../../../src/scout';
 
 describe('Page', () => {

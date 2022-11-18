@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {TableField, TableModel, TableRow} from '../../../../src/index';
-import {FormSpecHelper, SpecTable, TableModelWithCells, TableSpecHelper} from '../../../../src/testing/index';
+import {FormSpecHelper, SpecTable, TableModelWithCells, TableSpecHelper} from '../../../../src/testing/testing-index';
 
 describe('TableField', () => {
   let session: SandboxSession;

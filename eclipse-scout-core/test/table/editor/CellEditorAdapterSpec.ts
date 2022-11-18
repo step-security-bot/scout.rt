@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {Cell, CellEditorPopup, RemoteEvent, StringField, StringFieldAdapter, Table} from '../../../src/index';
-import {FormSpecHelper, TableSpecHelper} from '../../../src/testing/index';
+import {FormSpecHelper, TableSpecHelper} from '../../../src/testing/testing-index';
 import {InitModelOf} from '../../../src/scout';
 
 describe('CellEditorAdapter', () => {

@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {BasicField, Dimension, FormField, graphics, HtmlComponent, HtmlEnvironment, Insets} from '../../../src/index';
-import {FormSpecHelper} from '../../../src/testing/index';
+import {FormSpecHelper} from '../../../src/testing/testing-index';
 import {PrefSizeOptions} from '../../../src/layout/graphics';
 
 describe('FormFieldLayout', () => {

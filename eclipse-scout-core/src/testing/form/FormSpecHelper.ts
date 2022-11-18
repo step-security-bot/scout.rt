@@ -8,7 +8,7 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {SpecForm, SpecRadioButtonGroup} from '../index';
+import {SpecForm, SpecRadioButtonGroup} from '../testing-index';
 import {Action, arrays, Column, Form, FormField, FormModel, FullModelOf, GroupBox, InitModelOf, Mode, ModeSelector, ObjectType, RadioButton, scout, Session, StringField, TabBox, TabItem, Table, TableField, Widget} from '../../index';
 import $ from 'jquery';
 

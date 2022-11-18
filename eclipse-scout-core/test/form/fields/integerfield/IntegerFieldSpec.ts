@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 
-import {FormSpecHelper} from '../../../../src/testing/index';
+import {FormSpecHelper} from '../../../../src/testing/testing-index';
 import {IntegerField, ParsingFailedStatus, scout, Status, ValidationFailedStatus} from '../../../../src/index';
 
 describe('IntegerField', () => {
