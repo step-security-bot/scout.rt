@@ -16,7 +16,8 @@
   },
   "main": "./src/main/js/index.ts",
   "files": [
-    "src/main/js"
+    "src/main/js",
+    "target/dist"
   ],
   "scripts": {
     "ts-rename": "migrate --migrate false --sources src/**/*",
