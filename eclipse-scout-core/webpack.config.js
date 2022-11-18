@@ -18,9 +18,17 @@ module.exports = (env, args) => {
     entry: {
       'eclipse-scout-core.cjs': './src/index.ts'
     },
-    // Clean is false because the second config will clean it
+    // Clean is false because the last config will clean it
     ...baseConfig.libraryConfig(config, {clean: false})
   };
+
+  let testingConfig = {
+    entry: {
+      'eclipse-scout-testing.cjs': './src/testing/index.ts'
+    },
+    ...baseConfig.libraryConfig(config, {clean: false})
+  };
+  testingConfig.externals['@eclipse-scout/core'] = '@eclipse-scout/core';
 
   // This build creates resources that can directly be included in a html file without needing a build stack (webpack, babel etc.).
   // The resources are available by a CDN that provides npm modules (e.g. https://www.jsdelivr.com/package/npm/@eclipse-scout/core)
@@ -45,5 +53,5 @@ module.exports = (env, args) => {
     }
   };
 
-  return [cjsConfig, globalConfig];
+  return [cjsConfig, testingConfig, globalConfig];
 };
