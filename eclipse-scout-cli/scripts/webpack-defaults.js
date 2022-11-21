@@ -226,30 +226,12 @@ module.exports = (env, args) => {
   }
 
   if (!devMode) {
-    const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-    const TerserPlugin = require('terser-webpack-plugin');
+    const {ESBuildMinifyPlugin} = require('esbuild-loader');
     config.optimization.minimizer = [
-      // minify css
-      new CssMinimizerPlugin({
-        test: /\.min\.css$/g,
-        parallel: false,
-        minify: CssMinimizerPlugin.esbuildMinify,
-        minimizerOptions: {
-          sourcemap: 'external',
-          target: 'es6',
-          charset: 'utf8'
-        }
-      }),
-      // minify js
-      new TerserPlugin({
-        test: /\.js(\?.*)?$/i,
-        parallel: false, /* parallelism has almost no benefit in time but needs more memory for esbuildMinify. For terser parallel=4 leads to the best results */
-        minify: TerserPlugin.esbuildMinify,
-        terserOptions: {
-          sourcemap: 'external',
-          target: 'es6',
-          charset: 'utf8'
-        }
+      new ESBuildMinifyPlugin({
+        target: 'es2016',
+        sourcemap: true,
+        css: true
       })
     ];
   }
