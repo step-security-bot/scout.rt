@@ -15,6 +15,10 @@
     "pnpm": ">=6.22.2"
   },
   "main": "./src/main/js/index.ts",
+  "publishConfig": {
+    "main": "./target/dist/dev/eclipse-scout-svg.js",
+    "types": "./target/dist/d.ts/index.d.ts"
+  },
   "files": [
     "src/main/js",
     "target/dist"
