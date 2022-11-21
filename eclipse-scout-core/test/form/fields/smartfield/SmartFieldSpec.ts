@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {fields, keys, LookupRow, ProposalChooser, QueryBy, scout, SmartField, SmartFieldModel, SmartFieldMultiline, SmartFieldPopup, SmartFieldTouchPopup, Status, strings} from '../../../../src/index';
-import {AbortableMicrotaskStaticLookupCall, ColumnDescriptorDummyLookupCall, DummyLookupCall, FormSpecHelper, JQueryTesting} from '../../../../src/testing/testing-index';
+import {AbortableMicrotaskStaticLookupCall, ColumnDescriptorDummyLookupCall, DummyLookupCall, FormSpecHelper, JQueryTesting} from '../../../../src/testing/index';
 import {LookupCall} from '../../../../src/lookup/LookupCall';
 import {SmartFieldLookupResult} from '../../../../src/form/fields/smartfield/SmartField';
 import {FullModelOf, InitModelOf, ObjectOrModel} from '../../../../src/scout';

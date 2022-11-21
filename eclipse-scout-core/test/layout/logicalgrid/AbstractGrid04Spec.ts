@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {Button, GridData, GroupBox, GroupBoxGridConfig, HorizontalGrid, scout, StringField, VerticalSmartGrid} from '../../../src/index';
-import {GroupBoxSpecHelper} from '../../../src/testing/testing-index';
+import {GroupBoxSpecHelper} from '../../../src/testing/index';
 
 /**
  * Javadoc:

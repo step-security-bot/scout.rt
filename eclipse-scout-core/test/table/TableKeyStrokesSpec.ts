@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {keys} from '../../src/index';
-import {JQueryTesting, TableSpecHelper} from '../../src/testing/testing-index';
+import {JQueryTesting, TableSpecHelper} from '../../src/testing/index';
 
 describe('TableKeyStrokes', () => {
   let session: SandboxSession;

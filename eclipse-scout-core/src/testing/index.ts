@@ -12,7 +12,7 @@
 // TEST SUPPORT - DO NOT USE IN PRODUCTION CODE
 // /////////////////////////////////////////////////////////////////
 import {ObjectFactory} from '../index';
-import * as self from './testing-index';
+import * as self from './index';
 
 export * from './TestingApp';
 export * from './JasmineScout';

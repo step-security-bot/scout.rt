@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {Action, Button, ButtonAdapterMenu, Dimension, EllipsisMenu, GroupBoxMenuItemsOrder, HtmlComponent, Menu, MenuBar, MenuItemsOrder, MenuModel, scout} from '../../src/index';
-import {MenuSpecHelper} from '../../src/testing/testing-index';
+import {MenuSpecHelper} from '../../src/testing/index';
 import {MenuOrder} from '../../src/menu/MenuItemsOrder';
 
 describe('MenuBar', () => {

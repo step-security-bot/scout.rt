@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {FormField, LabelField, RadioButton, RadioButtonGroup, RadioButtonGroupLayout, scout} from '../../../../src/index';
-import {DummyLookupCall, FormSpecHelper} from '../../../../src/testing/testing-index';
+import {DummyLookupCall, FormSpecHelper} from '../../../../src/testing/index';
 
 describe('RadioButtonGroup', () => {
   let session: SandboxSession;

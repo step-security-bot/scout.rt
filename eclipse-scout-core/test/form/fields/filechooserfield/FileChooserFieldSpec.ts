@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {Device, FileChooserField, scout, Status} from '../../../../src/index';
-import {FormSpecHelper, JQueryTesting} from '../../../../src/testing/testing-index';
+import {FormSpecHelper, JQueryTesting} from '../../../../src/testing/index';
 
 describe('FileChooserField', () => {
   let session: SandboxSession;

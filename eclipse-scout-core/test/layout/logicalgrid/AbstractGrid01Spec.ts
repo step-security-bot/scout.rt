@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {GridData, GroupBox, GroupBoxGridConfig, HorizontalGrid, scout, StringField, VerticalSmartGrid} from '../../../src/index';
-import {GroupBoxSpecHelper} from '../../../src/testing/testing-index';
+import {GroupBoxSpecHelper} from '../../../src/testing/index';
 
 // see reference implementation org.eclipse.scout.rt.client.ui.form.fields.groupbox.internal.GroupBoxLayout01Test
 describe('AbstractGrid01', () => {

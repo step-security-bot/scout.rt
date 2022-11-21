@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {icons} from '../../../src/index';
-import {TableSpecHelper} from '../../../src/testing/testing-index';
+import {TableSpecHelper} from '../../../src/testing/index';
 
 describe('IconColumn', () => {
   let session: SandboxSession;

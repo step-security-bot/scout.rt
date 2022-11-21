@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {NavigateDownButton, NavigateUpButton} from '../../../../src/index';
-import {FormSpecHelper, OutlineSpecHelper} from '../../../../src/testing/testing-index';
+import {FormSpecHelper, OutlineSpecHelper} from '../../../../src/testing/index';
 
 describe('NavigateButton', () => {
 

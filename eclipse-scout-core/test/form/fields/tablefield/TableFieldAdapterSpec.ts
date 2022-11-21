@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {scout, Session, TableField, TableFieldAdapter} from '../../../../src/index';
-import {FormSpecHelper, TableSpecHelper} from '../../../../src/testing/testing-index';
+import {FormSpecHelper, TableSpecHelper} from '../../../../src/testing/index';
 import {FullModelOf, InitModelOf} from '../../../../src/scout';
 
 describe('TableFieldAdapter', () => {

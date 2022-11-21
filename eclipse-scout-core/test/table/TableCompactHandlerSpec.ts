@@ -10,7 +10,7 @@
  */
 
 import {CompactColumn} from '../../src';
-import {TableSpecHelper} from '../../src/testing/testing-index';
+import {TableSpecHelper} from '../../src/testing/index';
 
 describe('TableCompactHandler', () => {
   let session: SandboxSession, helper: TableSpecHelper;

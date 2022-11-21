@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {arrays, FormField, ParsingFailedStatus, scout, Status, StringField, ValueField} from '../../../src/index';
-import {FormSpecHelper, MenuSpecHelper} from '../../../src/testing/testing-index';
+import {FormSpecHelper, MenuSpecHelper} from '../../../src/testing/index';
 import {ValueFieldValidator} from '../../../src/form/fields/ValueField';
 
 /* global removePopups */

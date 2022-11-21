@@ -10,7 +10,7 @@
  */
 
 import {Action, Button, KeyStroke, NumberField, ObjectFactory, scout, StringField} from '../src/index';
-import {LocaleSpecHelper} from '../src/testing/testing-index';
+import {LocaleSpecHelper} from '../src/testing/index';
 import {InitModelOf} from '../src/scout';
 
 describe('ObjectFactory', () => {

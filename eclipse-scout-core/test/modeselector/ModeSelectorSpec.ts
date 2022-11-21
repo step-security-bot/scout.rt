@@ -8,7 +8,7 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {FormSpecHelper} from '../../src/testing/testing-index';
+import {FormSpecHelper} from '../../src/testing/index';
 import {Mode, ModeSelector, scout, Widget} from '../../src/index';
 
 describe('ModeSelector', () => {

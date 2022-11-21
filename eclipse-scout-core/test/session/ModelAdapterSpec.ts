@@ -8,7 +8,7 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {FormSpecHelper} from '../../src/testing/testing-index';
+import {FormSpecHelper} from '../../src/testing/index';
 import {Button, GroupBox, ModelAdapter, RemoteEvent, scout, Widget, WidgetModel} from '../../src/index';
 import {RemoteResponse} from '../../src/session/Session';
 import {FullModelOf} from '../../src/scout';

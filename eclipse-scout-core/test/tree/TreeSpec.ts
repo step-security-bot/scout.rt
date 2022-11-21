@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {graphics, objects, Page, Range, scout, scrollbars, strings, Tree, TreeField} from '../../src/index';
-import {JQueryTesting, TreeSpecHelper} from '../../src/testing/testing-index';
+import {JQueryTesting, TreeSpecHelper} from '../../src/testing/index';
 
 describe('Tree', () => {
   let session: SandboxSession;

@@ -8,7 +8,7 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {SpecTable, TableModelWithCells, TableSpecHelper} from '../../src/testing/testing-index';
+import {SpecTable, TableModelWithCells, TableSpecHelper} from '../../src/testing/index';
 import {HtmlTile, scout} from '../../src';
 
 describe('TableTileModeSpec', () => {

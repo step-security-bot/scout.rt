@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {LookupCall, LookupCallModel, LookupResult, LookupRow, QueryBy, scout, Status, TreeBox, TreeBoxModel} from '../../../../src/index';
-import {DummyLookupCall, FormSpecHelper, LanguageDummyLookupCall} from '../../../../src/testing/testing-index';
+import {DummyLookupCall, FormSpecHelper, LanguageDummyLookupCall} from '../../../../src/testing/index';
 import {InitModelOf} from '../../../../src/scout';
 
 describe('TreeBox', () => {

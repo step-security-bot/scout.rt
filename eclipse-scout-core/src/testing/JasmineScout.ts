@@ -11,7 +11,7 @@
 import {
   AdapterData, App, arrays, Desktop, FullModelOf, InitModelOf, JsonErrorResponse, ModelAdapter, ModelOf, ObjectFactory, RemoteEvent, RemoteRequest, RemoteResponse, scout, Session, SessionStartupResponse, Widget, WidgetModel
 } from '../index';
-import {jasmineScoutMatchers, LocaleSpecHelper, TestingApp} from './testing-index';
+import {jasmineScoutMatchers, LocaleSpecHelper, TestingApp} from './index';
 import 'jasmine-jquery';
 
 declare global {

@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {DateField, GroupBox, GroupBoxGridConfig, HorizontalGrid, Menu, scout, SmartField, StringField} from '../../../../src/index';
-import {CloneSpecHelper, FormSpecHelper} from '../../../../src/testing/testing-index';
+import {CloneSpecHelper, FormSpecHelper} from '../../../../src/testing/index';
 
 describe('GroupBox', () => {
   let session: SandboxSession;

@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {FullModelOf, InitModelOf, ModelAdapter, ObjectOrModel, Outline, OutlineAdapter, OutlineModel, Page, PageModel, Session} from '../../../index';
-import {FormSpecHelper, TableSpecHelper} from '../../testing-index';
+import {FormSpecHelper, TableSpecHelper} from '../../index';
 import $ from 'jquery';
 
 export class OutlineSpecHelper {

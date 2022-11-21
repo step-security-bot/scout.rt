@@ -8,7 +8,7 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {FormSpecHelper} from '../../../../src/testing/testing-index';
+import {FormSpecHelper} from '../../../../src/testing/index';
 import {NumberField, NumberFieldAdapter} from '../../../../src';
 
 describe('NumberFieldAdapter', () => {

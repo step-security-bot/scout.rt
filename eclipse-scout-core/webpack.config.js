@@ -10,6 +10,7 @@
  */
 
 const baseConfig = require('@eclipse-scout/cli/scripts/webpack-defaults');
+const path = require('path');
 module.exports = (env, args) => {
   args.resDirArray = ['res'];
   const config = baseConfig(env, args);
@@ -32,13 +33,22 @@ module.exports = (env, args) => {
 
   let testingConfig = {
     entry: {
-      'eclipse-scout-testing.cjs': './src/testing/testing-index.ts'
+      'eclipse-scout-testing.cjs': './src/testing/index.ts'
     },
     ...baseConfig.libraryConfig(config, {clean: false, externalizeDevDeps: true})
   };
   testingConfig.externals = [
     testingConfig.externals,
-    /\/index$/i // Exclude regular index (scout core)
+    ({context, request, contextInfo}, callback) => {
+      // Externalize every import to the main index and replace it with @eclipse-scout/core
+      // Keep imports to the testing index
+      if (/\/index$/.test(request) && !path.resolve(context, request).includes('testing')) {
+        return callback(null, '@eclipse-scout/core');
+      }
+
+      // Continue without externalizing the import
+      callback();
+    }
   ];
 
   // This build creates resources that can directly be included in a html file without needing a build stack (webpack, babel etc.).

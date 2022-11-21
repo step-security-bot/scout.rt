@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {keys, KeyStroke} from '../../src/index';
-import {JQueryTesting} from '../../src/testing/testing-index';
+import {JQueryTesting} from '../../src/testing';
 
 describe('KeyStroke', () => {
   let session: SandboxSession;

@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {CheckBoxField, keys, scout, ValueField} from '../../../../src/index';
-import {JQueryTesting} from '../../../../src/testing/testing-index';
+import {JQueryTesting} from '../../../../src/testing';
 
 describe('CheckBoxField', () => {
   let session: SandboxSession;

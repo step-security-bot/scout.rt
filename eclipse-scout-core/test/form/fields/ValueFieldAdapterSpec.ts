@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {Device, ValueFieldAdapter} from '../../../src/index';
-import {FormSpecHelper} from '../../../src/testing/testing-index';
+import {FormSpecHelper} from '../../../src/testing/index';
 
 describe('ValueFieldAdapter', () => {
   let session: SandboxSession, helper: FormSpecHelper;

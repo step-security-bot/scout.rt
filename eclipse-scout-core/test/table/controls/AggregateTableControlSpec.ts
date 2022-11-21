@@ -8,7 +8,7 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {LocaleSpecHelper, SpecTable, TableModelWithCells, TableSpecHelper} from '../../../src/testing/testing-index';
+import {LocaleSpecHelper, SpecTable, TableModelWithCells, TableSpecHelper} from '../../../src/testing/index';
 import {AggregateTableControl, Cell, Column, DecimalFormat, InitModelOf, NumberColumn, scout, TableControl, TableControlModel, TableRowModel} from '../../../src/index';
 
 describe('AggregateTableControl', () => {

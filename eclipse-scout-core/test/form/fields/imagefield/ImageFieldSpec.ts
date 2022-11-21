@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {ImageField} from '../../../../src/index';
-import {FormSpecHelper, MenuSpecHelper} from '../../../../src/testing/testing-index';
+import {FormSpecHelper, MenuSpecHelper} from '../../../../src/testing/index';
 
 /* global removePopups */
 describe('ImageField', () => {

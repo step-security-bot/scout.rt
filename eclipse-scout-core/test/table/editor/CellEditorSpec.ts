@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {Cell, CellEditorPopup, Column, keys, scout, SmartColumn, StaticLookupCall, Status, StringField, Table, TableRow, Widget} from '../../../src/index';
-import {FormSpecHelper, JQueryTesting, TableSpecHelper} from '../../../src/testing/testing-index';
+import {FormSpecHelper, JQueryTesting, TableSpecHelper} from '../../../src/testing/index';
 
 describe('CellEditor', () => {
   let session: SandboxSession;

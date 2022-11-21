@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {ClipboardField, Device} from '../../../../src/index';
-import {FormSpecHelper} from '../../../../src/testing/testing-index';
+import {FormSpecHelper} from '../../../../src/testing/index';
 
 describe('ClipboardField', () => {
   let session: SandboxSession, helper: FormSpecHelper, $sandbox: JQuery, origDevice: Device;

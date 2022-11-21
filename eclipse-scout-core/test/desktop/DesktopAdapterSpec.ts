@@ -8,7 +8,7 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {FormSpecHelper, OutlineSpecHelper} from '../../src/testing/testing-index';
+import {FormSpecHelper, OutlineSpecHelper} from '../../src/testing/index';
 import {Desktop, DesktopAdapter, Form, FormModel, GroupBox, GroupBoxModel, RemoteEvent} from '../../src/index';
 
 describe('DesktopAdapter', () => {

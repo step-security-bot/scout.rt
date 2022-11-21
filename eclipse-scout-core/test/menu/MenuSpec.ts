@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {Action, ContextMenuPopup, EllipsisMenu, Menu, scout, tooltips} from '../../src/index';
-import {JQueryTesting, MenuSpecHelper} from '../../src/testing/testing-index';
+import {JQueryTesting, MenuSpecHelper} from '../../src/testing/index';
 
 describe('Menu', () => {
   let session: SandboxSession, $sandbox: JQuery, menu1: Menu, menu2: Menu;

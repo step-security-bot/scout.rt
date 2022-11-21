@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {Device, Outline, PageWithTable, scout, Table, TableModel, TableTextUserFilter} from '../../../src/index';
-import {OutlineSpecHelper, TableSpecHelper} from '../../../src/testing/testing-index';
+import {OutlineSpecHelper, TableSpecHelper} from '../../../src/testing/index';
 
 describe('OutlineMediator', () => {
 

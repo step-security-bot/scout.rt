@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {dates} from '../../src/index';
-import {LocaleSpecHelper} from '../../src/testing/testing-index';
+import {LocaleSpecHelper} from '../../src/testing/index';
 
 describe('scout.dates', () => {
 

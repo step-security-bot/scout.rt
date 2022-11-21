@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {arrays, Group, InitModelOf, keys, scout, Tile, TileAccordion, TileGrid, TileModel} from '../../../src/index';
-import {JQueryTesting} from '../../../src/testing/testing-index';
+import {JQueryTesting} from '../../../src/testing/index';
 
 describe('TileAccordionKeyStrokes', () => {
   let session: SandboxSession;

@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {HtmlComponent, TabBox} from '../../../../src/index';
-import {TabBoxSpecHelper} from '../../../../src/testing/testing-index';
+import {TabBoxSpecHelper} from '../../../../src/testing/index';
 
 describe('TabItem', () => {
   let session: SandboxSession;

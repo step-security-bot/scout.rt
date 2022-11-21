@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {FieldStatus, GroupBox, Menu, scout, SmartField, Status, StringField} from '../../../src/index';
-import {FormSpecHelper, JQueryTesting} from '../../../src/testing/testing-index';
+import {FormSpecHelper, JQueryTesting} from '../../../src/testing/index';
 
 describe('FieldStatus', () => {
   let session: SandboxSession, helper: FormSpecHelper;

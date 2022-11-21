@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {ListBox, ListBoxModel, LookupCall, LookupResult, LookupRow, QueryBy, scout, Status} from '../../../../src/index';
-import {DummyLookupCall, FormSpecHelper, LanguageDummyLookupCall} from '../../../../src/testing/testing-index';
+import {DummyLookupCall, FormSpecHelper, LanguageDummyLookupCall} from '../../../../src/testing/index';
 import {InitModelOf, ObjectOrModel} from '../../../../src/scout';
 
 describe('ListBox', () => {

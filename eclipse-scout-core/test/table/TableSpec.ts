@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {BeanColumn, Column, Device, graphics, IconColumn, icons, Menu, MenuDestinations, NumberColumn, Range, RemoteEvent, scout, scrollbars, Table, TableField, TableRow} from '../../src/index';
-import {JQueryTesting, LocaleSpecHelper, SpecTable, TableSpecHelper} from '../../src/testing/testing-index';
+import {JQueryTesting, LocaleSpecHelper, SpecTable, TableSpecHelper} from '../../src/testing/index';
 
 describe('Table', () => {
   let session: SandboxSession;

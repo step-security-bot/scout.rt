@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {focusUtils, WrappedFormField, WrappedFormFieldModel} from '../../../../src/index';
-import {FormSpecHelper} from '../../../../src/testing/testing-index';
+import {FormSpecHelper} from '../../../../src/testing/index';
 
 describe('WrappedForm', () => {
   let session: SandboxSession;

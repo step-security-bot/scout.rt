@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {defaultValues, RemoteEvent, Tree} from '../../src/index';
-import {JQueryTesting, TreeSpecHelper} from '../../src/testing/testing-index';
+import {JQueryTesting, TreeSpecHelper} from '../../src/testing/index';
 
 describe('TreeAdapter', () => {
   let session: SandboxSession;

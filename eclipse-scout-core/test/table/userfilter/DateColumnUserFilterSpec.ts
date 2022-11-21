@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {DateColumnUserFilter, dates, FilterFieldsGroupBox} from '../../../src/index';
-import {TableSpecHelper} from '../../../src/testing/testing-index';
+import {TableSpecHelper} from '../../../src/testing/index';
 import {FullModelOf, InitModelOf} from '../../../src/scout';
 
 describe('DateColumnUserFilter', () => {

@@ -9,7 +9,7 @@
  *     BSI Business Systems Integration AG - initial API and implementation
  */
 import {Group, InitModelOf, Range, scout, Tile, TileAccordion, TileGrid, TileGridModel, TileModel} from '../../src/index';
-import {JQueryTesting} from '../../src/testing/testing-index';
+import {JQueryTesting} from '../../src/testing/index';
 
 describe('VirtualTileGrid', () => {
   let session: SandboxSession;

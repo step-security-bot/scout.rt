@@ -8,7 +8,7 @@
  * Contributors:
  *     BSI Business Systems Integration AG - initial API and implementation
  */
-import {FormSpecHelper, OutlineSpecHelper} from '../../src/testing/testing-index';
+import {FormSpecHelper, OutlineSpecHelper} from '../../src/testing/index';
 import {
   arrays, BusyIndicator, Button, Desktop, DesktopNotification, DesktopTab, Device, Event, FileChooser, Form, FormMenu, GroupBox, ListBox, MessageBox, MessageBoxes, Outline, RemoteEvent, scout, Status, StringField, strings,
   UnsavedFormChangesForm, Widget, WidgetPopup, WrappedFormField
