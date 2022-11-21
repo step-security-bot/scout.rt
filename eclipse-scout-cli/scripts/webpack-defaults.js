@@ -232,16 +232,24 @@ module.exports = (env, args) => {
       // minify css
       new CssMinimizerPlugin({
         test: /\.min\.css$/g,
+        parallel: false,
+        minify: CssMinimizerPlugin.esbuildMinify,
         minimizerOptions: {
-          preset: ['default', {
-            discardComments: {removeAll: true}
-          }]
+          sourcemap: 'external',
+          target: 'es6',
+          charset: 'utf8'
         }
       }),
       // minify js
       new TerserPlugin({
         test: /\.js(\?.*)?$/i,
-        parallel: 4
+        parallel: false, /* parallelism has almost no benefit in time but needs more memory for esbuildMinify. For terser parallel=4 leads to the best results */
+        minify: TerserPlugin.esbuildMinify,
+        terserOptions: {
+          sourcemap: 'external',
+          target: 'es6',
+          charset: 'utf8'
+        }
       })
     ];
   }
