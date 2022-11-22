@@ -28,12 +28,12 @@
   "publishConfig": {
     "exports": {
       ".": {
-        "require": "./dist/eclipse-scout-core.cjs.js",
-        "types": "./dist/src/index.d.ts"
+        "types": "./dist/src/index.d.ts",
+        "default": "./dist/eclipse-scout-core.cjs.js"
       },
       "./testing": {
-        "require": "./dist/eclipse-scout-testing.cjs.js",
-        "types": "./dist/src/testing/index.d.ts"
+        "types": "./dist/src/testing/index.d.ts",
+        "default": "./dist/eclipse-scout-testing.cjs.js"
       },
       "./src/*": "./src/*.less"
     },
