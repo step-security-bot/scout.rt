@@ -3,6 +3,7 @@
   "compilerOptions": {
     // Declarations are necessary for IDEs, even if TS source code is delivered (WEB-29638)
     "declaration": true,
-    "declarationMap": true
+    "declarationMap": true,
+    "maxNodeModuleJsDepth": 0
   }
 }
