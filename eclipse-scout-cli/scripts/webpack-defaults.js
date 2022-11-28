@@ -230,12 +230,16 @@ module.exports = (env, args) => {
   }
 
   if (!devMode) {
-    const {ESBuildMinifyPlugin} = require('esbuild-loader');
+    const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+    const TerserPlugin = require('terser-webpack-plugin');
     config.optimization.minimizer = [
-      new ESBuildMinifyPlugin({
-        target: 'es2016',
-        sourcemap: true,
-        css: true
+      // minify css
+      new CssMinimizerPlugin({
+        minify: CssMinimizerPlugin.esbuildMinify
+      }),
+      // minify js
+      new TerserPlugin({
+        minify: TerserPlugin.esbuildMinify
       })
     ];
   }
