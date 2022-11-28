@@ -10,7 +10,6 @@
     "strictBindCallApply": true,
     "noImplicitOverride": true,
     "useDefineForClassFields": true,
-    "maxNodeModuleJsDepth": 1,
     // Emitting is enabled by the webpack build, no need to emit anything during development
     "noEmit": true,
     // For jquery imports, see https://www.typescriptlang.org/tsconfig#allowSyntheticDefaultImports
