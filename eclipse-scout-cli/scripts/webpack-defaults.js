@@ -262,7 +262,11 @@ function libraryConfig(config, options = {}) {
   if (options.externalizeDevDeps ?? false) {
     dependencies = Object.assign(dependencies, toExternals(packageJson.devDependencies));
   }
-  markCommonJsExternals(dependencies, ['jquery', 'sourcemapped-stacktrace']);
+  // Make synthetic default import work (import $ from 'jquery') by importing jquery as commonjs module
+  let globalDependencies = {};
+  if (dependencies['jquery']) {
+    globalDependencies['jquery'] = 'commonjs jquery';
+  }
 
   // FileList is not necessary in library mode
   let plugins = config.plugins.map(plugin => {
@@ -286,7 +290,8 @@ function libraryConfig(config, options = {}) {
     },
     externals: {
       ...config.externals,
-      ...dependencies
+      ...dependencies,
+      ...globalDependencies
     },
     experiments: {
       // required for library.type = 'module'
@@ -294,20 +299,6 @@ function libraryConfig(config, options = {}) {
     },
     plugins
   };
-}
-
-/**
- * If a dependency uses commonjs, they need to be marked as commonjs external to make synthetic default imports work (e.g. import $ from 'jquery').
- * @param {{}} externals
- * @param {string[] | string} commonJsExternals
- */
-function markCommonJsExternals(externals, commonJsExternals) {
-  commonJsExternals = ensureArray(commonJsExternals);
-  for (let commonJsExternal of commonJsExternals) {
-    if (externals[commonJsExternal]) {
-      externals[commonJsExternal] = `commonjs ${commonJsExternal}`;
-    }
-  }
 }
 
 /**
@@ -459,4 +450,3 @@ function prodDevtoolModuleFilenameTemplate(info) {
 
 module.exports.addThemes = addThemes;
 module.exports.libraryConfig = libraryConfig;
-module.exports.markCommonJsExternals = markCommonJsExternals;
