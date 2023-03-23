@@ -840,7 +840,7 @@ export class GroupBox extends CompositeField implements GroupBoxModel {
     } else {
       ResponsiveManager.get().reset(this, true);
       if (this.responsive === null) {
-        let parent = this.findParent(parent => parent instanceof GroupBox && parent.responsive) as GroupBox;
+        let parent = this.findParent(GroupBox);
         ResponsiveManager.get().reset(parent, true);
       }
     }
