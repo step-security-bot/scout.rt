@@ -178,14 +178,7 @@ export class GroupBox extends CompositeField implements GroupBoxModel {
   }
 
   protected _setFields(fields: FormField[]) {
-    for (const field of this.fields) {
-      field.off('propertyChange', this._childFieldPropertyChangeHandler);
-    }
     this._setProperty('fields', fields);
-    for (const field of this.fields) {
-      field.on('propertyChange', this._childFieldPropertyChangeHandler);
-    }
-    this.updateRequiresSave();
     this._prepareFields();
   }
 

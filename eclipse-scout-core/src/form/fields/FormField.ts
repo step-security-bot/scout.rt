@@ -9,8 +9,8 @@
  */
 import {
   AbstractLayout, Action, arrays, clipboard, CloneOptions, ContextMenuPopup, Device, dragAndDrop, DragAndDropHandler, DragAndDropOptions, DropType, EnumObject, EventHandler, fields, FieldStatus, FormFieldClipboardExportEvent,
-  FormFieldEventMap, FormFieldLayout, FormFieldModel, GridData, GroupBox, HtmlComponent, InitModelOf, KeyStrokeContext, LoadingSupport, Menu, menus as menuUtil, ObjectOrChildModel, objects, Predicate, PropertyChangeEvent, scout, Status,
-  StatusMenuMapping, StatusOrModel, strings, styles, Tooltip, tooltips, TooltipSupport, TreeVisitResult, Widget
+  FormFieldEventMap, FormFieldLayout, FormFieldModel, GridData, GroupBox, HierarchyChangeEvent, HtmlComponent, InitModelOf, KeyStrokeContext, LoadingSupport, Menu, menus as menuUtil, ObjectOrChildModel, objects, Predicate,
+  PropertyChangeEvent, scout, Status, StatusMenuMapping, StatusOrModel, strings, styles, Tooltip, tooltips, TooltipSupport, TreeVisitResult, Widget
 } from '../../index';
 import $ from 'jquery';
 
@@ -66,6 +66,7 @@ export class FormField extends Widget implements FormFieldModel {
    * provides a custom copy context menu that opens the ClipboardForm.
    */
   disabledCopyOverlay: boolean;
+  childFields: FormField[];
 
   $label: JQuery;
   /**
@@ -89,6 +90,8 @@ export class FormField extends Widget implements FormFieldModel {
   $mandatory: JQuery;
   $disabledCopyOverlay: JQuery;
   protected _menuPropertyChangeHandler: EventHandler<PropertyChangeEvent<any, Menu>>;
+  protected _hierarchyChangeHandler: EventHandler<HierarchyChangeEvent>;
+  protected _stateChangeHandler: EventHandler<PropertyChangeEvent>;
 
   constructor() {
     super();
@@ -132,12 +135,16 @@ export class FormField extends Widget implements FormFieldModel {
     this.disabledCopyOverlay = false;
     this.$disabledCopyOverlay = null;
 
+    this.childFields = [];
+
     this._addWidgetProperties(['keyStrokes', 'menus', 'statusMenuMappings']);
     this._addCloneProperties(['dropType', 'dropMaximumSize', 'errorStatus', 'fieldStyle', 'gridDataHints', 'gridData', 'label', 'labelVisible', 'labelPosition',
       'labelWidthInPixel', 'labelUseUiWidth', 'mandatory', 'mode', 'preventInitialFocus', 'requiresSave', 'touched', 'statusVisible', 'statusPosition', 'statusMenuMappings',
       'tooltipText', 'tooltipAnchor']);
 
     this._menuPropertyChangeHandler = this._onMenuPropertyChange.bind(this);
+    this._stateChangeHandler = this._onStateChange.bind(this);
+    this._hierarchyChangeHandler = this._onHierarchyChange.bind(this);
   }
 
   static FieldStyle = {
@@ -220,6 +227,13 @@ export class FormField extends Widget implements FormFieldModel {
     this._setGridDataHints(this.gridDataHints);
     this._setGridData(this.gridData);
     this._updateEmpty();
+    this._linkToParentField();
+  }
+
+  protected override _destroy() {
+    this._unlinkFromParentField(this.parent);
+    // TODO owner vs parent, do nothing resp. clean childFields when parent is destroyed?
+    super._destroy();
   }
 
   protected override _initProperty(propertyName: string, value: any) {
@@ -1425,6 +1439,9 @@ export class FormField extends Widget implements FormFieldModel {
 
   /** @see FormFieldModel.touched */
   markAsSaved() {
+    for (const field of this.childFields) {
+      field.markAsSaved();
+    }
     this.setProperty('touched', false);
     this.updateRequiresSave();
   }
@@ -1453,6 +1470,11 @@ export class FormField extends Widget implements FormFieldModel {
    * Override this function to provide a custom logic to compute the {@link requiresSave} state if the field is not {@link touched}, see {@link updateRequiresSave}.
    */
   computeRequiresSave(): boolean {
+    for (const field of this.childFields) {
+      if (field.requiresSave) {
+        return true;
+      }
+    }
     return false;
   }
 
@@ -1506,6 +1528,63 @@ export class FormField extends Widget implements FormFieldModel {
       parent: this,
       text: text
     });
+  }
+
+  protected _updateParentListeners() {
+    let parent = this.parent;
+    while (parent) {
+      parent.on('hierarchyChange', this._hierarchyChangeHandler);
+      // this._parents.push(parent);
+      parent = parent.parent;
+    }
+  }
+
+  protected _linkToParentField() {
+    this.on('hierarchyChange', this._hierarchyChangeHandler);
+    let parentField = this._visitParentsUntilField(this.parent, parent => parent.on('hierarchyChange', this._hierarchyChangeHandler));
+    if (parentField) {
+      parentField.addChildField(this);
+    }
+  }
+
+  protected _unlinkFromParentField(oldParent) {
+    let oldParentField = this._visitParentsUntilField(oldParent, parent => parent.off('hierarchyChange', this._hierarchyChangeHandler));
+    if (oldParentField) {
+      oldParentField.removeChildField(this);
+    }
+  }
+
+  protected _onHierarchyChange(event: HierarchyChangeEvent) {
+    this._unlinkFromParentField(event.oldParent);
+    this._linkToParentField();
+  }
+
+  protected _visitParentsUntilField(parent: Widget, visitor: (parent: Widget) => void): FormField {
+    while (parent) {
+      if (parent instanceof FormField) {
+        return parent;
+      }
+      visitor(parent);
+      parent = parent.parent;
+    }
+  }
+
+  addChildField(formField: FormField) {
+    this.childFields.push(formField);
+    formField.on('propertyChange', this._stateChangeHandler);
+    this.updateRequiresSave();
+  }
+
+  removeChildField(formField: FormField) {
+    formField.off('propertyChange', this._stateChangeHandler);
+    arrays.remove(this.childFields, formField);
+    this.updateRequiresSave();
+  }
+
+  protected _onStateChange(event: PropertyChangeEvent<any, FormField>) {
+    if (event.propertyName === 'requiresSave') {
+      this.updateRequiresSave();
+    }
   }
 }
 

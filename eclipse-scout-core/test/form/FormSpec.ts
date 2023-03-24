@@ -1191,7 +1191,7 @@ describe('Form', () => {
       }
 
       form = scout.create(MyForm, {parent: session.desktop});
-      expect(form.saveNeeded).toBe(false); // TODO true or false?
+      expect(form.saveNeeded).toBe(false); // TODO true or false? and the affected field? why does it not work for widgets app? load should call marksaved
 
       form.load()
         .then(() => {
@@ -1408,5 +1408,7 @@ describe('Form', () => {
         .catch(fail)
         .always(done);
     });
+
+    // TODO create specs for form field links and cleanup. performance?
   });
 });
