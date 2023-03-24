@@ -7,9 +7,15 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  */
-import {fields, FormField, FormFieldStyle, TreeVisitResult, widgets} from '../../index';
+import {EventHandler, fields, FormField, FormFieldStyle, InitModelOf, PropertyChangeEvent, TreeVisitResult, widgets} from '../../index';
 
 export abstract class CompositeField extends FormField {
+  protected _childFieldPropertyChangeHandler: EventHandler<PropertyChangeEvent>;
+
+  protected override _init(model: InitModelOf<this>) {
+    super._init(model);
+    this._childFieldPropertyChangeHandler = this._onChildFieldPropertyChange.bind(this);
+  }
 
   /**
    * @returns an array of child-fields.
@@ -53,5 +59,24 @@ export abstract class CompositeField extends FormField {
       return field.getFocusableElement();
     }
     return null;
+  }
+
+  override computeRequiresSave(): boolean {
+    let requiresSave = super.computeRequiresSave();
+    if (requiresSave) {
+      return true;
+    }
+    for (const field of this.getFields()) {
+      if (field.requiresSave) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  protected _onChildFieldPropertyChange(event: PropertyChangeEvent<any, FormField>) {
+    if (event.propertyName === 'requiresSave') {
+      this.updateRequiresSave();
+    }
   }
 }

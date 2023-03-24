@@ -1052,11 +1052,7 @@ export class FormField extends Widget implements FormFieldModel {
   }
 
   getParentGroupBox(): GroupBox {
-    let parent = this.parent;
-    while (parent && !(parent instanceof GroupBox)) {
-      parent = parent.parent;
-    }
-    return parent as GroupBox;
+    return this.findParent(GroupBox);
   }
 
   getParentField(): Widget {
@@ -1446,7 +1442,11 @@ export class FormField extends Widget implements FormFieldModel {
     if (!this.initialized) {
       return;
     }
-    this.requiresSave = this.touched || this.computeRequiresSave();
+    this._setRequiresSave(this.touched || this.computeRequiresSave());
+  }
+
+  protected _setRequiresSave(requiresSave: boolean) {
+    this._setProperty('requiresSave', requiresSave);
   }
 
   /**

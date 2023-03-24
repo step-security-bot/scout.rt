@@ -9,7 +9,8 @@
  */
 import {FormSpecHelper, OutlineSpecHelper} from '../../src/testing/index';
 import {
-  CancelMenu, CloseMenu, Dimension, fields, Form, NotificationBadgeStatus, NullWidget, OkMenu, Popup, Rectangle, ResetMenu, SaveMenu, scout, Session, Status, StringField, TabBox, TabItem, webstorage, WrappedFormField
+  CancelMenu, CloseMenu, Dimension, fields, Form, FormFieldMenu, NotificationBadgeStatus, NullWidget, OkMenu, Popup, Rectangle, ResetMenu, SaveMenu, scout, SequenceBox, Session, SplitBox, Status, StringField, TabBox, TabItem, webstorage,
+  WrappedFormField
 } from '../../src/index';
 import {DateField, GroupBox} from '../../src';
 
@@ -1073,6 +1074,292 @@ describe('Form', () => {
       expect(form.getNotificationBadgeText()).toBe('foo');
       form.setNotificationBadgeText(null);
       expect(form.getNotificationBadgeText()).toBeUndefined();
+    });
+  });
+
+  describe('saveNeeded', () => {
+    let form: Form;
+    let firstField: StringField;
+    let secondField: StringField;
+
+    beforeEach(() => {
+      form = scout.create(Form, {
+        parent: session.desktop,
+        rootGroupBox: {
+          objectType: GroupBox,
+          fields: [{
+            objectType: StringField,
+            id: 'FirstField'
+          }, {
+            objectType: StringField,
+            id: 'SecondField'
+          }]
+        }
+      });
+      firstField = form.widget('FirstField', StringField);
+      secondField = form.widget('SecondField', StringField);
+    });
+
+    it('turns true as soon as a field requires to be saved', done => {
+      expect(form.saveNeeded).toBe(false);
+
+      firstField.setValue('hi');
+      expect(firstField.requiresSave).toBe(true);
+      expect(form.rootGroupBox.requiresSave).toBe(true);
+      expect(form.saveNeeded).toBe(true);
+
+      secondField.setValue('there');
+      expect(secondField.requiresSave).toBe(true);
+      expect(form.rootGroupBox.requiresSave).toBe(true);
+      expect(form.saveNeeded).toBe(true);
+
+      form.save()
+        .then(() => {
+          expect(firstField.requiresSave).toBe(false);
+          expect(secondField.requiresSave).toBe(false);
+          expect(form.rootGroupBox.requiresSave).toBe(false);
+          expect(form.saveNeeded).toBe(false);
+        })
+        .catch(fail)
+        .always(done);
+    });
+
+    it('turns false when no fields require to be saved anymore', () => {
+      expect(form.saveNeeded).toBe(false);
+
+      firstField.setValue('hi');
+      expect(firstField.requiresSave).toBe(true);
+      expect(form.rootGroupBox.requiresSave).toBe(true);
+      expect(form.saveNeeded).toBe(true);
+
+      firstField.setValue(null);
+      expect(form.saveNeeded).toBe(false);
+
+      secondField.setValue('there');
+      expect(form.saveNeeded).toBe(true);
+
+      firstField.setValue('there');
+      expect(form.saveNeeded).toBe(true);
+
+      secondField.setValue(null);
+      expect(form.saveNeeded).toBe(true);
+
+      firstField.setValue(null);
+      expect(firstField.requiresSave).toBe(false);
+      expect(form.rootGroupBox.requiresSave).toBe(false);
+      expect(form.saveNeeded).toBe(false);
+
+      // TODO Widgets innerhalb form field menus oder tiles
+      // TODO requiresSave -> saveNeeded
+    });
+
+
+    it('works if fields are changed dynamically', () => {
+      expect(form.saveNeeded).toBe(false);
+
+      firstField.setValue('hi');
+      expect(form.saveNeeded).toBe(true);
+
+      form.rootGroupBox.deleteField(firstField);
+      expect(form.rootGroupBox.requiresSave).toBe(false);
+      expect(form.saveNeeded).toBe(false);
+
+      let newField = scout.create(StringField, {parent: form});
+      form.rootGroupBox.insertField(newField);
+      expect(form.rootGroupBox.requiresSave).toBe(false);
+      expect(form.saveNeeded).toBe(false);
+
+      newField.setValue('hi');
+      expect(newField.requiresSave).toBe(true);
+      expect(form.rootGroupBox.requiresSave).toBe(true);
+      expect(form.saveNeeded).toBe(true);
+
+      form.markSaved();
+      expect(newField.requiresSave).toBe(false);
+      expect(form.rootGroupBox.requiresSave).toBe(false);
+      expect(form.saveNeeded).toBe(false);
+
+      // Insert a new field that has requiresSave set to true
+      let newField2 = scout.create(StringField, {
+        parent: form,
+        value: '123'
+      });
+      newField2.touch();
+      form.rootGroupBox.insertField(newField2);
+      expect(newField2.requiresSave).toBe(true);
+      expect(form.rootGroupBox.requiresSave).toBe(true);
+      expect(form.saveNeeded).toBe(true);
+    });
+
+    it('works for tab boxes', () => {
+      let form = scout.create(Form, {
+        parent: session.desktop,
+        rootGroupBox: {
+          objectType: GroupBox,
+          fields: [{
+            objectType: TabBox,
+            tabItems: [{
+              objectType: TabItem,
+              fields: [{
+                objectType: StringField,
+                id: 'TabField'
+              }]
+            }]
+          }]
+        }
+      });
+      let tabField = form.widget('TabField', StringField);
+      expect(form.saveNeeded).toBe(false);
+
+      tabField.setValue('hi');
+      expect(tabField.getParentGroupBox().requiresSave).toBe(true);
+      expect(form.saveNeeded).toBe(true);
+
+      let tabBox = tabField.findParent(TabBox);
+      tabBox.deleteTabItem(tabField.findParent(TabItem));
+      expect(form.rootGroupBox.requiresSave).toBe(false);
+      expect(form.saveNeeded).toBe(false);
+
+      let newTabItem = scout.create(TabItem, {
+        parent: form,
+        fields: [{
+          objectType: StringField
+        }]
+      });
+      tabBox.insertTabItem(newTabItem);
+      expect(form.saveNeeded).toBe(false);
+
+      (newTabItem.fields[0] as StringField).setValue('hi');
+      expect(tabBox.requiresSave).toBe(true);
+      expect(form.saveNeeded).toBe(true);
+
+      form.markSaved();
+      expect(tabBox.requiresSave).toBe(false);
+      expect(form.saveNeeded).toBe(false);
+    });
+
+    it('works for sequence boxes', () => {
+      let form = scout.create(Form, {
+        parent: session.desktop,
+        rootGroupBox: {
+          objectType: GroupBox,
+          fields: [{
+            objectType: SequenceBox,
+            fields: [{
+              objectType: StringField,
+              id: 'SeqField'
+            }, {
+              objectType: StringField,
+              id: 'SeqField2'
+            }]
+          }]
+        }
+      });
+      expect(form.saveNeeded).toBe(false);
+
+      let seqField = form.widget('SeqField', StringField);
+      let seqBox = seqField.findParent(SequenceBox);
+      seqField.setValue('hi');
+      expect(seqBox.requiresSave).toBe(true);
+      expect(form.saveNeeded).toBe(true);
+
+      let seqField2 = form.widget('SeqField2', StringField);
+      seqField2.setValue('there');
+      expect(form.saveNeeded).toBe(true);
+
+      seqField.setValue(null);
+      expect(seqBox.requiresSave).toBe(true);
+      expect(form.saveNeeded).toBe(true);
+
+      seqField2.setValue(null);
+      expect(seqBox.requiresSave).toBe(false);
+      expect(form.saveNeeded).toBe(false);
+    });
+
+    it('works for split boxes', () => {
+      let form = scout.create(Form, {
+        parent: session.desktop,
+        rootGroupBox: {
+          objectType: GroupBox,
+          fields: [{
+            objectType: SplitBox,
+            id: 'SplitBox',
+            firstField: {
+              objectType: StringField
+            },
+            secondField: {
+              objectType: StringField
+            }
+          }]
+        }
+      });
+      expect(form.saveNeeded).toBe(false);
+
+      let splitBox = form.widget('SplitBox', SplitBox);
+      (splitBox.firstField as StringField).setValue('hi');
+      expect(splitBox.requiresSave).toBe(true);
+      expect(form.saveNeeded).toBe(true);
+
+      (splitBox.secondField as StringField).setValue('there');
+      expect(form.saveNeeded).toBe(true);
+
+      (splitBox.firstField as StringField).setValue(null);
+      expect(splitBox.requiresSave).toBe(true);
+      expect(form.saveNeeded).toBe(true);
+
+      (splitBox.secondField as StringField).setValue(null);
+      expect(splitBox.requiresSave).toBe(false);
+      expect(form.saveNeeded).toBe(false);
+    });
+
+    it('considers fields in menu bars as well', done => {
+      expect(form.saveNeeded).toBe(false);
+
+      let menu = scout.create(FormFieldMenu, {
+        parent: form,
+        field: {
+          objectType: StringField
+        }
+      });
+      form.rootGroupBox.insertMenu(menu);
+      let menubarField = (menu.field as StringField);
+      menubarField.setValue('there');
+      expect(menubarField.requiresSave).toBe(true);
+      expect(form.rootGroupBox.requiresSave).toBe(true);
+      expect(form.saveNeeded).toBe(true);
+
+      let menu2 = scout.create(FormFieldMenu, {
+        parent: secondField,
+        field: {
+          objectType: StringField
+        }
+      });
+      secondField.insertMenu(menu2);
+      let menuField = (menu2.field as StringField);
+      menuField.setValue('hello');
+      expect(menuField.requiresSave).toBe(true);
+      expect(form.rootGroupBox.requiresSave).toBe(true);
+      expect(form.saveNeeded).toBe(true);
+
+      menubarField.setValue(null);
+      expect(form.saveNeeded).toBe(true);
+
+      menuField.setValue(null);
+      expect(form.saveNeeded).toBe(false);
+
+      menubarField.setValue('hi');
+      menuField.setValue('there');
+      expect(form.saveNeeded).toBe(true);
+
+      form.save()
+        .then(() => {
+          expect(menubarField.requiresSave).toBe(false);
+          expect(menuField.requiresSave).toBe(false);
+          expect(form.rootGroupBox.requiresSave).toBe(false);
+          expect(form.saveNeeded).toBe(false);
+        })
+        .catch(fail)
+        .always(done);
     });
   });
 });

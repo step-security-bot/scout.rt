@@ -405,8 +405,8 @@ export class Form extends Widget implements FormModel, DisplayParent {
   /**
    * Saves the changes without closing the form.
    * @returns promise which is resolved when the form is saved
-   *    Note: it will be resolved even if the form does not require save and therefore even if {@link @_save} is not called.
-   *    If you only want to be informed when save is required and {@link @_save} executed then you could use {@link whenSave()} or {@link on('save')} instead.
+   *    Note: it will be resolved even if the form does not require save and therefore even if {@link _save} is not called.
+   *    If you only want to be informed when save is required and {@link _save} executed then you could use {@link whenSave} or `on('save')` instead.
    */
   save(): JQuery.Promise<void> {
     return this.lifecycle.save();
@@ -755,7 +755,24 @@ export class Form extends Widget implements FormModel, DisplayParent {
     this._setProperty('rootGroupBox', rootGroupBox);
     if (this.rootGroupBox) {
       this.rootGroupBox.setMainBox(true);
+      this.updateSaveNeeded();
+      this.rootGroupBox.on('propertyChange:requiresSave', () => {
+        this.updateSaveNeeded();
+      });
+      // TODO CGU kann man root group box austauschen? listener wegmachen
     }
+  }
+
+  updateSaveNeeded() {
+    this.setSaveNeeded(this.rootGroupBox ? this.rootGroupBox.requiresSave : false);
+  }
+
+  markSaved() {
+    this.visitFields(field => field.markAsSaved());
+  }
+
+  setSaveNeeded(saveNeeded: boolean) {
+    this.setProperty('saveNeeded', saveNeeded);
   }
 
   protected _renderSaveNeeded() {

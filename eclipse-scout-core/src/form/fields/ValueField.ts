@@ -399,6 +399,7 @@ export class ValueField<TValue extends TModelValue, TModelValue = TValue> extend
     this._updateMenus();
     this._updateTouched();
     this._updateEmpty();
+    this.updateRequiresSave();
     this.triggerPropertyChange('value', oldValue, this.value);
   }
 
