@@ -77,7 +77,7 @@ export class FormLifecycle<TValidationResult extends ValidationResult = Validati
   }
 
   override markAsSaved() {
-    this.widget.markSaved();
+    this.widget.markAsSaved();
   }
 
   /**

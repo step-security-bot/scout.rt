@@ -74,6 +74,13 @@ export abstract class CompositeField extends FormField {
     return false;
   }
 
+  override markAsSaved() {
+    for (const field of this.getFields()) {
+      field.markAsSaved();
+    }
+    super.markAsSaved();
+  }
+
   protected _onChildFieldPropertyChange(event: PropertyChangeEvent<any, FormField>) {
     if (event.propertyName === 'requiresSave') {
       this.updateRequiresSave();

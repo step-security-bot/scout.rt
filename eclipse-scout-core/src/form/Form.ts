@@ -286,13 +286,12 @@ export class Form extends Widget implements FormModel, DisplayParent {
 
   /**
    * Loads the data and renders the form afterwards by adding it to the desktop.
-   * <p>
-   * Calling this method is equivalent to calling load() first and once the promise is resolved, calling show().
-   * <p>
+   *
+   * Calling this method is equivalent to calling {@link load} first and once the promise is resolved, calling {@link show}.
+   *
    * Keep in mind that the form won't be rendered immediately after calling {@link open}. Because promises are always resolved asynchronously,
    * {@link show} will be called delayed even if {@link load} does nothing but return a resolved promise.<br>
-   * This is only relevant if you need to access properties which are only available when the form is rendered (e.g. $container), which is not recommended anyway.
-   * <p>
+   * This is only relevant if you need to access properties which are only available when the form is rendered (e.g. {@link $container}), which is not recommended anyway.
    */
   open(): JQuery.Promise<void> {
     return this.load()
@@ -767,8 +766,8 @@ export class Form extends Widget implements FormModel, DisplayParent {
     this.setSaveNeeded(this.rootGroupBox ? this.rootGroupBox.requiresSave : false);
   }
 
-  markSaved() {
-    this.visitFields(field => field.markAsSaved());
+  markAsSaved() {
+    this.rootGroupBox?.markAsSaved();
   }
 
   setSaveNeeded(saveNeeded: boolean) {

@@ -9,8 +9,8 @@
  */
 import {FormSpecHelper, OutlineSpecHelper} from '../../src/testing/index';
 import {
-  CancelMenu, CloseMenu, Dimension, fields, Form, FormFieldMenu, NotificationBadgeStatus, NullWidget, OkMenu, Popup, Rectangle, ResetMenu, SaveMenu, scout, SequenceBox, Session, SplitBox, Status, StringField, TabBox, TabItem, webstorage,
-  WrappedFormField
+  CancelMenu, CloseMenu, Dimension, fields, Form, FormFieldMenu, FormModel, InitModelOf, NotificationBadgeStatus, NullWidget, OkMenu, Popup, Rectangle, ResetMenu, SaveMenu, scout, SequenceBox, Session, SplitBox, Status, StringField, TabBox,
+  TabItem, webstorage, WrappedFormField
 } from '../../src/index';
 import {DateField, GroupBox} from '../../src';
 
@@ -1149,10 +1149,57 @@ describe('Form', () => {
       expect(form.rootGroupBox.requiresSave).toBe(false);
       expect(form.saveNeeded).toBe(false);
 
-      // TODO Widgets innerhalb form field menus oder tiles
       // TODO requiresSave -> saveNeeded
     });
 
+    it('is false right after loading even if values are set while init or loading', done => {
+      class MyForm extends Form {
+        protected override _jsonModel(): FormModel {
+          return {
+            rootGroupBox: {
+              objectType: GroupBox,
+              fields: [{
+                objectType: TabBox,
+                tabItems: [{
+                  objectType: TabItem,
+                  fields: [{
+                    objectType: StringField,
+                    id: 'TabField'
+                  }, {
+                    objectType: StringField,
+                    id: 'TabField2'
+                  }]
+                }]
+              }]
+            }
+          };
+        }
+
+        protected override _init(model: InitModelOf<this>) {
+          super._init(model);
+          this.widget('TabField', StringField).setValue('hello');
+        }
+
+        protected override _load(): JQuery.Promise<object> {
+          this.widget('TabField', StringField).setValue('there');
+          return super._load();
+        }
+
+        override importData() {
+          this.widget('TabField2', StringField).setValue('hola');
+        }
+      }
+
+      form = scout.create(MyForm, {parent: session.desktop});
+      expect(form.saveNeeded).toBe(false); // TODO true or false?
+
+      form.load()
+        .then(() => {
+          expect(form.saveNeeded).toBe(false);
+        })
+        .catch(fail)
+        .always(done);
+    });
 
     it('works if fields are changed dynamically', () => {
       expect(form.saveNeeded).toBe(false);
@@ -1174,7 +1221,7 @@ describe('Form', () => {
       expect(form.rootGroupBox.requiresSave).toBe(true);
       expect(form.saveNeeded).toBe(true);
 
-      form.markSaved();
+      form.markAsSaved();
       expect(newField.requiresSave).toBe(false);
       expect(form.rootGroupBox.requiresSave).toBe(false);
       expect(form.saveNeeded).toBe(false);
@@ -1233,7 +1280,7 @@ describe('Form', () => {
       expect(tabBox.requiresSave).toBe(true);
       expect(form.saveNeeded).toBe(true);
 
-      form.markSaved();
+      form.markAsSaved();
       expect(tabBox.requiresSave).toBe(false);
       expect(form.saveNeeded).toBe(false);
     });
