@@ -1417,12 +1417,39 @@ export class FormField extends Widget implements FormFieldModel {
   }
 
   /**
-   * Visits this field and all child form fields in pre-order (top-down).
+   * Visits this field and all child {@link FormField}s in pre-order (top-down).
    *
+   * @param directChildrenOnly If set to true, visiting of a child is skipped if that child is not a form field, even if it would contain form fields itself.
+   *   For example: if a form field has a {@link FormFieldMenu}, which is a menu containing a form field, the form field inside the menu won't be visited.
+   *   Default is false.
    * @returns the TreeVisitResult, or nothing to continue.
    */
-  visitFields(visitor: (field: FormField) => TreeVisitResult | void): TreeVisitResult | void {
-    return visitor(this);
+  visitFields(visitor: (field: FormField) => TreeVisitResult | void, directChildrenOnly = false): TreeVisitResult | void {
+    let treeVisitResult = visitor(this);
+    if (treeVisitResult === TreeVisitResult.TERMINATE) {
+      return TreeVisitResult.TERMINATE;
+    }
+
+    if (treeVisitResult === TreeVisitResult.SKIP_SUBTREE) {
+      return;
+    }
+
+    let fields = this._collectFieldsForVisiting(directChildrenOnly);
+    for (let i = 0; i < fields.length; i++) {
+      let field = fields[i];
+      treeVisitResult = field.visitFields(visitor, directChildrenOnly);
+      if (treeVisitResult === TreeVisitResult.TERMINATE) {
+        return TreeVisitResult.TERMINATE;
+      }
+    }
+    return treeVisitResult;
+  }
+
+  protected _collectFieldsForVisiting(directChildrenOnly: boolean): FormField[] {
+    if (directChildrenOnly) {
+      return this.children.filter(child => child instanceof FormField) as FormField[];
+    }
+    return this.childFields;
   }
 
   /**

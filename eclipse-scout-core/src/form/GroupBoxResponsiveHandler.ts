@@ -88,7 +88,7 @@ export class GroupBoxResponsiveHandler extends ResponsiveHandler {
         field.on('propertyChange', this._formFieldAddedHandler);
         this._compositeFields.push(field);
       }
-    });
+    }, true);
   }
 
   override destroy() {
@@ -110,7 +110,7 @@ export class GroupBoxResponsiveHandler extends ResponsiveHandler {
   }
 
   protected override _transform() {
-    this.widget.visitFields(this._transformWidget.bind(this));
+    this.widget.visitFields(this._transformWidget.bind(this), true);
   }
 
   protected override _transformWidget(widget: FormField): TreeVisitResult {
@@ -359,7 +359,7 @@ export class GroupBoxResponsiveHandler extends ResponsiveHandler {
   protected _onFormFieldAdded(event: PropertyChangeEvent<any, CompositeField>) {
     if (this.state !== ResponsiveManager.ResponsiveState.NORMAL && (event.propertyName === 'fields' || event.propertyName === 'tabItems')) {
       let newFields = arrays.diff(event.newValue, event.oldValue) as CompositeField[];
-      newFields.forEach(field => field.visitFields(this._transformWidget.bind(this)));
+      newFields.forEach(field => field.visitFields(this._transformWidget.bind(this), true));
     }
   }
 }

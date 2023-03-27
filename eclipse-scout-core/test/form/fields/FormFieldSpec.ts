@@ -700,5 +700,8 @@ describe('FormField', () => {
       expectNotVisited(box2);
       expectNotVisited(box2.fields[0]);
     });
+
+    // FIXME CGU add spec for directFields only
+    // FIXME CGU do we have to make exception for form as in Java? Add parameter? should wrapped form field implement it?
   });
 });
