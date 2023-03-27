@@ -9,8 +9,8 @@
  */
 import {FormSpecHelper, OutlineSpecHelper} from '../../src/testing/index';
 import {
-  CancelMenu, CloseMenu, Dimension, fields, Form, FormFieldMenu, FormModel, InitModelOf, NotificationBadgeStatus, NullWidget, OkMenu, Popup, Rectangle, ResetMenu, SaveMenu, scout, SequenceBox, Session, SplitBox, Status, StringField, TabBox,
-  TabItem, webstorage, WrappedFormField
+  CancelMenu, CloseMenu, Dimension, fields, Form, FormFieldMenu, FormModel, InitModelOf, Menu, NotificationBadgeStatus, NullWidget, OkMenu, Popup, Rectangle, ResetMenu, SaveMenu, scout, SequenceBox, Session, SplitBox, Status, StringField,
+  TabBox, TabItem, webstorage, WrappedFormField
 } from '../../src/index';
 import {DateField, GroupBox} from '../../src';
 
@@ -1211,7 +1211,7 @@ describe('Form', () => {
       expect(form.rootGroupBox.requiresSave).toBe(false);
       expect(form.saveNeeded).toBe(false);
 
-      let newField = scout.create(StringField, {parent: form});
+      let newField = scout.create(StringField, {parent: form.rootGroupBox});
       form.rootGroupBox.insertField(newField);
       expect(form.rootGroupBox.requiresSave).toBe(false);
       expect(form.saveNeeded).toBe(false);
@@ -1235,6 +1235,121 @@ describe('Form', () => {
       form.rootGroupBox.insertField(newField2);
       expect(newField2.requiresSave).toBe(true);
       expect(form.rootGroupBox.requiresSave).toBe(true);
+      expect(form.saveNeeded).toBe(true);
+    });
+
+    it('works if fields are removed temporarily', () => {
+      form = scout.create(Form, {
+        parent: session.desktop,
+        rootGroupBox: {
+          objectType: GroupBox
+        }
+      });
+      expect(form.saveNeeded).toBe(false);
+
+      // Owner is form so field won't be destroyed when removed from the box
+      let newField = scout.create(StringField, {parent: form});
+      form.rootGroupBox.insertField(newField);
+      expect(form.saveNeeded).toBe(false);
+
+      newField.setValue('hi');
+      expect(form.saveNeeded).toBe(true);
+
+      form.rootGroupBox.deleteField(newField);
+      expect(form.saveNeeded).toBe(false);
+      expect(newField.destroyed).toBe(false);
+
+      form.rootGroupBox.insertField(newField);
+      expect(form.saveNeeded).toBe(true);
+    });
+
+    it('works if fields are removed temporarily', () => {
+      form = scout.create(Form, {
+        parent: session.desktop,
+        rootGroupBox: {
+          objectType: GroupBox
+        }
+      });
+      expect(form.saveNeeded).toBe(false);
+
+      // Owner is form so field won't be destroyed when removed from the box
+      let newField = scout.create(StringField, {parent: form});
+      form.rootGroupBox.insertField(newField);
+      expect(form.saveNeeded).toBe(false);
+
+      newField.setValue('hi');
+      expect(form.saveNeeded).toBe(true);
+
+      form.rootGroupBox.deleteField(newField);
+      expect(form.saveNeeded).toBe(false);
+      expect(newField.destroyed).toBe(false);
+
+      form.rootGroupBox.insertField(newField);
+      expect(form.saveNeeded).toBe(true);
+    });
+
+    it('manages listeners correctly', () => {
+      form = scout.create(Form, {
+        parent: session.desktop,
+        rootGroupBox: {
+          objectType: GroupBox,
+          fields: [{
+            objectType: GroupBox,
+            id: 'Box1'
+          }, {
+            objectType: GroupBox,
+            id: 'Box2',
+            menus: [{
+              objectType: FormFieldMenu,
+              id: 'Menu'
+            }]
+          }]
+        }
+      });
+      let newField = scout.create(StringField, {parent: form});
+      let box1 = form.widget('Box1', GroupBox);
+      let box2 = form.widget('Box2', GroupBox);
+      let menu = form.widget('Menu', FormFieldMenu);
+      let fieldListenerCount = newField.events.count('hierarchyChange');
+      let box1ListenerCount = box1.events.count('hierarchyChange');
+      let box2ListenerCount = box2.events.count('hierarchyChange');
+      let menuListenerCount = menu.events.count('hierarchyChange');
+      let mainBoxListenerCount = form.rootGroupBox.events.count('hierarchyChange');
+      let formListenerCount = form.events.count('hierarchyChange');
+
+      box1.insertField(newField);
+      expect(newField.events.count('hierarchyChange')).toBe(fieldListenerCount);
+      expect(box1.events.count('hierarchyChange')).toBe(box1ListenerCount);
+      expect(form.rootGroupBox.events.count('hierarchyChange')).toBe(mainBoxListenerCount);
+      expect(form.events.count('hierarchyChange')).toBe(formListenerCount - 1); // Field was attached to form -> box1 will be the new parent
+
+      box1.deleteField(newField);
+      expect(newField.events.count('hierarchyChange')).toBe(fieldListenerCount);
+      expect(box1.events.count('hierarchyChange')).toBe(box1ListenerCount);
+      expect(form.rootGroupBox.events.count('hierarchyChange')).toBe(mainBoxListenerCount);
+      expect(form.events.count('hierarchyChange')).toBe(formListenerCount);
+
+      menu.setField(newField);
+      expect(newField.events.count('hierarchyChange')).toBe(fieldListenerCount);
+      expect(menu.events.count('hierarchyChange')).toBe(menuListenerCount + 1);
+      expect(box2.events.count('hierarchyChange')).toBe(box2ListenerCount);
+      expect(form.rootGroupBox.events.count('hierarchyChange')).toBe(mainBoxListenerCount);
+      expect(form.events.count('hierarchyChange')).toBe(formListenerCount - 1);
+
+      menu.setField(null);
+      expect(newField.events.count('hierarchyChange')).toBe(fieldListenerCount);
+      expect(menu.events.count('hierarchyChange')).toBe(menuListenerCount);
+      expect(box2.events.count('hierarchyChange')).toBe(box2ListenerCount);
+      expect(form.rootGroupBox.events.count('hierarchyChange')).toBe(mainBoxListenerCount);
+      expect(form.events.count('hierarchyChange')).toBe(formListenerCount);
+
+      expect(form.saveNeeded).toBe(false);
+
+      // Field is not linked -> nothing should happen
+      newField.touch();
+      expect(form.saveNeeded).toBe(false);
+
+      box2.insertField(newField);
       expect(form.saveNeeded).toBe(true);
     });
 

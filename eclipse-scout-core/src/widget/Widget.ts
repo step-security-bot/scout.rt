@@ -371,6 +371,25 @@ export class Widget extends PropertyEventEmitter implements WidgetModel, ObjectW
     child.destroy();
   }
 
+  protected _destroyOrUnlinkChildren(widgets: Widget[] | Widget) {
+    if (!widgets) {
+      return;
+    }
+
+    widgets = arrays.ensure(widgets);
+    widgets.forEach(child => {
+      if (child.destroyed) {
+        return;
+      }
+      if (child.owner === this) {
+        this._destroyChild(child);
+      } else {
+        // Disconnect child from parent and re-connect to owner
+        child.setParent(child.owner);
+      }
+    });
+  }
+
   /**
    * Creates the UI by creating HTML elements and appending them to the DOM.
    * <p>
@@ -1491,8 +1510,8 @@ export class Widget extends PropertyEventEmitter implements WidgetModel, ObjectW
         oldWidgets = arrays.diff(oldWidgets, widgets);
       }
 
-      // Destroy old child widget(s)
-      this._destroyChildren(oldWidgets);
+      // Destroy old child widget(s). If the widget does not own the children, they will be unlinked only
+      this._destroyOrUnlinkChildren(oldWidgets);
 
       // Link to new parent
       this.link(widgets);

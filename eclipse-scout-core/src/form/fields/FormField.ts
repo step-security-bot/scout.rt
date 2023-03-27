@@ -1456,7 +1456,7 @@ export class FormField extends Widget implements FormFieldModel {
    * Updates the {@link requiresSave} property by checking if the field is touched or if {@link computeRequiresSave} returns true.
    */
   updateRequiresSave() {
-    if (!this.initialized) {
+    if (!this.initialized || this.destroying) {
       return;
     }
     this._setRequiresSave(this.touched || this.computeRequiresSave());
@@ -1530,17 +1530,11 @@ export class FormField extends Widget implements FormFieldModel {
     });
   }
 
-  protected _updateParentListeners() {
-    let parent = this.parent;
-    while (parent) {
-      parent.on('hierarchyChange', this._hierarchyChangeHandler);
-      // this._parents.push(parent);
-      parent = parent.parent;
-    }
-  }
-
   protected _linkToParentField() {
-    this.on('hierarchyChange', this._hierarchyChangeHandler);
+    if (!this.initialized) {
+      this.on('hierarchyChange', this._hierarchyChangeHandler);
+    }
+    // Each form field adds its own hierarchyChangeListener but non-form-fields don't -> add listener for every non-form field between this field and the next parent field
     let parentField = this._visitParentsUntilField(this.parent, parent => parent.on('hierarchyChange', this._hierarchyChangeHandler));
     if (parentField) {
       parentField.addChildField(this);

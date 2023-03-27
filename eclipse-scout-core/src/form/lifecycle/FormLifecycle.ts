@@ -80,21 +80,7 @@ export class FormLifecycle<TValidationResult extends ValidationResult = Validati
     this.widget.markAsSaved();
   }
 
-  /**
-   * Visits all form fields and calls the updateRequiresSave() function. If any
-   * field has the requiresSave flag set to true, this function returns true,
-   * false otherwise.
-   *
-   * @see (Java) AbstractFormField #checkSaveNeeded, #isSaveNeeded
-   */
   override requiresSave(): boolean {
-    let requiresSave = false;
-    this.widget.visitFields(field => {
-      field.updateRequiresSave();
-      if (field.requiresSave) {
-        requiresSave = true;
-      }
-    });
-    return requiresSave;
+    return this.widget.saveNeeded;
   }
 }
