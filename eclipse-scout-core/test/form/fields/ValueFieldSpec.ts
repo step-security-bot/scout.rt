@@ -703,6 +703,8 @@ describe('ValueField', () => {
 
   });
 
+  // FIXME CGU custom requires save, touched ersetzen?
+
   describe('menu visibility', () => {
     let formField: SpecInputValueField, model;
 

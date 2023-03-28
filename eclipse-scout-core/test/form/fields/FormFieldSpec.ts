@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  */
-import {CheckBoxField, FormField, GridData, GroupBox, Menu, RadioButton, RadioButtonGroup, scout, Status, StringField, TreeVisitResult, Widget} from '../../../src/index';
+import {CheckBoxField, FormField, FormFieldMenu, FormFieldTile, GridData, GroupBox, Menu, RadioButton, RadioButtonGroup, scout, Status, StringField, TileField, TileGrid, TreeVisitResult, Widget} from '../../../src/index';
 import {FormSpecHelper, MenuSpecHelper} from '../../../src/testing/index';
 import {InitModelOf} from '../../../src/scout';
 
@@ -551,6 +551,37 @@ describe('FormField', () => {
     });
   }
 
+  function createMixedVisitingStructure(): GroupBox {
+    return scout.create(GroupBox, {
+      parent: session.desktop,
+      fields: [{
+        objectType: TileField,
+        tileGrid: {
+          objectType: TileGrid,
+          tiles: [{
+            objectType: FormFieldTile,
+            tileWidget: {
+              objectType: GroupBox,
+              id: 'TileBox',
+              fields: [{
+                objectType: StringField
+              }]
+            }
+          }]
+        }
+      }, {
+        objectType: StringField
+      }],
+      menus: [{
+        objectType: FormFieldMenu,
+        field: {
+          objectType: StringField,
+          id: 'MenuField'
+        }
+      }]
+    });
+  }
+
   function expectVisited(field) {
     expect(field.hasBeenVisited).toBeTruthy();
   }
@@ -579,6 +610,60 @@ describe('FormField', () => {
       let box2 = groupBox.fields[3] as GroupBox;
       expectVisited(box2);
       expectVisited(box2.fields[0]);
+    });
+
+    it('visits child fields of non-widgets as well', () => {
+      let groupBox = createMixedVisitingStructure();
+      groupBox.visitFields(field => {
+        field['hasBeenVisited'] = true;
+      });
+
+      expectVisited(groupBox);
+      expectVisited(groupBox.fields[0]);
+      expectVisited(groupBox.fields[1]);
+      expectVisited(groupBox.widget('TileBox', GroupBox));
+      expectVisited(groupBox.widget('TileBox', GroupBox).fields[0]);
+      expectVisited(groupBox.widget('MenuField', FormField));
+    });
+
+    it('does not visits child fields of non-widgets if limitToSameFieldTree is true', () => {
+      let groupBox = createMixedVisitingStructure();
+      groupBox.visitFields(field => {
+        field['hasBeenVisited'] = true;
+      }, {limitToSameFieldTree: true});
+
+      expectVisited(groupBox);
+      expectVisited(groupBox.fields[0]);
+      expectVisited(groupBox.fields[1]);
+      expectNotVisited(groupBox.widget('TileBox', GroupBox));
+      expectNotVisited(groupBox.widget('TileBox', GroupBox).fields[0]);
+      expectNotVisited(groupBox.widget('MenuField', FormField));
+    });
+
+    it('only visits first child fields if firstLevelFieldsOnly is true', () => {
+      let groupBox = createMixedVisitingStructure();
+      groupBox.visitFields(field => {
+        field['hasBeenVisited'] = true;
+      }, {firstLevelFieldsOnly: true});
+
+      expectVisited(groupBox);
+      expectVisited(groupBox.fields[0]);
+      expectVisited(groupBox.fields[1]);
+      expectNotVisited(groupBox.widget('TileBox', GroupBox));
+      expectNotVisited(groupBox.widget('TileBox', GroupBox).fields[0]);
+      expectVisited(groupBox.widget('MenuField', FormField));
+
+      groupBox = createMixedVisitingStructure();
+      groupBox.fields[0].visitFields(field => {
+        field['hasBeenVisited'] = true;
+      }, {firstLevelFieldsOnly: true});
+
+      expectNotVisited(groupBox);
+      expectVisited(groupBox.fields[0]);
+      expectNotVisited(groupBox.fields[1]);
+      expectVisited(groupBox.widget('TileBox', GroupBox));
+      expectNotVisited(groupBox.widget('TileBox', GroupBox).fields[0]);
+      expectNotVisited(groupBox.widget('MenuField', FormField));
     });
 
     it('can skip subtree of a group box when returning TreeVisitResult.SKIP_SUBTREE', () => {
@@ -701,7 +786,38 @@ describe('FormField', () => {
       expectNotVisited(box2.fields[0]);
     });
 
-    // FIXME CGU add spec for directFields only
     // FIXME CGU do we have to make exception for form as in Java? Add parameter? should wrapped form field implement it?
+  });
+
+  describe('visitParentFields', () => {
+    it('visits parent fields of non-widgets as well', () => {
+      let groupBox = createMixedVisitingStructure();
+      let tileStringField = groupBox.widget('TileBox', GroupBox).fields[0];
+      tileStringField.visitParentFields(field => {
+        field['hasBeenVisited'] = true;
+      });
+
+      expectNotVisited(tileStringField);
+      expectVisited(groupBox.widget('TileBox', GroupBox));
+      expectVisited(groupBox.fields[0]);
+      expectVisited(groupBox);
+      expectNotVisited(groupBox.fields[1]);
+      expectNotVisited(groupBox.widget('MenuField', FormField));
+    });
+
+    it('does not visits parent fields of non-widgets if limitToSameFieldTree is true', () => {
+      let groupBox = createMixedVisitingStructure();
+      let tileStringField = groupBox.widget('TileBox', GroupBox).fields[0];
+      tileStringField.visitParentFields(field => {
+        field['hasBeenVisited'] = true;
+      }, {limitToSameFieldTree: true});
+
+      expectNotVisited(tileStringField);
+      expectVisited(groupBox.widget('TileBox', GroupBox));
+      expectNotVisited(groupBox.fields[0]);
+      expectNotVisited(groupBox);
+      expectNotVisited(groupBox.fields[1]);
+      expectNotVisited(groupBox.widget('MenuField', FormField));
+    });
   });
 });

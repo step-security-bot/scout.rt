@@ -1191,8 +1191,6 @@ describe('Form', () => {
       }
 
       form = scout.create(MyForm, {parent: session.desktop});
-      expect(form.saveNeeded).toBe(false); // TODO true or false? and the affected field? why does it not work for widgets app? load should call marksaved
-
       form.load()
         .then(() => {
           expect(form.saveNeeded).toBe(false);
@@ -1236,6 +1234,8 @@ describe('Form', () => {
       expect(newField2.requiresSave).toBe(true);
       expect(form.rootGroupBox.requiresSave).toBe(true);
       expect(form.saveNeeded).toBe(true);
+
+      // FIXME Add change value and reset to initvalue
     });
 
     it('works if fields are removed temporarily', () => {

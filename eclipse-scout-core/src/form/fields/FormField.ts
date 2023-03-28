@@ -10,7 +10,7 @@
 import {
   AbstractLayout, Action, arrays, clipboard, CloneOptions, ContextMenuPopup, Device, dragAndDrop, DragAndDropHandler, DragAndDropOptions, DropType, EnumObject, EventHandler, fields, FieldStatus, FormFieldClipboardExportEvent,
   FormFieldEventMap, FormFieldLayout, FormFieldModel, GridData, GroupBox, HierarchyChangeEvent, HtmlComponent, InitModelOf, KeyStrokeContext, LoadingSupport, Menu, menus as menuUtil, ObjectOrChildModel, objects, Predicate,
-  PropertyChangeEvent, scout, Status, StatusMenuMapping, StatusOrModel, strings, styles, Tooltip, tooltips, TooltipSupport, TreeVisitResult, Widget
+  PropertyChangeEvent, scout, Status, StatusMenuMapping, StatusOrModel, strings, styles, Tooltip, tooltips, TooltipSupport, TreeVisitor, TreeVisitResult, Widget
 } from '../../index';
 import $ from 'jquery';
 
@@ -135,15 +135,12 @@ export class FormField extends Widget implements FormFieldModel {
     this.disabledCopyOverlay = false;
     this.$disabledCopyOverlay = null;
 
-    this.childFields = [];
-
     this._addWidgetProperties(['keyStrokes', 'menus', 'statusMenuMappings']);
     this._addCloneProperties(['dropType', 'dropMaximumSize', 'errorStatus', 'fieldStyle', 'gridDataHints', 'gridData', 'label', 'labelVisible', 'labelPosition',
       'labelWidthInPixel', 'labelUseUiWidth', 'mandatory', 'mode', 'preventInitialFocus', 'requiresSave', 'touched', 'statusVisible', 'statusPosition', 'statusMenuMappings',
       'tooltipText', 'tooltipAnchor']);
 
     this._menuPropertyChangeHandler = this._onMenuPropertyChange.bind(this);
-    this._stateChangeHandler = this._onStateChange.bind(this);
     this._hierarchyChangeHandler = this._onHierarchyChange.bind(this);
   }
 
@@ -1418,55 +1415,39 @@ export class FormField extends Widget implements FormFieldModel {
 
   /**
    * Visits this field and all child {@link FormField}s in pre-order (top-down).
-   *
-   * @param directChildrenOnly If set to true, visiting of a child is skipped if that child is not a form field, even if it would contain form fields itself.
-   *   For example: if a form field has a {@link FormFieldMenu}, which is a menu containing a form field, the form field inside the menu won't be visited.
-   *   Default is false.
-   * @returns the TreeVisitResult, or nothing to continue.
    */
-  visitFields(visitor: (field: FormField) => TreeVisitResult | void, directChildrenOnly = false): TreeVisitResult | void {
-    let treeVisitResult = visitor(this);
-    if (treeVisitResult === TreeVisitResult.TERMINATE) {
-      return TreeVisitResult.TERMINATE;
-    }
-
-    if (treeVisitResult === TreeVisitResult.SKIP_SUBTREE) {
-      return;
-    }
-
-    let fields = this._collectFieldsForVisiting(directChildrenOnly);
-    for (let i = 0; i < fields.length; i++) {
-      let field = fields[i];
-      treeVisitResult = field.visitFields(visitor, directChildrenOnly);
-      if (treeVisitResult === TreeVisitResult.TERMINATE) {
-        return TreeVisitResult.TERMINATE;
+  visitFields(visitor: TreeVisitor<FormField>, options: VisitFieldsOptions = {}): TreeVisitResult {
+    return this.visit(child => {
+      if (child instanceof FormField) {
+        let visitResult = visitor(child);
+        return scout.nvl(options.firstLevelFieldsOnly, false) && this !== child ? TreeVisitResult.SKIP_SUBTREE : visitResult;
       }
-    }
-    return treeVisitResult;
-  }
-
-  protected _collectFieldsForVisiting(directChildrenOnly: boolean): FormField[] {
-    if (directChildrenOnly) {
-      return this.children.filter(child => child instanceof FormField) as FormField[];
-    }
-    return this.childFields;
+      if (scout.nvl(options.limitToSameFieldTree, false)) {
+        return TreeVisitResult.SKIP_SUBTREE;
+      }
+      return TreeVisitResult.CONTINUE;
+    }, {visitSelf: options.visitSelf});
   }
 
   /**
-   * Visit all parent form fields. The visit stops if the parent is no form field anymore (e.g. a form, desktop or session).
-   *
+   * Visits all parent form fields.
+   * To stop the visiting if the parent field is no form field anymore (e.g. a form or the desktop), you can set {@link VisitParentFieldsOptions.limitToSameFieldTree} to true.
    */
-  visitParentFields(visitor: (parent: FormField) => void) {
-    let curParent = this.parent;
-    while (curParent instanceof FormField) {
-      visitor(curParent);
-      curParent = curParent.parent;
+  visitParentFields(visitor: (parent: FormField) => void, options: VisitParentFieldsOptions = {}) {
+    let parent = this.parent;
+    while (parent) {
+      if (parent instanceof FormField) {
+        visitor(parent);
+      } else if (scout.nvl(options.limitToSameFieldTree, false)) {
+        return;
+      }
+      parent = parent.parent;
     }
   }
 
   /** @see FormFieldModel.touched */
   markAsSaved() {
-    for (const field of this.childFields) {
+    for (const field of this.getChildFields()) {
       field.markAsSaved();
     }
     this.setProperty('touched', false);
@@ -1491,18 +1472,32 @@ export class FormField extends Widget implements FormFieldModel {
 
   protected _setRequiresSave(requiresSave: boolean) {
     this._setProperty('requiresSave', requiresSave);
+    let parentField = this.findParent(FormField);
+    parentField?.updateRequiresSave();
   }
 
   /**
-   * Override this function to provide a custom logic to compute the {@link requiresSave} state if the field is not {@link touched}, see {@link updateRequiresSave}.
+   * Used by {@link updateRequiresSave} to update the {@link requiresSave} property.
+   *
+   * By default, all first level child fields are checked. The method returns true, if one of these fields needs to be saved.
    */
   computeRequiresSave(): boolean {
-    for (const field of this.childFields) {
-      if (field.requiresSave) {
+    let requiresSave = false;
+    this.visitFields(field => {
+      if (!field.destroying && field.requiresSave) {
+        requiresSave = true;
         return true;
       }
-    }
-    return false;
+    }, {firstLevelFieldsOnly: true, visitSelf: false});
+    return requiresSave;
+  }
+
+  getChildFields(firstLevelFieldsOnly = true) {
+    let childFields = [];
+    this.visitFields(field => {
+      childFields.push(field);
+    }, {firstLevelFieldsOnly: firstLevelFieldsOnly, visitSelf: false});
+    return childFields;
   }
 
   getValidationResult(): ValidationResult {
@@ -1563,16 +1558,12 @@ export class FormField extends Widget implements FormFieldModel {
     }
     // Each form field adds its own hierarchyChangeListener but non-form-fields don't -> add listener for every non-form field between this field and the next parent field
     let parentField = this._visitParentsUntilField(this.parent, parent => parent.on('hierarchyChange', this._hierarchyChangeHandler));
-    if (parentField) {
-      parentField.addChildField(this);
-    }
+    parentField?.updateRequiresSave();
   }
 
   protected _unlinkFromParentField(oldParent) {
     let oldParentField = this._visitParentsUntilField(oldParent, parent => parent.off('hierarchyChange', this._hierarchyChangeHandler));
-    if (oldParentField) {
-      oldParentField.removeChildField(this);
-    }
+    oldParentField?.updateRequiresSave();
   }
 
   protected _onHierarchyChange(event: HierarchyChangeEvent) {
@@ -1587,24 +1578,6 @@ export class FormField extends Widget implements FormFieldModel {
       }
       visitor(parent);
       parent = parent.parent;
-    }
-  }
-
-  addChildField(formField: FormField) {
-    this.childFields.push(formField);
-    formField.on('propertyChange', this._stateChangeHandler);
-    this.updateRequiresSave();
-  }
-
-  removeChildField(formField: FormField) {
-    formField.off('propertyChange', this._stateChangeHandler);
-    arrays.remove(this.childFields, formField);
-    this.updateRequiresSave();
-  }
-
-  protected _onStateChange(event: PropertyChangeEvent<any, FormField>) {
-    if (event.propertyName === 'requiresSave') {
-      this.updateRequiresSave();
     }
   }
 }
@@ -1641,3 +1614,27 @@ export type ValidationResult = {
   reveal: () => void;
 };
 export type AddCellEditorFieldCssClassesOptions = { cssClass?: string };
+
+export interface VisitParentFieldsOptions {
+  /**
+   * If set to true, visiting stops if a parent is not a form field.
+   *
+   * For example: if a group box has a {@link FormFieldMenu}, which is a menu containing a form field, the group box containing the menu won't be visited when the visiting starts at the form field.
+   *
+   * Default is false.
+   */
+  limitToSameFieldTree?: boolean;
+}
+
+export interface VisitFieldsOptions {
+  firstLevelFieldsOnly?: boolean;
+  /**
+   * If set to true, visiting of a child is skipped if that child is not a form field, even if it would contain form fields itself.
+   *
+   * For example: if a group box has a {@link FormFieldMenu}, which is a menu containing a form field, the form field inside the menu won't be visited after visiting the group box.
+   *
+   * Default is false.
+   */
+  limitToSameFieldTree?: boolean;
+  visitSelf?: boolean;
+}
