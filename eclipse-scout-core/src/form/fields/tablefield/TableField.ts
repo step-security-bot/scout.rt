@@ -99,7 +99,7 @@ export class TableField extends FormField implements TableFieldModel {
     this.invalidateLayoutTree();
   }
 
-  override computeRequiresSave(): boolean {
+  override computeSaveNeeded(): boolean {
     return Object.keys(this._deletedRows).length > 0 ||
       Object.keys(this._insertedRows).length > 0 ||
       Object.keys(this._updatedRows).length > 0 ||

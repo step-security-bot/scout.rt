@@ -80,7 +80,7 @@ export class FormLifecycle<TValidationResult extends ValidationResult = Validati
     this.widget.markAsSaved();
   }
 
-  override requiresSave(): boolean {
+  override saveNeeded(): boolean {
     return this.widget.saveNeeded;
   }
 }

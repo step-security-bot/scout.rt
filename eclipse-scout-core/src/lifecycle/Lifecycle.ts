@@ -101,7 +101,7 @@ export abstract class Lifecycle<TValidationResult> extends EventEmitter implemen
         }
 
         // 2. check if save is required
-        if (!this.requiresSave()) {
+        if (!this.saveNeeded()) {
           return this.close();
         }
 
@@ -119,7 +119,7 @@ export abstract class Lifecycle<TValidationResult> extends EventEmitter implemen
   }
 
   cancel(): JQuery.Promise<void> {
-    let showMessageBox = this.requiresSave() && this.askIfNeedSave;
+    let showMessageBox = this.saveNeeded() && this.askIfNeedSave;
     if (showMessageBox) {
       return this._showYesNoCancelMessageBox(
         this.askIfNeedSaveText,
@@ -151,7 +151,7 @@ export abstract class Lifecycle<TValidationResult> extends EventEmitter implemen
       .then(invalid => {
 
         // 2. invalid or form has not been changed
-        if (invalid || !this.requiresSave()) {
+        if (invalid || !this.saveNeeded()) {
           return;
         }
 
@@ -186,7 +186,7 @@ export abstract class Lifecycle<TValidationResult> extends EventEmitter implemen
   /**
    * Override this function to check if any data has changed and saving is required.
    */
-  requiresSave(): boolean {
+  saveNeeded(): boolean {
     return false;
   }
 

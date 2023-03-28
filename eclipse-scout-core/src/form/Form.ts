@@ -755,7 +755,7 @@ export class Form extends Widget implements FormModel, DisplayParent {
     if (this.rootGroupBox) {
       this.rootGroupBox.setMainBox(true);
       this.updateSaveNeeded();
-      this.rootGroupBox.on('propertyChange:requiresSave', () => {
+      this.rootGroupBox.on('propertyChange:saveNeeded', () => {
         this.updateSaveNeeded();
       });
       // TODO CGU kann man root group box austauschen? listener wegmachen
@@ -763,7 +763,7 @@ export class Form extends Widget implements FormModel, DisplayParent {
   }
 
   updateSaveNeeded() {
-    this.setSaveNeeded(this.rootGroupBox ? this.rootGroupBox.requiresSave : false);
+    this.setSaveNeeded(this.rootGroupBox ? this.rootGroupBox.saveNeeded : false);
   }
 
   markAsSaved() {

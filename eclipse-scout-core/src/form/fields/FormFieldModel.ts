@@ -151,8 +151,8 @@ export interface FormFieldModel extends WidgetModel {
    *
    * Default is false.
    *
-   * @see FormField.requiresSave
-   * @see FormField.updateRequiresSave
+   * @see FormField.saveNeeded
+   * @see FormField.updateSaveNeeded
    */
   touched?: boolean;
   /**

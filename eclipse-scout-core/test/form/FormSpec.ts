@@ -1104,20 +1104,20 @@ describe('Form', () => {
       expect(form.saveNeeded).toBe(false);
 
       firstField.setValue('hi');
-      expect(firstField.requiresSave).toBe(true);
-      expect(form.rootGroupBox.requiresSave).toBe(true);
+      expect(firstField.saveNeeded).toBe(true);
+      expect(form.rootGroupBox.saveNeeded).toBe(true);
       expect(form.saveNeeded).toBe(true);
 
       secondField.setValue('there');
-      expect(secondField.requiresSave).toBe(true);
-      expect(form.rootGroupBox.requiresSave).toBe(true);
+      expect(secondField.saveNeeded).toBe(true);
+      expect(form.rootGroupBox.saveNeeded).toBe(true);
       expect(form.saveNeeded).toBe(true);
 
       form.save()
         .then(() => {
-          expect(firstField.requiresSave).toBe(false);
-          expect(secondField.requiresSave).toBe(false);
-          expect(form.rootGroupBox.requiresSave).toBe(false);
+          expect(firstField.saveNeeded).toBe(false);
+          expect(secondField.saveNeeded).toBe(false);
+          expect(form.rootGroupBox.saveNeeded).toBe(false);
           expect(form.saveNeeded).toBe(false);
         })
         .catch(fail)
@@ -1128,8 +1128,8 @@ describe('Form', () => {
       expect(form.saveNeeded).toBe(false);
 
       firstField.setValue('hi');
-      expect(firstField.requiresSave).toBe(true);
-      expect(form.rootGroupBox.requiresSave).toBe(true);
+      expect(firstField.saveNeeded).toBe(true);
+      expect(form.rootGroupBox.saveNeeded).toBe(true);
       expect(form.saveNeeded).toBe(true);
 
       firstField.setValue(null);
@@ -1145,11 +1145,11 @@ describe('Form', () => {
       expect(form.saveNeeded).toBe(true);
 
       firstField.setValue(null);
-      expect(firstField.requiresSave).toBe(false);
-      expect(form.rootGroupBox.requiresSave).toBe(false);
+      expect(firstField.saveNeeded).toBe(false);
+      expect(form.rootGroupBox.saveNeeded).toBe(false);
       expect(form.saveNeeded).toBe(false);
 
-      // TODO requiresSave -> saveNeeded
+      // TODO saveNeeded -> saveNeeded
     });
 
     it('is false right after loading even if values are set while init or loading', done => {
@@ -1206,33 +1206,33 @@ describe('Form', () => {
       expect(form.saveNeeded).toBe(true);
 
       form.rootGroupBox.deleteField(firstField);
-      expect(form.rootGroupBox.requiresSave).toBe(false);
+      expect(form.rootGroupBox.saveNeeded).toBe(false);
       expect(form.saveNeeded).toBe(false);
 
       let newField = scout.create(StringField, {parent: form.rootGroupBox});
       form.rootGroupBox.insertField(newField);
-      expect(form.rootGroupBox.requiresSave).toBe(false);
+      expect(form.rootGroupBox.saveNeeded).toBe(false);
       expect(form.saveNeeded).toBe(false);
 
       newField.setValue('hi');
-      expect(newField.requiresSave).toBe(true);
-      expect(form.rootGroupBox.requiresSave).toBe(true);
+      expect(newField.saveNeeded).toBe(true);
+      expect(form.rootGroupBox.saveNeeded).toBe(true);
       expect(form.saveNeeded).toBe(true);
 
       form.markAsSaved();
-      expect(newField.requiresSave).toBe(false);
-      expect(form.rootGroupBox.requiresSave).toBe(false);
+      expect(newField.saveNeeded).toBe(false);
+      expect(form.rootGroupBox.saveNeeded).toBe(false);
       expect(form.saveNeeded).toBe(false);
 
-      // Insert a new field that has requiresSave set to true
+      // Insert a new field that has saveNeeded set to true
       let newField2 = scout.create(StringField, {
         parent: form,
         value: '123'
       });
       newField2.touch();
       form.rootGroupBox.insertField(newField2);
-      expect(newField2.requiresSave).toBe(true);
-      expect(form.rootGroupBox.requiresSave).toBe(true);
+      expect(newField2.saveNeeded).toBe(true);
+      expect(form.rootGroupBox.saveNeeded).toBe(true);
       expect(form.saveNeeded).toBe(true);
 
       // FIXME Add change value and reset to initvalue
@@ -1374,12 +1374,12 @@ describe('Form', () => {
       expect(form.saveNeeded).toBe(false);
 
       tabField.setValue('hi');
-      expect(tabField.getParentGroupBox().requiresSave).toBe(true);
+      expect(tabField.getParentGroupBox().saveNeeded).toBe(true);
       expect(form.saveNeeded).toBe(true);
 
       let tabBox = tabField.findParent(TabBox);
       tabBox.deleteTabItem(tabField.findParent(TabItem));
-      expect(form.rootGroupBox.requiresSave).toBe(false);
+      expect(form.rootGroupBox.saveNeeded).toBe(false);
       expect(form.saveNeeded).toBe(false);
 
       let newTabItem = scout.create(TabItem, {
@@ -1392,11 +1392,11 @@ describe('Form', () => {
       expect(form.saveNeeded).toBe(false);
 
       (newTabItem.fields[0] as StringField).setValue('hi');
-      expect(tabBox.requiresSave).toBe(true);
+      expect(tabBox.saveNeeded).toBe(true);
       expect(form.saveNeeded).toBe(true);
 
       form.markAsSaved();
-      expect(tabBox.requiresSave).toBe(false);
+      expect(tabBox.saveNeeded).toBe(false);
       expect(form.saveNeeded).toBe(false);
     });
 
@@ -1422,7 +1422,7 @@ describe('Form', () => {
       let seqField = form.widget('SeqField', StringField);
       let seqBox = seqField.findParent(SequenceBox);
       seqField.setValue('hi');
-      expect(seqBox.requiresSave).toBe(true);
+      expect(seqBox.saveNeeded).toBe(true);
       expect(form.saveNeeded).toBe(true);
 
       let seqField2 = form.widget('SeqField2', StringField);
@@ -1430,11 +1430,11 @@ describe('Form', () => {
       expect(form.saveNeeded).toBe(true);
 
       seqField.setValue(null);
-      expect(seqBox.requiresSave).toBe(true);
+      expect(seqBox.saveNeeded).toBe(true);
       expect(form.saveNeeded).toBe(true);
 
       seqField2.setValue(null);
-      expect(seqBox.requiresSave).toBe(false);
+      expect(seqBox.saveNeeded).toBe(false);
       expect(form.saveNeeded).toBe(false);
     });
 
@@ -1459,18 +1459,18 @@ describe('Form', () => {
 
       let splitBox = form.widget('SplitBox', SplitBox);
       (splitBox.firstField as StringField).setValue('hi');
-      expect(splitBox.requiresSave).toBe(true);
+      expect(splitBox.saveNeeded).toBe(true);
       expect(form.saveNeeded).toBe(true);
 
       (splitBox.secondField as StringField).setValue('there');
       expect(form.saveNeeded).toBe(true);
 
       (splitBox.firstField as StringField).setValue(null);
-      expect(splitBox.requiresSave).toBe(true);
+      expect(splitBox.saveNeeded).toBe(true);
       expect(form.saveNeeded).toBe(true);
 
       (splitBox.secondField as StringField).setValue(null);
-      expect(splitBox.requiresSave).toBe(false);
+      expect(splitBox.saveNeeded).toBe(false);
       expect(form.saveNeeded).toBe(false);
     });
 
@@ -1486,8 +1486,8 @@ describe('Form', () => {
       form.rootGroupBox.insertMenu(menu);
       let menubarField = (menu.field as StringField);
       menubarField.setValue('there');
-      expect(menubarField.requiresSave).toBe(true);
-      expect(form.rootGroupBox.requiresSave).toBe(true);
+      expect(menubarField.saveNeeded).toBe(true);
+      expect(form.rootGroupBox.saveNeeded).toBe(true);
       expect(form.saveNeeded).toBe(true);
 
       let menu2 = scout.create(FormFieldMenu, {
@@ -1499,8 +1499,8 @@ describe('Form', () => {
       secondField.insertMenu(menu2);
       let menuField = (menu2.field as StringField);
       menuField.setValue('hello');
-      expect(menuField.requiresSave).toBe(true);
-      expect(form.rootGroupBox.requiresSave).toBe(true);
+      expect(menuField.saveNeeded).toBe(true);
+      expect(form.rootGroupBox.saveNeeded).toBe(true);
       expect(form.saveNeeded).toBe(true);
 
       menubarField.setValue(null);
@@ -1515,9 +1515,9 @@ describe('Form', () => {
 
       form.save()
         .then(() => {
-          expect(menubarField.requiresSave).toBe(false);
-          expect(menuField.requiresSave).toBe(false);
-          expect(form.rootGroupBox.requiresSave).toBe(false);
+          expect(menubarField.saveNeeded).toBe(false);
+          expect(menuField.saveNeeded).toBe(false);
+          expect(form.rootGroupBox.saveNeeded).toBe(false);
           expect(form.saveNeeded).toBe(false);
         })
         .catch(fail)

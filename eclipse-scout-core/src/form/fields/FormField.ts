@@ -45,7 +45,7 @@ export class FormField extends Widget implements FormFieldModel {
   menusVisible: boolean;
   defaultMenuTypes: string[];
   preventInitialFocus: boolean;
-  requiresSave: boolean;
+  saveNeeded: boolean;
   statusPosition: FormFieldStatusPosition;
   statusVisible: boolean;
   suppressStatus: FormFieldSuppressStatus;
@@ -117,7 +117,7 @@ export class FormField extends Widget implements FormFieldModel {
     this.menusVisible = true;
     this.defaultMenuTypes = [];
     this.preventInitialFocus = false;
-    this.requiresSave = false;
+    this.saveNeeded = false;
     this.statusPosition = FormField.StatusPosition.DEFAULT;
     this.statusVisible = true;
     this.suppressStatus = null;
@@ -137,7 +137,7 @@ export class FormField extends Widget implements FormFieldModel {
 
     this._addWidgetProperties(['keyStrokes', 'menus', 'statusMenuMappings']);
     this._addCloneProperties(['dropType', 'dropMaximumSize', 'errorStatus', 'fieldStyle', 'gridDataHints', 'gridData', 'label', 'labelVisible', 'labelPosition',
-      'labelWidthInPixel', 'labelUseUiWidth', 'mandatory', 'mode', 'preventInitialFocus', 'requiresSave', 'touched', 'statusVisible', 'statusPosition', 'statusMenuMappings',
+      'labelWidthInPixel', 'labelUseUiWidth', 'mandatory', 'mode', 'preventInitialFocus', 'saveNeeded', 'touched', 'statusVisible', 'statusPosition', 'statusMenuMappings',
       'tooltipText', 'tooltipAnchor']);
 
     this._menuPropertyChangeHandler = this._onMenuPropertyChange.bind(this);
@@ -1451,45 +1451,45 @@ export class FormField extends Widget implements FormFieldModel {
       field.markAsSaved();
     }
     this.setProperty('touched', false);
-    this.updateRequiresSave();
+    this.updateSaveNeeded();
   }
 
   /** @see FormFieldModel.touched */
   touch() {
     this.setProperty('touched', true);
-    this.updateRequiresSave();
+    this.updateSaveNeeded();
   }
 
   /**
-   * Updates the {@link requiresSave} property by checking if the field is touched or if {@link computeRequiresSave} returns true.
+   * Updates the {@link saveNeeded} property by checking if the field is touched or if {@link computeSaveNeeded} returns true.
    */
-  updateRequiresSave() {
+  updateSaveNeeded() {
     if (!this.initialized || this.destroying) {
       return;
     }
-    this._setRequiresSave(this.touched || this.computeRequiresSave());
+    this._setSaveNeeded(this.touched || this.computeSaveNeeded());
   }
 
-  protected _setRequiresSave(requiresSave: boolean) {
-    this._setProperty('requiresSave', requiresSave);
+  protected _setSaveNeeded(saveNeeded: boolean) {
+    this._setProperty('saveNeeded', saveNeeded);
     let parentField = this.findParent(FormField);
-    parentField?.updateRequiresSave();
+    parentField?.updateSaveNeeded();
   }
 
   /**
-   * Used by {@link updateRequiresSave} to update the {@link requiresSave} property.
+   * Used by {@link updateSaveNeeded} to update the {@link saveNeeded} property.
    *
    * By default, all first level child fields are checked. The method returns true, if one of these fields needs to be saved.
    */
-  computeRequiresSave(): boolean {
-    let requiresSave = false;
+  computeSaveNeeded(): boolean {
+    let saveNeeded = false;
     this.visitFields(field => {
-      if (!field.destroying && field.requiresSave) {
-        requiresSave = true;
+      if (!field.destroying && field.saveNeeded) {
+        saveNeeded = true;
         return true;
       }
     }, {firstLevelFieldsOnly: true, visitSelf: false});
-    return requiresSave;
+    return saveNeeded;
   }
 
   getChildFields(firstLevelFieldsOnly = true) {
@@ -1558,12 +1558,12 @@ export class FormField extends Widget implements FormFieldModel {
     }
     // Each form field adds its own hierarchyChangeListener but non-form-fields don't -> add listener for every non-form field between this field and the next parent field
     let parentField = this._visitParentsUntilField(this.parent, parent => parent.on('hierarchyChange', this._hierarchyChangeHandler));
-    parentField?.updateRequiresSave();
+    parentField?.updateSaveNeeded();
   }
 
   protected _unlinkFromParentField(oldParent) {
     let oldParentField = this._visitParentsUntilField(oldParent, parent => parent.off('hierarchyChange', this._hierarchyChangeHandler));
-    oldParentField?.updateRequiresSave();
+    oldParentField?.updateSaveNeeded();
   }
 
   protected _onHierarchyChange(event: HierarchyChangeEvent) {
