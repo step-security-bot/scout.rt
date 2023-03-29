@@ -1523,7 +1523,5 @@ describe('Form', () => {
         .catch(fail)
         .always(done);
     });
-
-    // TODO create specs for form field links and cleanup. performance?
   });
 });

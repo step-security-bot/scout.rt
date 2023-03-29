@@ -11,7 +11,6 @@ import {arrays, FormField, ParsingFailedStatus, scout, Status, StringField, Valu
 import {FormSpecHelper, MenuSpecHelper} from '../../../src/testing/index';
 import {ValueFieldValidator} from '../../../src/form/fields/ValueField';
 
-/* global removePopups */
 describe('ValueField', () => {
   let session: SandboxSession, helper: FormSpecHelper, menuHelper: MenuSpecHelper;
 
@@ -642,7 +641,7 @@ describe('ValueField', () => {
 
   });
 
-  describe('validation: initialValue, touched, empty and mandatory', () => {
+  describe('validation: initialValue, empty and mandatory', () => {
 
     let field;
 
@@ -656,16 +655,7 @@ describe('ValueField', () => {
       field.markAsSaved();
       expect(field.initialValue).toBe('Foo');
       expect(field.touched).toBe(false);
-    });
-
-    it('sets touched to true when value is different from initial value', () => {
-      field.setValue('Foo');
-      field.markAsSaved();
-      expect(field.touched).toBe(false);
-      field.setValue('Bar');
-      expect(field.touched).toBe(true);
-      field.setValue('Foo');
-      expect(field.touched).toBe(false);
+      expect(field.saveNeeded).toBe(false);
     });
 
     it('sets empty to true when value is an empty string (for StringField)', () => {
@@ -701,9 +691,42 @@ describe('ValueField', () => {
       expect(result.validByMandatory).toBe(false);
     });
 
-  });
+    describe('saveNeeded', () => {
+      it('is set to true when value changes', () => {
+        expect(field.saveNeeded).toBe(false);
+        field.setValue('Bar');
+        expect(field.saveNeeded).toBe(true);
+        field.setValue(null);
+        expect(field.saveNeeded).toBe(false);
+      });
 
-  // FIXME CGU custom requires save, touched ersetzen?
+      it('is set to true when value is different than initial value', () => {
+        field.setValue('Foo');
+        field.markAsSaved();
+        expect(field.saveNeeded).toBe(false);
+        field.setValue('Bar');
+        expect(field.saveNeeded).toBe(true);
+        field.setValue('Foo');
+        expect(field.saveNeeded).toBe(false);
+      });
+
+      it('is set to true when field is touched', () => {
+        expect(field.saveNeeded).toBe(false);
+        field.touch();
+        expect(field.saveNeeded).toBe(true);
+        field.setValue('Foo');
+        expect(field.saveNeeded).toBe(true);
+        field.setValue(null);
+        expect(field.saveNeeded).toBe(true); // Still true
+
+        field.markAsSaved();
+        expect(field.saveNeeded).toBe(false);
+      });
+
+      // FIXME CGU add spec for resetValue with save needed
+      // FIXME CGU check workspace for usages of touched
+    });
+  });
 
   describe('menu visibility', () => {
     let formField: SpecInputValueField, model;

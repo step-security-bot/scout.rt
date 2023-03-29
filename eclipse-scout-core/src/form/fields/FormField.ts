@@ -1417,6 +1417,7 @@ export class FormField extends Widget implements FormFieldModel {
    * Visits this field and all child {@link FormField}s in pre-order (top-down).
    */
   visitFields(visitor: TreeVisitor<FormField>, options: VisitFieldsOptions = {}): TreeVisitResult {
+    // FIXME consider natural boundaries (form (without wrapped?), popup (without contextmenu popup with field?)
     return this.visit(child => {
       if (child instanceof FormField) {
         let visitResult = visitor(child);
@@ -1450,8 +1451,12 @@ export class FormField extends Widget implements FormFieldModel {
     for (const field of this.getChildFields()) {
       field.markAsSaved();
     }
-    this.setProperty('touched', false);
+    this._markAsSaved();
     this.updateSaveNeeded();
+  }
+
+  protected _markAsSaved() {
+    this.setProperty('touched', false);
   }
 
   /** @see FormFieldModel.touched */

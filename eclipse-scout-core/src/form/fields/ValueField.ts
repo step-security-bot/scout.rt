@@ -397,7 +397,6 @@ export class ValueField<TValue extends TModelValue, TModelValue = TValue> extend
 
     this._valueChanged();
     this._updateMenus();
-    this._updateTouched();
     this._updateEmpty();
     this.updateSaveNeeded();
     this.triggerPropertyChange('value', oldValue, this.value);
@@ -612,8 +611,15 @@ export class ValueField<TValue extends TModelValue, TModelValue = TValue> extend
     return scout.nvl(value, '') + '';
   }
 
-  protected _updateTouched() {
-    this.touched = !this._valueEquals(this.value, this.initialValue);
+  override computeSaveNeeded(): boolean {
+    if (this._hasValueChanged()) {
+      return true;
+    }
+    return super.computeSaveNeeded();
+  }
+
+  protected _hasValueChanged(): boolean {
+    return !this._valueEquals(this.value, this.initialValue);
   }
 
   addClearIcon($parent?: JQuery) {
@@ -634,8 +640,8 @@ export class ValueField<TValue extends TModelValue, TModelValue = TValue> extend
     this.$field.data('valuefield', this);
   }
 
-  override markAsSaved() {
-    super.markAsSaved();
+  override _markAsSaved() {
+    super._markAsSaved();
     this.initialValue = this.value;
   }
 
