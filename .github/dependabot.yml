@@ -1,0 +1,506 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /eclipse-scout-chart
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /eclipse-scout-chart
+    schedule:
+      interval: daily
+
+  - package-ecosystem: npm
+    directory: /eclipse-scout-cli
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /eclipse-scout-cli
+    schedule:
+      interval: daily
+
+  - package-ecosystem: npm
+    directory: /eclipse-scout-core
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /eclipse-scout-core
+    schedule:
+      interval: daily
+
+  - package-ecosystem: npm
+    directory: /eclipse-scout-migrate
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /eclipse-scout-migrate
+    schedule:
+      interval: daily
+
+  - package-ecosystem: npm
+    directory: /eclipse-scout-releng
+    schedule:
+      interval: daily
+
+  - package-ecosystem: npm
+    directory: /eclipse-scout-tsconfig
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /eclipse-scout-tsconfig
+    schedule:
+      interval: daily
+
+  - package-ecosystem: npm
+    directory: /eslint-config
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /eslint-config
+    schedule:
+      interval: daily
+
+  - package-ecosystem: npm
+    directory: /karma-jasmine-scout
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /karma-jasmine-scout
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.dev.jetty.test.affix
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.dev.jetty.test
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.dev.jetty
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.jaxws.apt
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.json
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.charsetdetect
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.chart.client
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.chart.shared
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.chart.ui.html
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.client.test
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.client
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.dataformat
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.datamodel.client
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.datamodel.server
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.datamodel.shared
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.datamodel.ui.html
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.dataobject.test
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.dataobject
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.jackson.test
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.jackson
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.mail.test
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.mail
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.mom.api.test
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.mom.api
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.mom.jms.test
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.mom.jms
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.oauth2
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.platform.test
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.platform
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.rest.jackson
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.rest.jersey.client
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.rest.jersey.test
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.rest.test
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.rest
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.security.test
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.security
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.server.commons.test
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.server.commons
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.server.jaxws.test
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.server.jaxws
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.server.jdbc.test
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.server.jdbc
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.server.test
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.server
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.serverbridge
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.shared.test
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.shared
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.svg.client.test
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.svg.client
+    schedule:
+      interval: daily
+
+  - package-ecosystem: npm
+    directory: /org.eclipse.scout.rt.svg.ui.html
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.svg.ui.html
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.ui.html.selenium
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.ui.html.test
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt.ui.html
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /org.eclipse.scout.rt
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /scout-hellojs-app
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /scout-hellojs-app/src/main/resources/archetype-resources/__rootArtifactId__.api
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /scout-hellojs-app/src/main/resources/archetype-resources/__rootArtifactId__.app.dev
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /scout-hellojs-app/src/main/resources/archetype-resources/__rootArtifactId__.app.war
+    schedule:
+      interval: daily
+
+  - package-ecosystem: npm
+    directory: /scout-hellojs-app/src/main/resources/archetype-resources/__rootArtifactId__.app
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /scout-hellojs-app/src/main/resources/archetype-resources/__rootArtifactId__.app
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /scout-hellojs-app/src/main/resources/archetype-resources/__rootArtifactId__.core
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /scout-hellojs-app/src/main/resources/archetype-resources/__rootArtifactId__.data
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /scout-hellojs-app/src/main/resources/archetype-resources/__rootArtifactId__.db
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /scout-hellojs-app/src/main/resources/archetype-resources/__rootArtifactId__.persistence
+    schedule:
+      interval: daily
+
+  - package-ecosystem: npm
+    directory: /scout-hellojs-app/src/main/resources/archetype-resources/__rootArtifactId__.ui
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /scout-hellojs-app/src/main/resources/archetype-resources/__rootArtifactId__.ui
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /scout-hellojs-app/src/main/resources/archetype-resources/__rootArtifactId__
+    schedule:
+      interval: daily
+
+  - package-ecosystem: npm
+    directory: /scout-hellojs-app/src/main/resources/archetype-resources
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /scout-hellojs-app/src/main/resources/archetype-resources
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /scout-helloworld-app
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /scout-helloworld-app/src/main/resources/archetype-resources/__rootArtifactId__.client
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /scout-helloworld-app/src/main/resources/archetype-resources/__rootArtifactId__.server.app.dev
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /scout-helloworld-app/src/main/resources/archetype-resources/__rootArtifactId__.server.app.war
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /scout-helloworld-app/src/main/resources/archetype-resources/__rootArtifactId__.server
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /scout-helloworld-app/src/main/resources/archetype-resources/__rootArtifactId__.shared
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /scout-helloworld-app/src/main/resources/archetype-resources/__rootArtifactId__.ui.html.app.dev
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /scout-helloworld-app/src/main/resources/archetype-resources/__rootArtifactId__.ui.html.app.war
+    schedule:
+      interval: daily
+
+  - package-ecosystem: npm
+    directory: /scout-helloworld-app/src/main/resources/archetype-resources/__rootArtifactId__.ui.html
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /scout-helloworld-app/src/main/resources/archetype-resources/__rootArtifactId__.ui.html
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /scout-helloworld-app/src/main/resources/archetype-resources/__rootArtifactId__
+    schedule:
+      interval: daily
+
+  - package-ecosystem: npm
+    directory: /scout-helloworld-app/src/main/resources/archetype-resources
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /scout-helloworld-app/src/main/resources/archetype-resources
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /scout-jaxws-module
+    schedule:
+      interval: daily
+
+  - package-ecosystem: maven
+    directory: /scout-jaxws-module/src/main/resources/archetype-resources
+    schedule:
+      interval: daily
